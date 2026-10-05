@@ -59,10 +59,10 @@ function Welcome() {
           className="btn btn-ghost"
           onClick={() => {
             updateSettings({ name: name.trim(), track: "indecis" });
-            go("/metiers");
+            go("/orientation");
           }}
         >
-          Je ne sais pas encore : découvrir les métiers d'abord
+          🎯 Je ne sais pas encore : faire le test d'orientation (3 minutes)
         </button>
       </p>
       <p className="small muted center">Vous pourrez changer d'objectif à tout moment dans les Réglages.</p>
@@ -220,6 +220,9 @@ export default function Home() {
           </a>
           <a href="#/domaine/methode" className="quick-item">
             <span>🧭</span>Méthode & astuces
+          </a>
+          <a href="#/orientation" className="quick-item">
+            <span>🎯</span>Test d'orientation
           </a>
           <a href="#/metiers" className="quick-item">
             <span>🚀</span>Métiers de demain

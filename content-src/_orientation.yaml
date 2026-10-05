@@ -1,0 +1,318 @@
+# Test d'orientation : chaque réponse donne des points à des métiers
+# (identifiants de « profils »). Une réponse peut aussi porter un « conseil »
+# personnalisé, affiché dans les résultats. Modifiable sans programmer.
+# Les projections à 20 ans sont des analyses de tendances, pas des certitudes :
+# elles sont présentées comme telles dans l'application.
+profils:
+  - id: data-engineer
+    titre: Data engineer
+    emoji: 🛢️
+    parcours: data-engineer
+    resume: Construit les pipelines qui collectent, nettoient et mettent à disposition les données de l'entreprise.
+    quotidien: Python et SQL, pipelines planifiés, entrepôts et data lakes, tests de qualité, échanges avec les analystes et les métiers.
+    marche: Demande soutenue et durable — chaque projet d'analyse ou d'IA commence par des données fiables. Le poste est souvent cité parmi les profils data les plus difficiles à recruter.
+    avenir: "Sur 20 ans : très porteur. Les volumes de données, le temps réel, l'IA et la réglementation (traçabilité, RGPD, AI Act) augmentent le besoin de plateformes de données fiables. Le métier va se déplacer vers l'architecture, la qualité, la gouvernance et l'automatisation : l'IA écrira une partie du code, l'ingénieur concevra et garantira le système."
+    risque_ia: Modéré. Les tâches répétitives (requêtes simples, code standard) s'automatisent ; la conception, la fiabilité, la sécurité et la compréhension du métier restent humaines.
+    acces: Accessible en reconversion avec un bon portfolio et une certification data d'un fournisseur cloud ; les premiers postes passent souvent par l'alternance ou une ESN.
+    optimiser:
+      - "Maîtriser à fond SQL et Python : c'est ce qui sera testé en entretien, quelles que soient les modes d'outils."
+      - Viser une certification data d'un grand fournisseur cloud (AWS Data Engineer Associate, DP-700 ou Google Professional Data Engineer selon votre région).
+      - "Ajouter une compétence d'avenir : le streaming (Kafka), les formats de table ouverts (Iceberg/Delta) ou les pipelines pour l'IA (RAG, données pour les modèles)."
+      - Développer la qualité et la gouvernance des données (tests, contrats, lignage) — ce que l'automatisation ne remplace pas.
+      - Se spécialiser dans un secteur (finance, santé, industrie, énergie) pour devenir difficile à remplacer.
+    specialisations: [Data platform engineer, Streaming / temps réel, DataOps, Ingénieur données pour l'IA (RAG, MLOps), Architecte data]
+    certifications: [aws-dea, dp-700, databricks-dea, dbt-ae, airflow-fundamentals, gcp-pde]
+    evolutions: Data engineer senior → lead data / architecte data → responsable plateforme data.
+    premier_poste: true
+  - id: analytics-engineer
+    titre: Analytics engineer
+    emoji: 📐
+    parcours: data-engineer
+    resume: Transforme les données brutes de l'entrepôt en modèles fiables, documentés et testés, prêts pour l'analyse.
+    quotidien: SQL avancé, dbt, modélisation en étoile, tests de données, documentation, dialogue étroit avec les analystes et les métiers.
+    marche: Métier plus récent, en forte croissance dans les entreprises qui ont adopté l'ELT et dbt ; souvent intégré aux équipes data modernes.
+    avenir: "Sur 20 ans : porteur, à condition de rester du côté de la modélisation et de la qualité. La définition des indicateurs, la cohérence et la confiance dans les chiffres resteront des besoins forts ; l'écriture de SQL standard sera de plus en plus assistée par l'IA."
+    risque_ia: "Modéré : le SQL de routine est très automatisable, la modélisation métier et la gouvernance des indicateurs beaucoup moins."
+    acces: Très bonne porte d'entrée en reconversion, notamment pour les profils venant de la gestion, de la finance ou du contrôle de gestion, à l'aise avec les chiffres.
+    optimiser:
+      - Devenir excellent en SQL (fonctions de fenêtre, CTE) et en modélisation dimensionnelle.
+      - Obtenir la certification dbt Analytics Engineering, puis une certification de plateforme (Snowflake ou Databricks).
+      - Apprendre assez de Python et d'orchestration pour évoluer vers le data engineering.
+      - Maîtriser la couche sémantique (définitions partagées des indicateurs).
+    specialisations: [Modélisation et couche sémantique, Qualité et gouvernance des indicateurs, Data engineering]
+    certifications: [dbt-ae, snowpro-core, databricks-dea, dp-700]
+    evolutions: Analytics engineer → data engineer ou lead analytics → responsable data / BI.
+    premier_poste: true
+  - id: data-analyst
+    titre: Data analyst
+    emoji: 📊
+    parcours: data-engineer
+    resume: Répond aux questions métier avec des chiffres, des analyses et des tableaux de bord.
+    quotidien: SQL, outils de visualisation (Power BI, Tableau), Excel, échanges constants avec les équipes métier.
+    marche: "Beaucoup d'offres, mais aussi beaucoup de candidats : la concurrence est plus forte à l'entrée que pour les profils d'ingénierie."
+    avenir: "Sur 20 ans : à faire évoluer. Les tableaux de bord et analyses simples sont parmi les tâches les plus exposées aux assistants d'IA. La valeur se déplacera vers la compréhension du métier, la formulation des bonnes questions et la fiabilité des données — d'où l'intérêt d'évoluer vers l'analytics engineering ou le data engineering."
+    risque_ia: Élevé pour les analyses de routine ; faible pour le conseil métier et l'interprétation.
+    acces: Le plus accessible des métiers data en reconversion, surtout avec une expertise sectorielle.
+    optimiser:
+      - "Ne pas s'arrêter aux tableaux de bord : apprendre la modélisation (dbt) pour évoluer vers analytics engineer."
+      - Valoriser fortement votre expertise métier (finance, santé, commerce…) — c'est elle qui vous rendra irremplaçable.
+      - Apprendre Python pour l'automatisation et l'analyse avancée.
+      - Savoir utiliser l'IA comme accélérateur d'analyse, et en vérifier les résultats.
+    specialisations: [Analytics engineering, Analyste métier spécialisé (finance, santé, supply chain), Product analytics]
+    certifications: [dbt-ae, snowpro-core, aws-ccp, az-900]
+    evolutions: Data analyst → analytics engineer / data engineer, ou analyste senior spécialisé → responsable BI.
+    premier_poste: true
+  - id: ml-engineer
+    titre: ML engineer / MLOps
+    emoji: 🤖
+    parcours: data-engineer
+    resume: Met en production les modèles d'IA (y compris les LLM), les surveille et les maintient.
+    quotidien: Python, pipelines de données et d'entraînement, conteneurs, cloud, évaluation et surveillance de modèles, RAG.
+    marche: Forte demande portée par l'IA générative, mais des postes souvent exigeants (expérience, bases mathématiques) et concentrés dans les grandes entreprises et les éditeurs.
+    avenir: "Sur 20 ans : très porteur mais mouvant. Les outils changent extrêmement vite ; les fondamentaux (données, évaluation, mise en production fiable, sécurité, coûts) resteront recherchés."
+    risque_ia: Faible à moyen terme, mais métier en transformation permanente.
+    acces: "Difficile en entrée directe depuis zéro : le chemin réaliste passe par data engineer (ou DevOps), puis une spécialisation MLOps."
+    optimiser:
+      - Commencer par devenir un bon data engineer ou ingénieur DevOps, puis se spécialiser.
+      - Solidifier les bases de statistiques et d'évaluation des modèles.
+      - "Maîtriser le RAG et l'évaluation des LLM : c'est là que les entreprises recrutent aujourd'hui."
+      - Connaître le cadre de l'AI Act (documentation, traçabilité) — un atout distinctif.
+    specialisations: [MLOps, LLMOps / ingénierie des applications d'IA, Ingénieur données pour l'IA]
+    certifications: [aws-dea, gcp-pde, databricks-dea, kcna]
+    evolutions: Data engineer → ML engineer → architecte IA / responsable plateforme ML.
+    premier_poste: false
+    porte_entree: data-engineer
+  - id: cloud-engineer
+    titre: Ingénieur cloud
+    emoji: ☁️
+    parcours: cloud-devops
+    resume: Conçoit et exploite l'infrastructure cloud — réseau, calcul, stockage, identités — de façon sûre et économe.
+    quotidien: Console et CLI cloud, Terraform, réseau (VPC, DNS), IAM, supervision, optimisation des coûts.
+    marche: Demande forte et diversifiée (entreprises, ESN, administrations) ; les certifications associées sont très lues par les recruteurs.
+    avenir: "Sur 20 ans : porteur. La migration vers le cloud n'est pas terminée, le cloud souverain et la réglementation (NIS2, DORA, SecNumCloud) créent de nouveaux besoins, et l'architecture, la sécurité et les coûts demandent du jugement humain."
+    risque_ia: Modéré. Les déploiements standard s'automatisent ; l'architecture, la sécurité et les arbitrages de coûts restent humains.
+    acces: Accessible en reconversion, surtout depuis le support informatique ou l'administration système ; les certifications associées ouvrent des portes.
+    optimiser:
+      - Prendre une certification associée très demandée (AWS Solutions Architect Associate ou Azure Administrator AZ-104).
+      - "Devenir solide en réseau et en IAM : ce sont les sujets où se jouent la sécurité et la qualité d'une architecture."
+      - Écrire toute l'infrastructure en Terraform et la publier sur GitHub.
+      - Ajouter FinOps ou sécurité cloud comme spécialité différenciante.
+      - Suivre le cloud souverain européen (SecNumCloud, acteurs européens) — un marché en croissance en France.
+    specialisations: [Architecte cloud, Sécurité cloud, FinOps, Cloud souverain]
+    certifications: [aws-ccp, az-900, aws-saa, az-104, gcp-ace, terraform-associate]
+    evolutions: Ingénieur cloud → architecte cloud → responsable infrastructure / CTO.
+    premier_poste: true
+  - id: devops
+    titre: Ingénieur DevOps
+    emoji: ♾️
+    parcours: cloud-devops
+    resume: Automatise toute la chaîne qui va du code à la production (CI/CD, conteneurs, environnements).
+    quotidien: Git, GitHub Actions ou GitLab CI, Docker, Kubernetes, Terraform, scripts, accompagnement des développeurs.
+    marche: Demande forte et durable ; profils recherchés dans tous les secteurs qui produisent du logiciel.
+    avenir: "Sur 20 ans : porteur, avec une évolution vers l'ingénierie de plateforme (offrir aux développeurs des outils en libre-service) et vers la sécurité de la chaîne logicielle."
+    risque_ia: Modéré. L'écriture de pipelines standard s'automatise ; la conception de plateformes fiables et sûres reste humaine.
+    acces: Accessible en reconversion avec Linux solide, Git, Docker et un projet de CI/CD complet en portfolio.
+    optimiser:
+      - Maîtriser Linux, Git, Docker et Kubernetes en profondeur (la CKA est un excellent signal).
+      - Construire un projet complet — CI/CD, conteneurs, déploiement automatique, observabilité — et le documenter.
+      - "Ajouter la sécurité de la chaîne (DevSecOps : SBOM, scan d'images, signature) : compétence de plus en plus exigée."
+      - Apprendre à programmer correctement (Python ou Go) pour l'outillage.
+    specialisations: [Platform engineering, DevSecOps, SRE, GitOps]
+    certifications: [github-foundations, github-actions, kcna, cka, terraform-associate, az-400]
+    evolutions: DevOps → platform engineer / SRE senior → responsable plateforme.
+    premier_poste: true
+  - id: sre
+    titre: SRE (ingénieur fiabilité)
+    emoji: 🚨
+    parcours: cloud-devops
+    resume: Garantit la fiabilité et la performance des services en production, mesure, alerte, gère les incidents.
+    quotidien: Observabilité (métriques, journaux, traces), SLO, automatisation, gestion d'incidents, astreintes.
+    marche: Rôle recherché dans les entreprises dont le service en ligne est critique (e-commerce, banques, éditeurs), avec des rémunérations souvent élevées.
+    avenir: "Sur 20 ans : porteur. Plus les systèmes sont distribués et critiques, plus la fiabilité devient un enjeu stratégique ; l'IA aidera au diagnostic, mais la responsabilité et le jugement en incident restent humains."
+    risque_ia: "Faible à modéré : l'IA aide à détecter et diagnostiquer, pas à assumer un incident majeur."
+    acces: Rarement un premier poste ; on y arrive généralement après une expérience DevOps ou d'administration système.
+    optimiser:
+      - Commencer par un poste DevOps ou d'ingénieur cloud, puis évoluer vers le SRE.
+      - Devenir expert en observabilité (Prometheus, Grafana, OpenTelemetry) et en SLO.
+      - Pratiquer la gestion d'incident et les post-mortems (y compris sur vos projets).
+      - "Préserver votre santé : les astreintes doivent être organisées et compensées — à vérifier à l'embauche."
+    specialisations: [Observabilité, Performance et capacité, Ingénierie du chaos, Platform engineering]
+    certifications: [lfcs, cka, aws-saa, az-104]
+    evolutions: DevOps → SRE → SRE senior / responsable fiabilité.
+    premier_poste: false
+    porte_entree: devops
+  - id: platform-engineer
+    titre: Platform engineer
+    emoji: 🧱
+    parcours: cloud-devops
+    resume: Construit une plateforme interne en libre-service (Kubernetes, modèles, outils) qui simplifie la vie des développeurs et des équipes data.
+    quotidien: Kubernetes, Terraform, GitOps, outils internes, portails développeurs, automatisation, beaucoup de code.
+    marche: Tendance forte dans les moyennes et grandes organisations ; rarement un premier poste.
+    avenir: "Sur 20 ans : très porteur. Industrialiser et standardiser le développement est la réponse des entreprises à la complexité du cloud ; les plateformes intégreront de plus en plus l'IA, qu'il faudra concevoir et sécuriser."
+    risque_ia: Faible. Concevoir des plateformes et des abstractions demande une vision d'ensemble.
+    acces: Évolution naturelle après 2 à 4 ans de DevOps ou de cloud.
+    optimiser:
+      - Passer par DevOps ou ingénieur cloud d'abord.
+      - Devenir très solide en Kubernetes (CKA), Terraform et GitOps.
+      - Apprendre à concevoir des produits internes (écouter les utilisateurs-développeurs, documenter).
+      - Programmer sérieusement (Go ou Python).
+    specialisations: [Plateformes Kubernetes, Plateformes data, Developer experience]
+    certifications: [cka, terraform-associate, kcna, aws-saa]
+    evolutions: DevOps → platform engineer → architecte / responsable plateforme.
+    premier_poste: false
+    porte_entree: devops
+  - id: cloud-security
+    titre: Ingénieur sécurité cloud
+    emoji: 🔐
+    parcours: cloud-devops
+    resume: Sécurise les identités, les réseaux, les données et la chaîne de déploiement dans le cloud.
+    quotidien: IAM, politiques, chiffrement, détection, conformité (RGPD, NIS2, DORA), DevSecOps, audits.
+    marche: "Demande très forte et pénurie durable de profils en cybersécurité ; la réglementation européenne l'accentue."
+    avenir: "Sur 20 ans : parmi les plus porteurs. Les attaques se professionnalisent (y compris avec l'IA), les obligations réglementaires augmentent, et la sécurité est l'un des domaines où la responsabilité humaine reste centrale."
+    risque_ia: Faible. L'IA est un outil pour les défenseurs comme pour les attaquants ; elle augmente le besoin d'experts.
+    acces: Mieux en deuxième temps, après des bases solides en systèmes, réseaux et cloud ; une certification d'entrée en sécurité aide.
+    optimiser:
+      - Construire d'abord un socle cloud et réseau solide (le parcours Cloud/DevOps).
+      - Prendre une certification d'entrée en sécurité (ISC2 CC, puis CompTIA Security+), puis une spécialité cloud.
+      - Maîtriser l'IAM et la sécurité de la chaîne logicielle (DevSecOps).
+      - Connaître la réglementation (RGPD, NIS2, DORA, AI Act) — atout rare chez les techniciens.
+    specialisations: [Sécurité cloud, DevSecOps, Gestion des identités, Conformité et gouvernance]
+    certifications: [isc2-cc, security-plus, aws-saa, az-104, cka]
+    evolutions: Ingénieur cloud/DevOps → ingénieur sécurité cloud → architecte sécurité / RSSI.
+    premier_poste: false
+    porte_entree: cloud-engineer
+  - id: finops
+    titre: Spécialiste FinOps cloud
+    emoji: 💶
+    parcours: cloud-devops
+    resume: Pilote et optimise les dépenses cloud en associant finance, technique et métiers.
+    quotidien: Analyse des factures cloud, tableaux de bord de coûts, recommandations d'optimisation, dialogue avec les équipes techniques et financières.
+    marche: Métier jeune et en croissance dans les organisations dont la facture cloud est importante ; nombre de postes plus limité, mais peu de candidats qualifiés.
+    avenir: "Sur 20 ans : prometteur. La pression sur les coûts et la sobriété (impact environnemental) va s'accentuer ; la double compétence finance + technique est rare."
+    risque_ia: Modéré. Les recommandations simples s'automatisent ; la négociation, les arbitrages et la conduite du changement restent humains.
+    acces: "Excellente porte d'entrée pour un profil finance/contrôle de gestion qui ajoute une compétence cloud solide."
+    optimiser:
+      - Acquérir de solides bases cloud (certification de fondamentaux, puis associée).
+      - Apprendre SQL et un outil de tableau de bord pour analyser les données de facturation.
+      - Suivre le cadre de la FinOps Foundation (et ses certifications).
+      - Ajouter la dimension environnementale (mesure de l'empreinte) — une demande montante.
+    specialisations: [FinOps, Green IT / sobriété numérique, Gouvernance cloud]
+    certifications: [aws-ccp, az-900, aws-saa]
+    evolutions: FinOps → responsable FinOps / gouvernance cloud.
+    premier_poste: true
+
+# Conseils d'employabilité valables pour tous les métiers (affichés dans les résultats)
+conseils_durables:
+  - "Profil en T : une expertise profonde (votre métier) + des bases larges (Linux, Git, SQL, Python, cloud, sécurité). C'est le profil qui traverse le mieux les changements d'outils."
+  - "Distinguer compétences durables et périssables : SQL, réseaux, Linux, modélisation, sécurité, raisonnement sur les systèmes durent des décennies ; tel outil à la mode, quelques années. Investissez d'abord dans les premières."
+  - "Faire de l'IA un outil de productivité, pas un concurrent : savoir lui confier les tâches répétitives, vérifier ce qu'elle produit, et l'intégrer dans les systèmes que vous construisez."
+  - "Se spécialiser dans un secteur (finance, santé, énergie, industrie, secteur public) : la combinaison compétence technique + connaissance métier est la plus difficile à remplacer."
+  - "Entretenir ses certifications et sa veille : la plupart expirent après 2 à 3 ans ; c'est l'occasion d'actualiser régulièrement ses compétences."
+  - "Soigner les compétences humaines : expliquer simplement, écrire une documentation claire, travailler en équipe, gérer un incident calmement. Elles comptent de plus en plus à mesure que la technique s'automatise."
+  - "Rester visible : GitHub à jour, profil LinkedIn, participation à des communautés locales. La plupart des opportunités circulent par le réseau."
+avertissement: "Ce test donne une orientation à partir de vos goûts déclarés ; il ne mesure ni vos aptitudes ni le marché local. Les projections à 20 ans reposent sur des tendances connues en octobre 2026 (données, cloud, IA, sécurité, réglementation européenne) et comportent une part d'incertitude. Confrontez le résultat à la réalité : lisez des offres d'emploi de votre région, échangez avec des professionnels du métier, essayez les premiers modules."
+
+questions:
+  - id: q1
+    q: Dans un travail, ce qui vous plaît le plus, c'est…
+    reponses:
+      - { texte: "Comprendre ce que disent les chiffres et trouver une explication", points: { data-analyst: 3, analytics-engineer: 2, data-engineer: 1 } }
+      - { texte: "Construire des systèmes qui tournent tout seuls, de façon fiable", points: { data-engineer: 3, platform-engineer: 2, devops: 2 } }
+      - { texte: "Réparer quand ça casse, et faire en sorte que ça ne recasse pas", points: { sre: 3, cloud-engineer: 2, devops: 1 } }
+      - { texte: "Protéger : repérer les failles et les risques", points: { cloud-security: 3, cloud-engineer: 1 } }
+      - { texte: "Optimiser : faire mieux avec moins", points: { finops: 3, cloud-engineer: 1, sre: 1 } }
+      - { texte: "Créer quelque chose d'« intelligent » qui prédit ou génère", points: { ml-engineer: 3, data-engineer: 1 } }
+  - id: q2
+    q: Le résultat de travail qui vous rendrait le plus fier…
+    reponses:
+      - { texte: "Un tableau de bord que toute la direction consulte chaque matin", points: { data-analyst: 3, analytics-engineer: 2 } }
+      - { texte: "Un pipeline qui alimente chaque jour des millions de lignes sans erreur", points: { data-engineer: 3, analytics-engineer: 1 } }
+      - { texte: "Une plateforme que des dizaines d'équipes utilisent", points: { platform-engineer: 3, devops: 2, data-engineer: 1 } }
+      - { texte: "Un site qui n'est jamais tombé pendant les soldes", points: { sre: 3, cloud-engineer: 2 } }
+      - { texte: "Une facture cloud réduite de 30 %", points: { finops: 3, cloud-engineer: 1 } }
+      - { texte: "Une attaque déjouée avant qu'elle ne fasse des dégâts", points: { cloud-security: 3 } }
+      - { texte: "Un assistant d'IA qui répond juste, à partir des documents de l'entreprise", points: { ml-engineer: 3, data-engineer: 1 } }
+  - id: q3
+    q: Votre rapport aux mathématiques et aux statistiques…
+    reponses:
+      - { texte: "J'aime ça, les probabilités et les modèles m'intéressent", points: { ml-engineer: 3, data-analyst: 2, analytics-engineer: 1 } }
+      - { texte: "Je suis à l'aise avec les chiffres, sans plus", points: { data-engineer: 1, analytics-engineer: 2, finops: 2, data-analyst: 1 } }
+      - { texte: "Je préfère éviter", points: { cloud-engineer: 1, devops: 1, sre: 1, cloud-security: 1, platform-engineer: 1 }, conseil: "Bonne nouvelle : les métiers cloud, DevOps et sécurité demandent de la logique, pas des mathématiques avancées. Le machine learning, en revanche, en demande ; le data engineering très peu." }
+  - id: q4
+    q: Et la programmation ?
+    reponses:
+      - { texte: "J'aimerais coder une bonne partie de la journée", points: { data-engineer: 2, ml-engineer: 2, platform-engineer: 2, devops: 1 } }
+      - { texte: "Des scripts pour automatiser, oui ; développer toute la journée, non", points: { cloud-engineer: 2, sre: 1, devops: 1, cloud-security: 1 } }
+      - { texte: "Je préfère SQL et les tableurs", points: { data-analyst: 3, analytics-engineer: 2, finops: 1 } }
+      - { texte: "Le moins possible", points: { finops: 2, cloud-security: 1 }, conseil: "Tous les métiers de ce domaine demandent au minimum du SQL et un peu de scripting. Rassurez-vous : c'est ce qui s'apprend le mieux par la pratique quotidienne — les labos de l'application sont faits pour ça." }
+  - id: q5
+    q: Avec qui préférez-vous travailler au quotidien ?
+    reponses:
+      - { texte: "Les métiers : marketing, finance, direction", points: { data-analyst: 3, analytics-engineer: 2, finops: 1 } }
+      - { texte: "Les développeurs", points: { devops: 3, platform-engineer: 2 } }
+      - { texte: "Des ingénieurs système et réseau", points: { cloud-engineer: 2, sre: 2, cloud-security: 1 } }
+      - { texte: "Des data scientists et des analystes", points: { data-engineer: 2, ml-engineer: 2, analytics-engineer: 1 } }
+      - { texte: "Des contrôleurs, auditeurs, juristes", points: { cloud-security: 2, finops: 2 } }
+  - id: q6
+    q: Être joignable la nuit ou le week-end en cas de panne (astreinte)…
+    reponses:
+      - { texte: "Ça me stimule, j'aime l'urgence", points: { sre: 3, devops: 1, cloud-security: 1 } }
+      - { texte: "Je l'accepte de temps en temps", points: { cloud-engineer: 1, data-engineer: 1, devops: 1, platform-engineer: 1 } }
+      - { texte: "Je veux l'éviter", points: { analytics-engineer: 2, data-analyst: 1, finops: 1, ml-engineer: 1 }, conseil: "Évitez le métier de SRE et posez la question des astreintes à chaque entretien (fréquence, compensation). Les postes d'analytics engineer et de FinOps en comportent rarement." }
+  - id: q7
+    q: Vous préférez…
+    reponses:
+      - { texte: "Dessiner des schémas d'architecture et réfléchir à l'ensemble", points: { cloud-engineer: 2, platform-engineer: 2, data-engineer: 1 } }
+      - { texte: "Appliquer des règles avec rigueur, ne rien laisser passer", points: { cloud-security: 2, analytics-engineer: 1, finops: 1 } }
+      - { texte: "Expérimenter, tester des hypothèses", points: { ml-engineer: 2, data-analyst: 1, sre: 1 } }
+      - { texte: "Automatiser tout ce qui se répète", points: { devops: 2, data-engineer: 2, platform-engineer: 1 } }
+  - id: q8
+    q: Dans quel domaine avez-vous le plus d'expérience professionnelle ?
+    reponses:
+      - { texte: "Finance, comptabilité, contrôle de gestion", points: { finops: 2, analytics-engineer: 1, data-analyst: 1 }, conseil: "Votre expérience financière est un atout rare : data engineer dans la banque/assurance (réglementation DORA), analytics engineer pour les indicateurs financiers, ou FinOps. Mettez-la en avant dès l'accroche du CV." }
+      - { texte: "Commerce, marketing, vente", points: { data-analyst: 2, analytics-engineer: 1 }, conseil: "Valorisez votre connaissance des clients et des indicateurs commerciaux : les équipes data manquent de profils qui comprennent le métier. Ciblez le e-commerce et la distribution." }
+      - { texte: "Industrie, logistique, technique", points: { data-engineer: 1, cloud-engineer: 1, sre: 1 }, conseil: "L'industrie (capteurs, maintenance prédictive) et la logistique (flux temps réel) ont de forts besoins en data engineering et en streaming : votre connaissance du terrain est un vrai plus." }
+      - { texte: "Support informatique, réseau, administration", points: { cloud-engineer: 2, sre: 1, cloud-security: 1, devops: 1 }, conseil: "Vous partez avec une longueur d'avance pour le parcours Cloud/DevOps : vos bases systèmes et réseau sont exactement ce qui manque à beaucoup de débutants. Visez rapidement AZ-104 ou AWS Solutions Architect." }
+      - { texte: "Santé, social, éducation, secteur public", points: { data-analyst: 1, data-engineer: 1, cloud-security: 1 }, conseil: "Le secteur public et la santé recrutent des profils data et cloud, avec des enjeux forts de protection des données (RGPD, données de santé, SecNumCloud) : votre connaissance de ces environnements est valorisable." }
+      - { texte: "Autre, ou peu d'expérience professionnelle", points: {}, conseil: "Sans expérience à valoriser, vos projets de portfolio et vos certifications seront votre vitrine : soignez-les particulièrement, et visez l'alternance pour un premier poste." }
+  - id: q9
+    q: Votre niveau d'anglais à l'écrit ?
+    reponses:
+      - { texte: "À l'aise", points: { ml-engineer: 1, platform-engineer: 1, sre: 1 } }
+      - { texte: "Je lis une documentation avec un traducteur", points: {}, conseil: "Suffisant pour démarrer. Prenez l'habitude de lire la documentation en anglais dès maintenant : plusieurs certifications (Linux Foundation, HashiCorp, Databricks) n'existent qu'en anglais." }
+      - { texte: "C'est difficile", points: {}, conseil: "L'anglais technique sera votre premier chantier transversal : 15 minutes par jour de documentation en anglais suffisent pour progresser vite. Commencez par les certifications disponibles en français (AWS, Microsoft)." }
+  - id: q10
+    q: Combien de temps pouvez-vous consacrer à votre formation chaque semaine ?
+    reponses:
+      - { texte: "Moins de 5 heures", points: {}, valeur: 4, conseil: "Avec moins de 5 heures par semaine, comptez plutôt 2 à 3 ans : visez d'abord une évolution dans votre entreprise actuelle (projet data ou cloud interne), qui valorisera chaque heure investie." }
+      - { texte: "5 à 10 heures", points: {}, valeur: 8 }
+      - { texte: "10 à 20 heures", points: {}, valeur: 15 }
+      - { texte: "Temps plein (formation intensive, reconversion)", points: {}, valeur: 35, conseil: "À temps plein, une formation financée (CPF, Transitions Pro, France Travail) ou un bootcamp complétera bien l'application ; l'alternance est aussi une excellente option." }
+  - id: q11
+    q: Ce qui compte le plus pour vous dans votre futur emploi…
+    reponses:
+      - { texte: "La sécurité de l'emploi sur le long terme", points: { cloud-security: 2, data-engineer: 1, cloud-engineer: 1 } }
+      - { texte: "Un salaire élevé", points: { sre: 1, ml-engineer: 1, cloud-engineer: 1, platform-engineer: 1 } }
+      - { texte: "Le sens, l'impact de mon travail", points: { data-analyst: 1, ml-engineer: 1, cloud-security: 1 } }
+      - { texte: "Apprendre en permanence", points: { platform-engineer: 1, devops: 1, ml-engineer: 1 } }
+      - { texte: "Le télétravail et l'autonomie", points: { data-engineer: 1, analytics-engineer: 1, devops: 1 } }
+  - id: q12
+    q: Quand vous découvrez un nouvel outil…
+    reponses:
+      - { texte: "Je veux comprendre comment il fonctionne à l'intérieur", points: { platform-engineer: 2, sre: 1, cloud-security: 1, data-engineer: 1 } }
+      - { texte: "Je veux surtout savoir à quoi il sert pour mon problème", points: { data-analyst: 1, analytics-engineer: 1, finops: 1, cloud-engineer: 1 } }
+      - { texte: "Je cherche comment il pourrait casser ou être détourné", points: { cloud-security: 3, sre: 1 } }
+      - { texte: "Je l'automatise et je l'intègre à une chaîne", points: { devops: 2, data-engineer: 1 } }
+  - id: q13
+    q: Où souhaitez-vous travailler ?
+    reponses:
+      - { texte: "En Île-de-France ou dans une grande métropole (Lyon, Toulouse, Nantes, Lille…)", points: {} , conseil: "Les grandes métropoles concentrent la majorité des offres data et cloud, y compris les premiers postes. Ciblez aussi les ESN, très présentes dans ces villes." }
+      - { texte: "Dans une ville moyenne ou à la campagne, sans déménager", points: { cloud-engineer: 1, data-analyst: 1 }, conseil: "Hors des métropoles, les offres sont moins nombreuses : visez le télétravail (fréquent en data et DevOps une fois l'expérience acquise), les administrations et collectivités, les ESN régionales, et l'évolution interne dans votre entreprise actuelle." }
+      - { texte: "Je suis mobile, y compris à l'étranger", points: { ml-engineer: 1, platform-engineer: 1 }, conseil: "La mobilité multiplie vos chances ; l'anglais devient alors indispensable, et les certifications des grands fournisseurs cloud sont reconnues dans le monde entier." }
+  - id: q14
+    q: Quelle est votre situation actuelle ?
+    reponses:
+      - { texte: "Salarié(e), je me forme en parallèle", points: {}, conseil: "Financement et accélérateur : CPF, projet de transition professionnelle (Transitions Pro), et surtout l'évolution interne — proposez-vous sur un projet data ou cloud dans votre entreprise ; c'est souvent le chemin le plus court vers un premier poste." }
+      - { texte: "Demandeur d'emploi", points: {}, conseil: "Parlez de votre projet à votre conseiller France Travail : aides au financement de formations et de certifications, préparation opérationnelle à l'emploi (POE) avec des entreprises qui recrutent. L'alternance est aussi accessible aux adultes." }
+      - { texte: "Étudiant(e) ou jeune diplômé(e)", points: {}, conseil: "Visez l'alternance ou le stage : c'est la voie la plus efficace pour un premier emploi. Les certifications d'entrée (Linux Essentials, GitHub, AWS Cloud Practitioner) vous démarqueront." }
+      - { texte: "Indépendant(e) ou en création d'activité", points: { finops: 1, cloud-engineer: 1 }, conseil: "Le freelance en data ou cloud demande d'abord 2 à 3 ans d'expérience salariée. En attendant, appliquez ces compétences à votre propre activité : c'est un excellent projet de portfolio." }

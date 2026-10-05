@@ -191,6 +191,40 @@ export interface CertStatus {
   credentialUrl?: string; // lien de vérification (Credly…)
 }
 
+// Test d'orientation (content-src/_orientation.yaml)
+export interface OrientationProfil {
+  id: string;
+  titre: string;
+  emoji: string;
+  parcours: string; // identifiant du parcours (Track)
+  resume: string;
+  quotidien: string;
+  marche: string;
+  avenir: string;
+  risque_ia: string;
+  acces: string;
+  optimiser: string[];
+  specialisations: string[];
+  certifications: string[];
+  evolutions: string;
+  premier_poste: boolean;
+  porte_entree?: string; // métier d'entrée conseillé si ce n'est pas un premier poste
+}
+
+export interface OrientationReponse {
+  texte: string;
+  points: Record<string, number>;
+  conseil?: string;
+  valeur?: number; // heures par semaine (question sur le temps disponible)
+}
+
+export interface Orientation {
+  profils: OrientationProfil[];
+  questions: { id: string; q: string; reponses: OrientationReponse[] }[];
+  conseils_durables: string[];
+  avertissement: string;
+}
+
 export interface ManifestEntry {
   id: string;
   file: string;
@@ -205,6 +239,7 @@ export interface Manifest {
   tracks?: Track[];
   datasets?: Record<string, { title: string; description: string; sql: string }>;
   certifications?: Certification[];
+  orientation?: Orientation;
   changelog?: { date: string; text: string }[];
 }
 

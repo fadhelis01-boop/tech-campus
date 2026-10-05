@@ -773,3 +773,18 @@ h1 { font-weight: 800; letter-spacing: -0.02em; }
 .ms-icon { font-size: 1.4rem; }
 .milestone-home { display: flex; gap: 12px; align-items: center; border-left: 5px solid var(--gold); }
 .milestone-home .grow { display: flex; flex-direction: column; }
+
+/* ============ Test d'orientation ============ */
+.orient-q { font-size: 1.5rem; }
+.orient-hero { display: flex; gap: 16px; align-items: flex-start; border-top: 6px solid var(--brand); }
+.orient-hero h1 { margin: 0.1em 0 0.3em; }
+.orient-emoji { font-size: 3rem; line-height: 1; }
+.orient-bars { display: flex; flex-direction: column; gap: 6px; }
+.orient-bar { display: grid; grid-template-columns: minmax(150px, 220px) 1fr 44px; gap: 10px; align-items: center; font-size: 0.92rem; }
+.orient-bar.top { font-weight: 700; }
+.orient-bar .mini-bar { --accent: var(--brand); }
+.orient-avis { display: grid; gap: 10px; margin: 0; }
+.orient-avis dt { font-weight: 700; color: var(--brand); }
+.orient-avis dd { margin: 2px 0 0; }
+.orient-cta { margin-top: 14px; }
+@media (max-width: 520px) { .orient-bar { grid-template-columns: 1fr 70px 40px; } }

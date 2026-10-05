@@ -25,6 +25,7 @@ import Aide from "./pages/Aide";
 import Labo from "./pages/Labo";
 import Metiers from "./pages/Metiers";
 import Certifications from "./pages/Certifications";
+import Orientation from "./pages/Orientation";
 import { MENU } from "./pages/Plus";
 
 const NAV = [
@@ -88,6 +89,8 @@ function Page() {
       return <Metiers />;
     case "certifications":
       return <Certifications />;
+    case "orientation":
+      return <Orientation />;
     default:
       return (
         <div className="page">

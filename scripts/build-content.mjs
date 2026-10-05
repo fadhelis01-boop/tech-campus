@@ -72,6 +72,7 @@ const manifest = {
   changelog: existsSync(path.join(SRC, "_changelog.yaml")) ? load("_changelog.yaml") : [],
   datasets: existsSync(path.join(SRC, "_datasets.yaml")) ? load("_datasets.yaml") : {},
   certifications: existsSync(path.join(SRC, "_certifications.yaml")) ? load("_certifications.yaml") : [],
+  orientation: existsSync(path.join(SRC, "_orientation.yaml")) ? load("_orientation.yaml") : undefined,
 };
 
 let lessonCount = 0;
@@ -168,6 +169,21 @@ for (const t of manifest.tracks) {
     for (const m of s.milestones ?? []) if (!certIds.has(m)) errors.push(`parcours ${t.id} : certification inconnue ${m}`);
   }
   for (const m of t.certifications ?? []) if (!certIds.has(m)) errors.push(`parcours ${t.id} : certification inconnue ${m}`);
+}
+
+// Test d'orientation : références vers les profils, parcours et certifications
+if (manifest.orientation) {
+  const o = manifest.orientation;
+  const pids = new Set(o.profils.map((p) => p.id));
+  const tids = new Set(manifest.tracks.map((t) => t.id));
+  for (const p of o.profils) {
+    if (!tids.has(p.parcours)) errors.push(`orientation ${p.id} : parcours inconnu ${p.parcours}`);
+    for (const c of p.certifications ?? []) if (!certIds.has(c)) errors.push(`orientation ${p.id} : certification inconnue ${c}`);
+    if (p.porte_entree && !pids.has(p.porte_entree)) errors.push(`orientation ${p.id} : porte d'entrée inconnue ${p.porte_entree}`);
+    for (const k of ["titre", "resume", "marche", "avenir", "risque_ia", "acces"]) if (!p[k]) errors.push(`orientation ${p.id} : champ « ${k} » manquant`);
+  }
+  for (const q of o.questions)
+    for (const r of q.reponses) for (const k of Object.keys(r.points ?? {})) if (!pids.has(k)) errors.push(`orientation ${q.id} : profil inconnu ${k}`);
 }
 
 manifest.packs.sort((a, b) => a.id.localeCompare(b.id));

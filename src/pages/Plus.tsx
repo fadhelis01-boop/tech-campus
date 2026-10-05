@@ -1,6 +1,7 @@
 export const MENU = [
   { path: "/revisions", icon: "🧠", label: "Révisions", sub: "Cartes mémoire à répétition espacée" },
   { path: "/domaine/methode", icon: "🧭", label: "Méthode & astuces", sub: "Apprendre à apprendre, déboguer, chercher, s'organiser" },
+  { path: "/orientation", icon: "🎯", label: "Test d'orientation", sub: "Trouver son métier, avis et plan d'employabilité à 20 ans" },
   { path: "/certifications", icon: "🎓", label: "Certifications", sub: "Les jalons officiels qui valident vos compétences sur un CV" },
   { path: "/metiers", icon: "🚀", label: "Métiers de demain", sub: "Data, cloud, DevOps : missions, compétences, certifications" },
   { path: "/labo", icon: "🧪", label: "Labo libre", sub: "Python, SQL et terminal Linux pour expérimenter" },

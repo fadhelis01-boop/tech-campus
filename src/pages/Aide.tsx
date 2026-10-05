@@ -2,6 +2,7 @@ import Markdown from "../components/Markdown";
 
 const HELP = `## Comment travailler avec TechCampus
 
+0. **Vous hésitez ?** Faites le **test d'orientation** (Plus → Test d'orientation) : 14 questions sur vos goûts et votre situation, dix métiers comparés, un avis sur le marché et l'avenir à 20 ans, la durée réaliste de formation et un plan pour optimiser votre employabilité.
 1. **Choisissez votre métier** (data engineer ou ingénieur cloud/DevOps) : l'onglet **Parcours** vous donne une feuille de route ordonnée, jalonnée de vraies certifications.
 2. **Chaque jour, 30 à 60 minutes** : les cartes du jour (Révisions), une leçon (à lire ou à écouter), son exercice pratique, son quiz.
 3. **Pratiquez toujours** : chaque domaine a des exercices corrigés automatiquement — code Python et requêtes SQL exécutés pour de vrai dans le navigateur, terminal Linux simulé (fichiers, Git, Docker, Kubernetes, Terraform), fichiers de configuration vérifiés (Dockerfile, YAML, Terraform, politiques IAM), calculs, remises en ordre, projets corrigés par l'assistant.
