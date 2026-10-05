@@ -1,0 +1,280 @@
+# Certifications professionnelles réelles qui jalonnent les parcours.
+# Tarifs : prix publics de l'éditeur, hors taxes, constatés en octobre 2026.
+# Ils changent souvent (promotions, nouvelles versions) : l'application
+# rappelle de vérifier la page officielle avant de s'inscrire.
+# « validates » : domaines TechCampus qui préparent l'examen.
+- id: linux-essentials
+  name: LPI Linux Essentials
+  vendor: Linux Professional Institute (LPI)
+  level: Débutant
+  url: https://www.lpi.org/our-certifications/linux-essentials-overview/
+  price: "≈ 110 € (tarif réduit lors d'événements communautaires)"
+  format: QCM surveillé en ligne ou en centre, 60 minutes
+  validity: À vie
+  validates: [linux, fondamentaux]
+  why: Prouve que vous savez utiliser Linux et la ligne de commande. Premier badge idéal pour un débutant, reconnu dans le monde du logiciel libre. Une nouvelle version 2.0 arrive fin 2026.
+  cv: Certification LPI Linux Essentials — utilisation de Linux et de la ligne de commande
+- id: lfcs
+  name: LFCS — Linux Foundation Certified System Administrator
+  vendor: The Linux Foundation
+  level: Intermédiaire
+  url: https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/
+  price: "445 $ (promotions fréquentes, souvent -30 à -40 %)"
+  format: Examen pratique en ligne sur une vraie machine, 2 heures
+  validity: 2 ans
+  validates: [linux, reseaux]
+  why: Examen 100 % pratique — on administre de vraies machines. Très apprécié pour les postes d'administration, DevOps et SRE.
+  cv: LFCS (The Linux Foundation) — administration système Linux, examen pratique
+- id: pcep
+  name: PCEP — Certified Entry-Level Python Programmer
+  vendor: Python Institute
+  level: Débutant
+  url: https://pythoninstitute.org/pcep
+  price: 59 $
+  format: QCM en ligne surveillé, 45 minutes
+  validity: À vie
+  validates: [python]
+  why: Le premier jalon officiel en Python, peu coûteux, qui valide les bases (variables, boucles, fonctions, listes).
+  cv: PCEP (Python Institute) — programmation Python, niveau fondamental
+- id: pcap
+  name: PCAP — Certified Associate in Python Programming
+  vendor: Python Institute
+  level: Intermédiaire
+  url: https://pythoninstitute.org/pcap
+  price: "295 $ (formule avec seconde chance : 345 $)"
+  format: QCM en ligne surveillé, 65 minutes
+  validity: À vie
+  validates: [python, algo]
+  why: Valide un niveau solide (modules, exceptions, programmation orientée objet). Pertinent si vous n'avez pas de diplôme en informatique.
+  cv: PCAP (Python Institute) — programmation Python, niveau associé
+- id: github-foundations
+  name: GitHub Foundations (GH-900)
+  vendor: GitHub (Microsoft)
+  level: Débutant
+  url: https://resources.github.com/learn/certifications/
+  price: 99 $
+  format: QCM en ligne surveillé, 120 minutes
+  validity: Voir la page officielle
+  validates: [git]
+  why: Valide Git, GitHub, la collaboration (pull requests, revues) : des compétences demandées dans 100 % des postes techniques.
+  cv: GitHub Foundations — gestion de versions et collaboration avec Git/GitHub
+- id: github-actions
+  name: GitHub Actions (GH-200)
+  vendor: GitHub (Microsoft)
+  level: Intermédiaire
+  url: https://resources.github.com/learn/certifications/
+  price: "≈ 250 $ (vérifier : le tarif a varié)"
+  format: QCM en ligne surveillé, 100 à 120 minutes
+  validity: 2 ans
+  validates: [devops, git]
+  why: Valide l'intégration et le déploiement continus avec GitHub Actions, l'outil de CI/CD le plus répandu chez les jeunes équipes.
+  cv: GitHub Actions — intégration et déploiement continus (CI/CD)
+- id: aws-ccp
+  name: AWS Certified Cloud Practitioner (CLF-C02)
+  vendor: Amazon Web Services
+  level: Débutant
+  url: https://aws.amazon.com/certification/certified-cloud-practitioner/
+  price: "100 $ (réussir un examen AWS donne -50 % sur le suivant)"
+  format: QCM en ligne ou en centre, 90 minutes, disponible en français
+  validity: 3 ans
+  validates: [cloud, fondamentaux]
+  why: La porte d'entrée du premier fournisseur cloud mondial. Montre que vous parlez le langage du cloud (services, sécurité, coûts).
+  cv: AWS Certified Cloud Practitioner — fondamentaux du cloud AWS
+- id: az-900
+  name: Microsoft Azure Fundamentals (AZ-900)
+  vendor: Microsoft
+  level: Débutant
+  url: https://learn.microsoft.com/credentials/certifications/azure-fundamentals/
+  price: "Tarif selon le pays (≈ 99 $ aux États-Unis) ; examen souvent offert lors des Microsoft Virtual Training Days"
+  format: QCM en ligne ou en centre, 45 minutes, disponible en français
+  validity: À vie
+  validates: [cloud, fondamentaux]
+  why: Équivalent Microsoft de la certification AWS de base. Azure est très présent dans les grandes entreprises françaises.
+  cv: Microsoft Certified Azure Fundamentals (AZ-900)
+- id: aws-dea
+  name: AWS Certified Data Engineer – Associate (DEA-C01)
+  vendor: Amazon Web Services
+  level: Intermédiaire
+  url: https://aws.amazon.com/certification/certified-data-engineer-associate/
+  price: 150 $ (75 $ avec le bon de réduction d'une certification AWS précédente)
+  format: QCM en ligne ou en centre, 130 minutes
+  validity: 3 ans
+  validates: [data-eng, sql, cloud]
+  why: La référence pour un data engineer sur AWS (ingestion, Glue, Redshift, S3, orchestration, qualité). Un vrai différenciant sur un CV junior.
+  cv: AWS Certified Data Engineer – Associate — pipelines de données sur AWS
+- id: dp-700
+  name: Microsoft Fabric Data Engineer Associate (DP-700)
+  vendor: Microsoft
+  level: Intermédiaire
+  url: https://learn.microsoft.com/credentials/certifications/fabric-data-engineer-associate/
+  price: "Tarif selon le pays (≈ 165 $ aux États-Unis)"
+  format: QCM et études de cas, 100 minutes, renouvellement annuel gratuit en ligne
+  validity: 1 an, renouvelable gratuitement
+  validates: [data-eng, sql]
+  why: A remplacé l'ancienne certification Azure Data Engineer (DP-203, retirée en mars 2025). Pertinente dans l'écosystème Microsoft, très présent en France.
+  cv: Microsoft Certified Fabric Data Engineer Associate (DP-700)
+- id: gcp-pde
+  name: Google Cloud Professional Data Engineer
+  vendor: Google Cloud
+  level: Avancé
+  url: https://cloud.google.com/learn/certification/data-engineer
+  price: 200 $
+  format: QCM en ligne ou en centre, 120 minutes
+  validity: 2 ans
+  validates: [data-eng, cloud, ia-data]
+  why: L'une des certifications data les mieux reconnues (BigQuery, Dataflow, Pub/Sub, ML). À viser après un premier poste ou un projet solide.
+  cv: Google Cloud Professional Data Engineer
+- id: databricks-dea
+  name: Databricks Certified Data Engineer Associate
+  vendor: Databricks
+  level: Intermédiaire
+  url: https://www.databricks.com/learn/certification/data-engineer-associate
+  price: 200 $
+  format: QCM en ligne surveillé, 90 minutes
+  validity: 2 ans
+  validates: [data-eng, sql, python]
+  why: Spark, Delta Lake, lakehouse : Databricks est l'une des plateformes data les plus demandées dans les offres d'emploi.
+  cv: Databricks Certified Data Engineer Associate — Spark, Delta Lake, lakehouse
+- id: dbt-ae
+  name: dbt Analytics Engineering Certification
+  vendor: dbt Labs
+  level: Intermédiaire
+  url: https://www.getdbt.com/certifications
+  price: 200 $
+  format: QCM en ligne surveillé, 2 heures
+  validity: 2 ans
+  validates: [data-eng, sql]
+  why: dbt est devenu le standard de la transformation de données en SQL (ELT). Idéal pour les profils data engineer / analytics engineer.
+  cv: dbt Analytics Engineering Certification — modélisation et tests de données en SQL
+- id: snowpro-core
+  name: SnowPro Core (COF-C03)
+  vendor: Snowflake
+  level: Intermédiaire
+  url: https://learn.snowflake.com/en/certifications/snowpro-core/
+  price: 175 $
+  format: QCM en ligne ou en centre, 115 minutes
+  validity: 2 ans
+  validates: [data-eng, sql]
+  why: Snowflake est un entrepôt de données cloud très répandu. La version COF-C03 remplace COF-C02 depuis février 2026.
+  cv: Snowflake SnowPro Core Certification
+- id: airflow-fundamentals
+  name: Astronomer Certification — Apache Airflow 3 Fundamentals
+  vendor: Astronomer
+  level: Intermédiaire
+  url: https://academy.astronomer.io/
+  price: "150 $ (souvent gratuit via les ateliers de certification en ligne d'Astronomer)"
+  format: QCM en ligne
+  validity: 2 ans
+  validates: [data-eng]
+  why: Airflow est l'orchestrateur de pipelines le plus utilisé. Certification peu coûteuse, voire gratuite, et parlante pour un recruteur data.
+  cv: Astronomer Certified — Apache Airflow 3 Fundamentals (orchestration de pipelines)
+- id: ccdak
+  name: Confluent Certified Developer for Apache Kafka (CCDAK)
+  vendor: Confluent
+  level: Avancé
+  url: https://www.confluent.io/certification/
+  price: 150 $
+  format: QCM en ligne surveillé, 90 minutes
+  validity: 2 ans
+  validates: [data-eng]
+  why: Valide la maîtrise du streaming avec Kafka. À viser si vous vous orientez vers le temps réel.
+  cv: Confluent Certified Developer for Apache Kafka (CCDAK)
+- id: kcna
+  name: KCNA — Kubernetes and Cloud Native Associate
+  vendor: CNCF / The Linux Foundation
+  level: Débutant
+  url: https://training.linuxfoundation.org/certification/kubernetes-cloud-native-associate/
+  price: "250 $ (promotions fréquentes)"
+  format: QCM en ligne surveillé, 90 minutes
+  validity: 2 ans
+  validates: [conteneurs]
+  why: Première marche Kubernetes et « cloud native » : conteneurs, orchestration, observabilité.
+  cv: KCNA (CNCF) — fondamentaux de Kubernetes et du cloud native
+- id: cka
+  name: CKA — Certified Kubernetes Administrator
+  vendor: CNCF / The Linux Foundation
+  level: Avancé
+  url: https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/
+  price: "445 $ (une seconde tentative incluse ; promotions fréquentes)"
+  format: Examen pratique en ligne sur de vrais clusters, 2 heures
+  validity: 2 ans
+  validates: [conteneurs, linux, reseaux]
+  why: LA certification Kubernetes, entièrement pratique. Très valorisée pour les postes DevOps, SRE et platform engineer.
+  cv: CKA (CNCF) — administration de clusters Kubernetes, examen pratique
+- id: terraform-associate
+  name: HashiCorp Certified Terraform Associate (004)
+  vendor: HashiCorp (IBM)
+  level: Intermédiaire
+  url: https://developer.hashicorp.com/certifications/infrastructure-automation
+  price: "≈ 70 $"
+  format: QCM en ligne surveillé, 60 minutes
+  validity: 2 ans
+  validates: [iac]
+  why: Terraform est l'outil d'infrastructure as code le plus demandé. Rapport coût/valeur excellent.
+  cv: HashiCorp Certified Terraform Associate — infrastructure as code
+- id: az-104
+  name: Microsoft Azure Administrator (AZ-104)
+  vendor: Microsoft
+  level: Intermédiaire
+  url: https://learn.microsoft.com/credentials/certifications/azure-administrator/
+  price: "Tarif selon le pays (≈ 165 $ aux États-Unis)"
+  format: QCM, études de cas et exercices, 100 minutes
+  validity: 1 an, renouvelable gratuitement
+  validates: [cloud, reseaux, securite]
+  why: La certification la plus demandée pour les postes d'ingénieur cloud Azure, et le prérequis de l'expert DevOps AZ-400.
+  cv: Microsoft Certified Azure Administrator Associate (AZ-104)
+- id: aws-saa
+  name: AWS Certified Solutions Architect – Associate (SAA-C03)
+  vendor: Amazon Web Services
+  level: Intermédiaire
+  url: https://aws.amazon.com/certification/certified-solutions-architect-associate/
+  price: 150 $ (75 $ avec le bon de réduction)
+  format: QCM en ligne ou en centre, 130 minutes, disponible en français
+  validity: 3 ans
+  validates: [cloud, reseaux, securite]
+  why: Probablement la certification cloud la plus citée dans les offres d'emploi : concevoir des architectures fiables, sécurisées et économes sur AWS.
+  cv: AWS Certified Solutions Architect – Associate
+- id: gcp-ace
+  name: Google Cloud Associate Cloud Engineer
+  vendor: Google Cloud
+  level: Intermédiaire
+  url: https://cloud.google.com/learn/certification/cloud-engineer
+  price: 125 $
+  format: QCM en ligne ou en centre, 120 minutes
+  validity: 3 ans
+  validates: [cloud]
+  why: L'équivalent Google de l'AZ-104 : déployer et exploiter des ressources sur Google Cloud.
+  cv: Google Cloud Associate Cloud Engineer
+- id: az-400
+  name: Microsoft DevOps Engineer Expert (AZ-400)
+  vendor: Microsoft
+  level: Avancé
+  url: https://learn.microsoft.com/credentials/certifications/devops-engineer/
+  price: "Tarif selon le pays (≈ 165 $ aux États-Unis) ; prérequis : AZ-104"
+  format: QCM et études de cas, 100 minutes
+  validity: 1 an, renouvelable gratuitement
+  validates: [devops, git, securite]
+  why: Certification de niveau expert sur la chaîne DevOps complète (CI/CD, sécurité, supervision).
+  cv: Microsoft Certified DevOps Engineer Expert (AZ-400)
+- id: isc2-cc
+  name: ISC2 Certified in Cybersecurity (CC)
+  vendor: ISC2
+  level: Débutant
+  url: https://www.isc2.org/certifications/cc
+  price: "199 $ + 50 $/an d'entretien (la gratuité a pris fin le 20 mai 2026)"
+  format: QCM en centre d'examen, 2 heures
+  validity: 3 ans (entretien annuel)
+  validates: [securite]
+  why: Socle de cybersécurité reconnu, émis par l'organisme du célèbre CISSP. Rassure un employeur sur vos réflexes sécurité.
+  cv: ISC2 Certified in Cybersecurity (CC)
+- id: security-plus
+  name: CompTIA Security+ (SY0-701)
+  vendor: CompTIA
+  level: Intermédiaire
+  url: https://www.comptia.org/certifications/security
+  price: 425 $
+  format: QCM et questions pratiques, 90 minutes
+  validity: 3 ans
+  validates: [securite, reseaux]
+  why: Certification de sécurité généraliste la plus répandue au monde, exigée par de nombreux employeurs pour les postes sensibles.
+  cv: CompTIA Security+

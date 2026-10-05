@@ -1,0 +1,351 @@
+id: algo
+version: 2026.10.1
+title: Algorithmique et structures de données
+branch: Socle
+icon: 🧮
+color: "#9333ea"
+order: 16
+updatedAt: 2026-10-05
+description: Complexité, recherche et tri, structures de données, récursivité, graphes — penser efficacité et réussir les entretiens techniques.
+outlook: Les volumes de données ne cessent de croître ; savoir choisir le bon algorithme et la bonne structure reste ce qui distingue un pipeline qui passe à l'échelle d'un pipeline qui s'effondre.
+glossary:
+  - { term: Complexité, en: time complexity, def: "Croissance du coût d'un algorithme avec la taille des données, notée O(…)." }
+  - { term: Recherche dichotomique, en: binary search, def: "Recherche dans une liste triée en divisant l'intervalle par deux à chaque étape : O(log n)." }
+  - { term: Table de hachage, en: hash table, def: "Structure qui associe des clés à des valeurs avec un accès en O(1) (dict, set)." }
+  - { term: Pile, en: stack, def: "Structure dernier entré, premier sorti (LIFO)." }
+  - { term: File, en: queue, def: "Structure premier entré, premier sorti (FIFO)." }
+  - { term: Tas, en: heap, def: "Structure qui donne le minimum (ou maximum) rapidement ; utile pour les k plus grands." }
+  - { term: Récursivité, en: recursion, def: "Fonction qui s'appelle elle-même sur un problème plus petit, jusqu'à un cas de base." }
+  - { term: Mémoïsation, en: memoization, def: "Mémorisation des résultats déjà calculés pour ne pas les recalculer." }
+  - { term: Graphe, en: graph, def: "Ensemble de nœuds reliés par des arêtes." }
+  - { term: DAG, en: Directed Acyclic Graph, def: "Graphe orienté sans cycle ; modèle des pipelines de tâches." }
+  - { term: Tri topologique, en: topological sort, def: "Ordre des nœuds d'un DAG où chaque nœud vient après ses dépendances." }
+modules:
+  - id: m1
+    title: Penser efficacité
+    level: 2
+    summary: Complexité, recherche et tri, structures de données.
+    lessons:
+      - id: algo-complexite
+        title: La complexité — prévoir le coût d'un algorithme
+        objectives:
+          - Lire et utiliser la notation O
+          - Reconnaître la complexité d'un code simple
+          - Remplacer un O(n²) par un O(n)
+        docs:
+          - { title: "Wiki Python — TimeComplexity des opérations", url: "https://wiki.python.org/moin/TimeComplexity" }
+        quiz:
+          - type: qcm
+            q: Quelle est la complexité de deux boucles imbriquées sur la même liste ?
+            choices: ["O(n)", "O(log n)", "O(n²)", "O(1)"]
+            answer: 2
+            explain: Pour chaque élément, on parcourt tous les autres.
+          - type: qcm
+            q: Quelle opération est en O(1) en moyenne ?
+            choices: ["x in liste", "x in ensemble", "sorted(liste)", "parcourir une liste"]
+            answer: 1
+            explain: Un set (table de hachage) trouve un élément sans parcourir.
+          - type: qcm
+            q: Combien d'étapes environ faut-il pour une recherche dichotomique dans un million d'éléments ?
+            choices: ["1 000 000", "1 000", "20", "1"]
+            answer: 2
+            explain: "log₂(1 000 000) ≈ 20."
+        flashcards:
+          - { q: "Ordre des complexités", a: "O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ)" }
+          - { q: "Rendre une recherche O(1)", a: "Remplacer la liste par un set ou un dict." }
+        exercises:
+          - id: ex-complexite
+            type: calcul
+            title: Estimer des temps d'exécution
+            statement: |
+              Une opération élémentaire prend 1 microseconde (10⁻⁶ s). Pour n = 100 000 éléments, donnez le temps approximatif en **secondes**.
+            questions:
+              - { q: "Algorithme en O(n)", answer: 0.1, tolerance: 0.001, unit: s, explain: "100 000 × 10⁻⁶ = 0,1 s." }
+              - { q: "Algorithme en O(n²)", answer: 10000, tolerance: 1, unit: s, explain: "10¹⁰ × 10⁻⁶ = 10 000 s, soit près de 3 heures." }
+              - { q: "Algorithme en O(n log n) (prenez log₂ n ≈ 17)", answer: 1.7, tolerance: 0.01, unit: s, explain: "100 000 × 17 × 10⁻⁶ ≈ 1,7 s." }
+          - id: ex-doublons
+            type: code
+            lang: python
+            title: D'O(n²) à O(n)
+            statement: |
+              La fonction `clients_communs(liste_a, liste_b)` renvoie les identifiants présents dans les deux listes (dans l'ordre de `liste_a`). Elle est correcte mais en O(n × m) : sur deux listes de 100 000 identifiants, elle met plusieurs minutes.
+
+              Réécrivez-la en temps **linéaire**. Le test chronomètre votre version sur 200 000 éléments.
+            starter: |
+              def clients_communs(liste_a, liste_b):
+                  return [x for x in liste_a if x in liste_b]
+
+              print(clients_communs([1, 2, 3, 4], [3, 4, 5]))
+            solution: |
+              def clients_communs(liste_a, liste_b):
+                  ensemble_b = set(liste_b)
+                  return [x for x in liste_a if x in ensemble_b]
+
+              print(clients_communs([1, 2, 3, 4], [3, 4, 5]))
+            tests:
+              - { label: "Résultat correct", code: "assert clients_communs([1, 2, 3, 4], [3, 4, 5]) == [3, 4]" }
+              - { label: "Linéaire : liste_b n'est pas parcourue à chaque élément de liste_a", code: "class ListeComptee(list):\n    recherches = 0\n    def __contains__(self, x):\n        ListeComptee.recherches += 1\n        return list.__contains__(self, x)\nb = ListeComptee(range(500, 1500))\nr = clients_communs(list(range(1000)), b)\nassert len(r) == 500\nassert ListeComptee.recherches < 10, f'{ListeComptee.recherches} recherches dans une liste : complexité O(n × m)'" }
+            hints:
+              - "`x in liste_b` parcourt toute la liste à chaque fois."
+              - "Convertissez liste_b en set une seule fois, avant la boucle."
+            model: "Une seule ligne change : `set(liste_b)` coûte O(m) une fois, puis chaque test `in` est O(1). On passe de 10¹⁰ opérations à environ 3 × 10⁵. C'est l'optimisation la plus rentable du quotidien."
+      - id: algo-recherche-tri
+        title: Rechercher et trier
+        objectives:
+          - Implémenter la recherche dichotomique
+          - Connaître les principaux algorithmes de tri et leur complexité
+          - Trier des enregistrements avec sorted et key
+        docs:
+          - { title: "Python — Guide pour le tri", url: "https://docs.python.org/fr/3/howto/sorting.html" }
+        quiz:
+          - type: qcm
+            q: Quelle condition faut-il pour une recherche dichotomique ?
+            choices: ["Une liste triée", "Une liste courte", "Des nombres entiers", "Aucune"]
+            answer: 0
+            explain: Sans tri, on ne sait pas de quel côté continuer.
+          - type: qcm
+            q: Quelle est la complexité d'un bon algorithme de tri ?
+            choices: ["O(1)", "O(n)", "O(n log n)", "O(2ⁿ)"]
+            answer: 2
+            explain: Les tris par comparaison efficaces sont en O(n log n).
+          - type: vf
+            q: Le tri de Python est stable.
+            answer: true
+            explain: Les éléments égaux gardent leur ordre d'origine.
+        flashcards:
+          - { q: "Trier des dictionnaires par une clé", a: "sorted(liste, key=lambda d: d[\"ca\"], reverse=True)" }
+        exercises:
+          - id: ex-dichotomie
+            type: code
+            lang: python
+            title: La recherche dichotomique
+            statement: |
+              Écrivez `recherche(liste_triee, x)` qui renvoie la **position** de `x` dans la liste triée, ou `-1` s'il est absent, **en O(log n)** (sans utiliser `in`, `index` ni de boucle sur tous les éléments).
+            starter: |
+              def recherche(liste_triee, x):
+                  debut, fin = 0, len(liste_triee) - 1
+                  # boucle while à écrire
+                  return -1
+
+              print(recherche([3, 8, 15, 23, 42, 57], 23))
+            solution: |
+              def recherche(liste_triee, x):
+                  debut, fin = 0, len(liste_triee) - 1
+                  while debut <= fin:
+                      milieu = (debut + fin) // 2
+                      if liste_triee[milieu] == x:
+                          return milieu
+                      if liste_triee[milieu] < x:
+                          debut = milieu + 1
+                      else:
+                          fin = milieu - 1
+                  return -1
+
+              print(recherche([3, 8, 15, 23, 42, 57], 23))
+            tests:
+              - { label: "Élément présent", code: "assert recherche([3, 8, 15, 23, 42, 57], 23) == 3" }
+              - { label: "Premier et dernier", code: "assert recherche([3, 8, 15], 3) == 0 and recherche([3, 8, 15], 15) == 2" }
+              - { label: "Absent et liste vide", code: "assert recherche([3, 8, 15], 9) == -1 and recherche([], 1) == -1" }
+              - { label: "Nombre d'accès logarithmique", code: "class L(list):\n    acces = 0\n    def __getitem__(self, i):\n        L.acces += 1\n        return list.__getitem__(self, i)\ngrande = L(range(0, 2_000_000, 2))\nL.acces = 0\nassert recherche(grande, 1_337_000) == 668_500\nassert L.acces <= 40, f'{L.acces} accès : ce n est pas une dichotomie'" }
+            hints:
+              - "Tant que debut <= fin, regardez l'élément du milieu."
+              - "S'il est trop petit, cherchez à droite (debut = milieu + 1), sinon à gauche."
+            model: "Un million d'éléments, une vingtaine d'accès. Les erreurs classiques : oublier le `<=` (on rate le dernier élément) ou écrire `debut = milieu` (boucle infinie). Le module standard `bisect` fournit cet algorithme tout fait."
+      - id: algo-structures
+        title: Les structures de données
+        objectives:
+          - Choisir entre liste, dictionnaire, ensemble, pile, file et tas
+          - Utiliser Counter, defaultdict, deque et heapq
+        docs:
+          - { title: "Python — module collections", url: "https://docs.python.org/fr/3/library/collections.html" }
+          - { title: "Python — module heapq", url: "https://docs.python.org/fr/3/library/heapq.html" }
+        quiz:
+          - type: qcm
+            q: Quelle structure suit la règle « premier entré, premier sorti » ?
+            choices: ["Pile", "File", "Tas", "Ensemble"]
+            answer: 1
+            explain: La file (FIFO) ; la pile est LIFO.
+          - type: qcm
+            q: Quel outil compte les occurrences d'une liste en une ligne ?
+            choices: ["defaultdict", "Counter", "deque", "heapq"]
+            answer: 1
+            explain: Counter(liste).most_common(k) donne les k plus fréquents.
+          - type: vf
+            q: list.pop(0) est aussi rapide que deque.popleft().
+            answer: false
+            explain: pop(0) décale tous les éléments (O(n)) ; deque.popleft est O(1).
+        flashcards:
+          - { q: "Counter", a: "Compte les occurrences : Counter(mots).most_common(3)" }
+          - { q: "Les k plus grands sans tout trier", a: "heapq.nlargest(k, données, key=…)" }
+        exercises:
+          - id: ex-counter
+            type: code
+            lang: python
+            title: Les erreurs les plus fréquentes
+            statement: |
+              La variable `journal` (fournie) contient des lignes `"NIVEAU message"`.
+
+              Écrivez `top_erreurs(journal, k)` qui renvoie les `k` messages d'erreur (niveau `ERROR`) les plus fréquents, sous forme de liste de tuples `(message, nombre)`, du plus fréquent au moins fréquent.
+            setup: |
+              journal = [
+                  "INFO démarrage",
+                  "ERROR connexion refusée",
+                  "WARNING disque à 85 %",
+                  "ERROR délai dépassé",
+                  "ERROR connexion refusée",
+                  "INFO requête traitée",
+                  "ERROR connexion refusée",
+                  "ERROR délai dépassé",
+                  "ERROR fichier introuvable",
+              ]
+            starter: |
+              from collections import Counter
+
+              def top_erreurs(journal, k):
+                  # 1. garder les lignes ERROR, 2. extraire le message, 3. compter
+                  return []
+
+              print(top_erreurs(journal, 2))
+            solution: |
+              from collections import Counter
+
+              def top_erreurs(journal, k):
+                  messages = [ligne.split(" ", 1)[1] for ligne in journal if ligne.startswith("ERROR ")]
+                  return Counter(messages).most_common(k)
+
+              print(top_erreurs(journal, 2))
+            tests:
+              - { label: "Top 2", code: "assert top_erreurs(journal, 2) == [('connexion refusée', 3), ('délai dépassé', 2)]" }
+              - { label: "Top 1", code: "assert top_erreurs(journal, 1) == [('connexion refusée', 3)]" }
+            hints:
+              - "ligne.split(\" \", 1) coupe seulement au premier espace : [niveau, message]."
+              - "Counter(messages).most_common(k)"
+            model: "C'est la version Python du célèbre `grep ERROR | cut | sort | uniq -c | sort -rn` du module Linux. Les outils changent, le raisonnement reste."
+  - id: m2
+    title: Récursivité et graphes
+    level: 3
+    summary: Penser récursivement, parcourir des graphes, ordonner des tâches dépendantes.
+    lessons:
+      - id: algo-recursivite
+        title: La récursivité
+        objectives:
+          - Écrire une fonction récursive avec cas de base et cas récursif
+          - Parcourir une structure imbriquée
+          - Utiliser la mémoïsation
+        docs:
+          - { title: "Python — functools.cache", url: "https://docs.python.org/fr/3/library/functools.html#functools.cache" }
+        quiz:
+          - type: qcm
+            q: Que se passe-t-il si une fonction récursive n'a pas de cas de base ?
+            choices: ["Elle renvoie None", "Elle s'appelle indéfiniment jusqu'à une RecursionError", "Elle s'arrête au bout de 10 appels", "Rien"]
+            answer: 1
+            explain: Le cas de base est indispensable pour arrêter la récursion.
+          - type: qcm
+            q: À quoi sert @cache sur une fonction récursive ?
+            choices: ["À la rendre plus lisible", "À mémoriser les résultats déjà calculés", "À la paralléliser", "À limiter la profondeur"]
+            answer: 1
+            explain: C'est la mémoïsation, base de la programmation dynamique.
+        flashcards:
+          - { q: "Les 2 parties d'une récursion", a: "Cas de base (arrêt) + cas récursif (problème plus petit)." }
+        exercises:
+          - id: ex-json-recursif
+            type: code
+            lang: python
+            title: Compter les clés d'un JSON imbriqué
+            statement: |
+              Écrivez `compter_feuilles(donnee)` qui compte les **valeurs simples** (ni dictionnaire, ni liste) contenues dans une structure JSON quelconque, à n'importe quelle profondeur.
+
+              Exemple : `{"a": 1, "b": {"c": 2, "d": [3, 4]}}` contient 4 valeurs simples (1, 2, 3, 4).
+            starter: |
+              def compter_feuilles(donnee):
+                  if isinstance(donnee, dict):
+                      pass  # à compléter
+                  elif isinstance(donnee, list):
+                      pass  # à compléter
+                  return 1
+
+              print(compter_feuilles({"a": 1, "b": {"c": 2, "d": [3, 4]}}))
+            solution: |
+              def compter_feuilles(donnee):
+                  if isinstance(donnee, dict):
+                      return sum(compter_feuilles(v) for v in donnee.values())
+                  elif isinstance(donnee, list):
+                      return sum(compter_feuilles(v) for v in donnee)
+                  return 1
+
+              print(compter_feuilles({"a": 1, "b": {"c": 2, "d": [3, 4]}}))
+            tests:
+              - { label: "Exemple de l'énoncé", code: "assert compter_feuilles({'a': 1, 'b': {'c': 2, 'd': [3, 4]}}) == 4" }
+              - { label: "Valeur simple", code: "assert compter_feuilles('texte') == 1" }
+              - { label: "Structures vides", code: "assert compter_feuilles({}) == 0 and compter_feuilles([]) == 0" }
+              - { label: "Profondeur importante", code: "d = 0\nfor _ in range(200):\n    d = {'x': [d]}\nassert compter_feuilles(d) == 1" }
+            hints:
+              - "Pour un dictionnaire : la somme des feuilles de chacune de ses valeurs."
+              - "Pour une liste : la somme des feuilles de chacun de ses éléments."
+            model: "Les API renvoient souvent du JSON imbriqué de profondeur variable : la récursion est la façon naturelle de le parcourir (pour l'aplatir en tableau, compter, chercher une clé)."
+      - id: algo-graphes
+        title: Graphes, parcours et tri topologique
+        objectives:
+          - Représenter un graphe avec un dictionnaire
+          - Parcourir en largeur pour trouver un plus court chemin
+          - Ordonner des tâches avec un tri topologique et détecter un cycle
+        docs:
+          - { title: "Python — module graphlib", url: "https://docs.python.org/fr/3/library/graphlib.html" }
+          - { title: "Airflow — DAGs", url: "https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html" }
+        quiz:
+          - type: qcm
+            q: Que signifie DAG ?
+            choices: ["Data Access Gateway", "Graphe orienté acyclique", "Base de données distribuée", "Algorithme de tri"]
+            answer: 1
+            explain: Directed Acyclic Graph, graphe orienté sans cycle.
+          - type: qcm
+            q: Quel parcours trouve le chemin le plus court en nombre d'étapes ?
+            choices: ["Profondeur (DFS)", "Largeur (BFS)", "Tri topologique", "Dichotomie"]
+            answer: 1
+            explain: Le BFS explore niveau par niveau.
+          - type: vf
+            q: Un graphe de tâches avec un cycle peut être ordonné par un tri topologique.
+            answer: false
+            explain: Un cycle rend tout ordre impossible ; c'est pourquoi les pipelines sont des DAG.
+        flashcards:
+          - { q: "Tri topologique", a: "Ordre où chaque tâche suit ses dépendances (graphlib.TopologicalSorter)." }
+          - { q: "BFS / DFS", a: "Largeur avec une file / profondeur avec une pile ou la récursion." }
+        exercises:
+          - id: ex-topologique
+            type: code
+            lang: python
+            title: Ordonnancer un pipeline
+            statement: |
+              Écrivez `ordre_execution(dependances)` qui reçoit un dictionnaire `tâche → liste des tâches dont elle dépend`, et renvoie une liste de tâches dans un ordre d'exécution valide, **sans utiliser graphlib**.
+
+              S'il existe un cycle, levez une `ValueError`.
+
+              Algorithme de Kahn : répétez « prendre une tâche dont toutes les dépendances sont déjà faites ». À chaque étape, choisissez la tâche prête **la plus petite par ordre alphabétique** (pour un résultat déterministe).
+            starter: |
+              def ordre_execution(dependances):
+                  faites = []
+                  # boucle : tant qu'il reste des tâches, trouver les tâches prêtes
+                  return faites
+
+              print(ordre_execution({"charger": ["nettoyer"], "nettoyer": ["extraire"], "extraire": []}))
+            solution: |
+              def ordre_execution(dependances):
+                  faites = []
+                  restantes = set(dependances)
+                  while restantes:
+                      pretes = sorted(t for t in restantes if all(d in faites for d in dependances[t]))
+                      if not pretes:
+                          raise ValueError("Cycle détecté : " + ", ".join(sorted(restantes)))
+                      faites.append(pretes[0])
+                      restantes.remove(pretes[0])
+                  return faites
+
+              print(ordre_execution({"charger": ["nettoyer"], "nettoyer": ["extraire"], "extraire": []}))
+            tests:
+              - { label: "Chaîne simple", code: "assert ordre_execution({'charger': ['nettoyer'], 'nettoyer': ['extraire'], 'extraire': []}) == ['extraire', 'nettoyer', 'charger']" }
+              - { label: "Pipeline à deux sources", code: "d = {'extraire_ventes': [], 'extraire_clients': [], 'nettoyer': ['extraire_ventes', 'extraire_clients'], 'charger': ['nettoyer'], 'rapport': ['charger']}\nassert ordre_execution(d) == ['extraire_clients', 'extraire_ventes', 'nettoyer', 'charger', 'rapport']" }
+              - { label: "Cycle → ValueError", code: "try:\n    ordre_execution({'a': ['b'], 'b': ['a']})\n    assert False, 'ValueError attendue'\nexcept ValueError:\n    pass" }
+            hints:
+              - "Une tâche est prête si toutes ses dépendances sont dans la liste des tâches faites."
+              - "S'il reste des tâches mais qu'aucune n'est prête : il y a un cycle."
+            model: "C'est le cœur d'un orchestrateur comme Airflow ou de dbt : à partir des dépendances déclarées, calculer l'ordre d'exécution (et paralléliser les tâches prêtes en même temps, comme les deux extractions ici)."

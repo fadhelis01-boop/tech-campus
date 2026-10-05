@@ -1,0 +1,396 @@
+id: fondamentaux
+version: 2026.10.1
+title: Comprendre l'ordinateur et Internet
+branch: Socle
+icon: 💡
+color: "#0284c7"
+order: 10
+updatedAt: 2026-10-05
+description: Le point de départ — matériel, binaire et unités, fichiers et formats, Internet, logique de programmation, cloud.
+outlook: Ces bases ne vieillissent pas. Elles permettent de comprendre n'importe quelle nouvelle technologie au lieu de l'apprendre par cœur.
+glossary:
+  - { term: Processeur, en: CPU, def: "Composant qui exécute les instructions des programmes." }
+  - { term: Mémoire vive, en: RAM, def: "Mémoire rapide et temporaire qui contient les données en cours d'utilisation ; elle s'efface à l'extinction." }
+  - { term: Machine virtuelle, en: virtual machine (VM), def: "Ordinateur simulé par logiciel sur un serveur physique ; brique de base du cloud." }
+  - { term: Octet, en: byte, def: "Groupe de 8 bits, pouvant prendre 256 valeurs." }
+  - { term: Encodage, en: encoding, def: "Correspondance entre caractères et octets ; UTF-8 est la référence." }
+  - { term: Extension, en: file extension, def: "Fin du nom de fichier (.csv, .json) qui indique son format par convention." }
+  - { term: Adresse IP, en: IP address, def: "Identifiant numérique d'une machine sur un réseau." }
+  - { term: DNS, en: Domain Name System, def: "Annuaire qui traduit un nom de domaine en adresse IP." }
+  - { term: API, en: Application Programming Interface, def: "Interface par laquelle un programme rend des services à d'autres programmes." }
+  - { term: Code de statut HTTP, en: HTTP status code, def: "Nombre renvoyé par un serveur web : 2xx succès, 4xx erreur du client, 5xx erreur du serveur." }
+  - { term: Algorithme, en: algorithm, def: "Suite d'étapes précises et non ambiguës qui résout un problème." }
+  - { term: Élasticité, en: elasticity, def: "Capacité d'augmenter ou de réduire les ressources cloud en quelques minutes selon le besoin." }
+modules:
+  - id: m1
+    title: La machine et les données
+    level: 1
+    summary: Ce qu'il y a dans un ordinateur, comment il représente l'information, comment sont rangées les données.
+    lessons:
+      - id: fond-ordinateur
+        title: Ce qu'il y a dans un ordinateur (et un serveur)
+        objectives:
+          - Connaître le rôle du processeur, de la mémoire, du stockage et du réseau
+          - Distinguer système d'exploitation, programme et processus
+          - Comprendre ce qu'est un serveur et une machine virtuelle
+        quiz:
+          - type: qcm
+            q: Un traitement de données s'arrête avec l'erreur « out of memory ». Quelle ressource manque ?
+            choices: ["Le disque", "La mémoire vive (RAM)", "Le réseau", "Le processeur"]
+            answer: 1
+            explain: "« Out of memory » signifie que la mémoire de travail (RAM) est saturée ; le disque, lui, sert au stockage durable."
+          - type: vf
+            q: Les données en mémoire vive sont conservées après l'extinction de la machine.
+            answer: false
+            explain: La RAM est volatile ; seul le stockage (disque, SSD) conserve les données.
+          - type: qcm
+            q: Qu'est-ce qu'une machine virtuelle ?
+            choices: ["Un ordinateur portable", "Un ordinateur simulé par logiciel sur un serveur physique", "Un programme de dessin", "Un câble réseau"]
+            answer: 1
+            explain: Un serveur physique puissant peut héberger de nombreuses machines virtuelles isolées les unes des autres.
+          - type: qcm
+            q: Un programme en cours d'exécution s'appelle…
+            choices: ["un fichier", "un processus", "un serveur", "un octet"]
+            answer: 1
+            explain: Le programme est le fichier ; une fois lancé, il devient un processus qui consomme CPU et mémoire.
+        flashcards:
+          - { q: "CPU / RAM / disque", a: "CPU calcule ; RAM = mémoire de travail volatile ; disque = stockage durable." }
+          - { q: "Machine virtuelle (VM)", a: "Ordinateur simulé par logiciel ; plusieurs VM partagent un serveur physique." }
+          - { q: "Client / serveur", a: "Le client demande, le serveur rend le service." }
+        exercises:
+          - id: ex-dimensionner
+            type: ordre
+            title: Du clic à l'exécution
+            statement: Remettez dans l'ordre ce qui se passe quand vous lancez un programme d'analyse sur un fichier.
+            items:
+              - Le système d'exploitation lit le programme sur le disque
+              - Le programme devient un processus, chargé en mémoire vive
+              - Le processus demande à lire le fichier de données sur le disque
+              - Les données sont copiées en mémoire vive
+              - Le processeur exécute les calculs sur ces données
+              - Le résultat est écrit sur le disque pour être conservé
+            model: Disque → mémoire → processeur → disque : c'est le cycle de base de tout traitement de données.
+      - id: fond-binaire
+        title: Binaire, octets, unités et encodage du texte
+        objectives:
+          - Comprendre bits, octets et puissances de 2
+          - Convertir entre unités (Ko, Mo, Go, To) et entre bits et octets
+          - Comprendre ce qu'est UTF-8 et reconnaître un problème d'encodage
+        docs:
+          - { title: "Python — Comment gérer Unicode", url: "https://docs.python.org/fr/3/howto/unicode.html" }
+        quiz:
+          - type: qcm
+            q: Combien de valeurs différentes peut représenter un octet ?
+            choices: ["8", "16", "255", "256"]
+            answer: 3
+            explain: "8 bits → 2⁸ = 256 valeurs, de 0 à 255."
+          - type: qcm
+            q: Que vaut 1010 en binaire ?
+            choices: ["2", "10", "1010", "5"]
+            answer: 1
+            explain: "8 + 0 + 2 + 0 = 10."
+          - type: qcm
+            q: Une connexion à 80 Mbit/s télécharge au mieux combien de Mo par seconde ?
+            choices: ["80", "10", "640", "8"]
+            answer: 1
+            explain: "On divise par 8 pour passer des bits aux octets : 80 / 8 = 10 Mo/s."
+          - type: vf
+            q: En UTF-8, la lettre « é » occupe un seul octet.
+            answer: false
+            explain: Les caractères non ASCII occupent 2 à 4 octets en UTF-8 ; « é » en prend 2.
+          - type: qcm
+            q: Un fichier s'affiche avec « Ã© » à la place des « é ». Cause la plus probable ?
+            choices: ["Un virus", "Un problème d'encodage (UTF-8 lu comme Latin-1)", "Un disque plein", "Une police manquante"]
+            answer: 1
+            explain: C'est la signature typique d'un fichier UTF-8 décodé avec le mauvais encodage.
+        flashcards:
+          - { q: "1 octet", a: "8 bits, 256 valeurs (0 à 255)." }
+          - { q: "Ko vs Kio", a: "1 Ko = 1 000 octets ; 1 Kio = 1 024 octets." }
+          - { q: "Mbit/s → Mo/s", a: "Diviser par 8." }
+          - { q: "UTF-8", a: "Encodage Unicode de référence ; 1 à 4 octets par caractère." }
+        exercises:
+          - id: ex-unites
+            type: calcul
+            title: Calculs d'unités de data engineer
+            statement: Répondez par un nombre. Utilisez le système décimal (1 Go = 1 000 Mo) sauf indication contraire.
+            questions:
+              - { q: "Combien de valeurs peut-on représenter avec 10 bits ?", answer: 1024, explain: "2¹⁰ = 1 024." }
+              - { q: "Un fichier de 2,5 Go : combien de Mo ?", answer: 2500, unit: Mo, explain: "2,5 × 1 000 = 2 500 Mo." }
+              - { q: "Transférer 600 Mo sur une liaison à 100 Mbit/s prend au minimum combien de secondes ?", answer: 48, unit: s, explain: "100 Mbit/s = 12,5 Mo/s ; 600 / 12,5 = 48 s." }
+              - { q: "Une table d'un million de lignes de 500 octets chacune : combien de Mo ?", answer: 500, unit: Mo, explain: "1 000 000 × 500 = 500 000 000 octets = 500 Mo." }
+              - { q: "Que vaut 11001 en binaire, en décimal ?", answer: 25, explain: "16 + 8 + 1 = 25." }
+          - id: ex-python-octets
+            type: code
+            lang: python
+            title: Compter les octets d'un texte
+            statement: |
+              Écrivez une fonction `taille_utf8(texte)` qui renvoie le **nombre d'octets** qu'occupe `texte` en UTF-8.
+
+              Astuce : `texte.encode("utf-8")` transforme le texte en octets, et `len()` les compte.
+            starter: |
+              def taille_utf8(texte):
+                  # à compléter
+                  pass
+
+              print(taille_utf8("café"))
+            solution: |
+              def taille_utf8(texte):
+                  return len(texte.encode("utf-8"))
+
+              print(taille_utf8("café"))
+            tests:
+              - { label: "« abc » occupe 3 octets", code: "assert taille_utf8('abc') == 3, 'abc devrait faire 3 octets'" }
+              - { label: "« café » occupe 5 octets", code: "assert taille_utf8('café') == 5, 'le é compte pour 2 octets'" }
+              - { label: "Un emoji occupe 4 octets", code: "assert taille_utf8('🚀') == 4, 'un emoji prend 4 octets'" }
+            hints:
+              - "La méthode `.encode(\"utf-8\")` renvoie un objet `bytes`."
+              - "`len()` sur des bytes compte les octets, pas les caractères."
+            model: Le nombre de caractères (`len(texte)`) et le nombre d'octets (`len(texte.encode("utf-8"))`) diffèrent dès qu'il y a des accents ou des emojis. C'est essentiel quand une base de données limite une colonne en octets.
+      - id: fond-fichiers
+        title: Fichiers, formats et chemins
+        objectives:
+          - Distinguer fichiers texte et binaires
+          - Reconnaître CSV, JSON, YAML, Parquet
+          - Savoir quel format sert à quoi
+        quiz:
+          - type: qcm
+            q: Quel format est typiquement renvoyé par une API web ?
+            choices: ["CSV", "JSON", "Parquet", "ZIP"]
+            answer: 1
+            explain: JSON est le format standard des API, car il gère les données imbriquées.
+          - type: qcm
+            q: Quel format sert aux fichiers de configuration Kubernetes et Docker Compose ?
+            choices: ["YAML", "CSV", "Parquet", "MP4"]
+            answer: 0
+            explain: YAML, lisible par un humain, est le format de configuration dominant du DevOps.
+          - type: vf
+            q: Renommer un fichier .jpg en .csv le convertit en tableau.
+            answer: false
+            explain: L'extension n'est qu'une convention ; le contenu reste une image.
+          - type: qcm
+            q: Quel format est optimisé pour l'analyse de gros volumes (stockage en colonnes) ?
+            choices: ["CSV", "Parquet", "TXT", "YAML"]
+            answer: 1
+            explain: Parquet stocke par colonnes et compresse fortement ; c'est le standard des data lakes.
+        flashcards:
+          - { q: "CSV / JSON / YAML / Parquet", a: "Échanger / API / configurer / analyser." }
+          - { q: "Fichier texte vs binaire", a: "Texte lisible dans un éditeur (code, CSV, JSON) ; binaire réservé aux programmes (images, Parquet)." }
+        exercises:
+          - id: ex-json
+            type: code
+            lang: python
+            title: Lire un JSON comme une API
+            statement: |
+              La variable `reponse` contient du texte JSON, comme celui renvoyé par une API.
+
+              Complétez la fonction `villes(texte_json)` qui renvoie la **liste des villes** des clients, dans l'ordre.
+
+              Le module `json` de Python transforme le texte en dictionnaires et listes avec `json.loads(...)`.
+            setup: |
+              reponse = '{"clients": [{"nom": "Ada", "ville": "Londres"}, {"nom": "Grace", "ville": "New York"}, {"nom": "Linus", "ville": "Helsinki"}]}'
+            starter: |
+              import json
+
+              def villes(texte_json):
+                  donnees = json.loads(texte_json)
+                  # à compléter : parcourir donnees["clients"]
+                  return []
+
+              print(villes(reponse))
+            solution: |
+              import json
+
+              def villes(texte_json):
+                  donnees = json.loads(texte_json)
+                  return [client["ville"] for client in donnees["clients"]]
+
+              print(villes(reponse))
+            tests:
+              - { label: "Les trois villes, dans l'ordre", code: "assert villes(reponse) == ['Londres', 'New York', 'Helsinki'], villes(reponse)" }
+              - { label: "Fonctionne avec une liste vide", code: "assert villes('{\"clients\": []}') == []" }
+            hints:
+              - "`donnees[\"clients\"]` est une liste de dictionnaires."
+              - "Pour chaque `client` de cette liste, `client[\"ville\"]` donne la ville."
+            model: "`json.loads` convertit le texte JSON en objets Python (dictionnaires `{}` et listes `[]`). On parcourt ensuite la liste comme n'importe quelle liste. La compréhension de liste `[c[\"ville\"] for c in ...]` est la façon idiomatique de l'écrire."
+  - id: m2
+    title: Réseaux, programmes et cloud
+    level: 1
+    summary: Comment circule une requête sur Internet, comment pense un programmeur, ce qu'est vraiment le cloud.
+    lessons:
+      - id: fond-internet
+        title: Comment fonctionne Internet
+        objectives:
+          - Comprendre client, serveur, API
+          - Suivre le trajet d'une requête (DNS, TCP, TLS, HTTP)
+          - Interpréter les codes HTTP
+        docs:
+          - { title: "MDN — Vue d'ensemble de HTTP", url: "https://developer.mozilla.org/fr/docs/Web/HTTP/Overview" }
+          - { title: "MDN — Codes de réponse HTTP", url: "https://developer.mozilla.org/fr/docs/Web/HTTP/Status" }
+        quiz:
+          - type: qcm
+            q: Quel service traduit un nom de domaine en adresse IP ?
+            choices: ["HTTP", "DNS", "TLS", "TCP"]
+            answer: 1
+            explain: Le DNS est l'annuaire d'Internet.
+          - type: qcm
+            q: Une API répond 401. Que faire en priorité ?
+            choices: ["Attendre et réessayer", "Vérifier son jeton ou ses identifiants", "Contacter l'hébergeur", "Changer de navigateur"]
+            answer: 1
+            explain: 401 = non authentifié ; le jeton est absent, faux ou expiré.
+          - type: qcm
+            q: Les codes 5xx signalent…
+            choices: ["Un succès", "Une redirection", "Une erreur du client", "Une erreur du serveur"]
+            answer: 3
+            explain: "5xx : le serveur a rencontré un problème ; réessayer plus tard peut fonctionner."
+          - type: vf
+            q: Le « S » de HTTPS signifie que la connexion est chiffrée par TLS.
+            answer: true
+            explain: HTTPS = HTTP au-dessus de TLS, qui chiffre et authentifie le serveur.
+        flashcards:
+          - { q: "DNS", a: "Traduit un nom de domaine en adresse IP." }
+          - { q: "2xx / 4xx / 5xx", a: "Succès / erreur du client / erreur du serveur." }
+          - { q: "429", a: "Trop de requêtes : il faut ralentir (et réessayer plus tard)." }
+        exercises:
+          - id: ex-requete
+            type: ordre
+            title: Le voyage d'une requête HTTPS
+            statement: Remettez dans l'ordre les étapes d'une visite sur https://www.example.com/catalogue.
+            items:
+              - Le navigateur demande au DNS l'adresse IP de www.example.com
+              - Il ouvre une connexion TCP vers cette adresse, port 443
+              - La négociation TLS chiffre la connexion
+              - Le navigateur envoie la requête HTTP GET /catalogue
+              - Le serveur répond avec un code (200) et le contenu
+              - Le navigateur affiche la page
+            model: "DNS → TCP → TLS → HTTP → réponse → affichage. Sans DNS, pas d'adresse ; sans TCP, pas de connexion ; sans TLS, pas de chiffrement."
+          - id: ex-codes-http
+            type: code
+            lang: python
+            title: Classer des réponses HTTP
+            statement: |
+              Écrivez `famille(code)` qui renvoie, pour un code HTTP (entier) :
+              - `"succès"` pour 200 à 299,
+              - `"redirection"` pour 300 à 399,
+              - `"erreur client"` pour 400 à 499,
+              - `"erreur serveur"` pour 500 à 599,
+              - `"inconnu"` sinon.
+            starter: |
+              def famille(code):
+                  # à compléter avec if / elif / else
+                  return "inconnu"
+
+              print(famille(404))
+            solution: |
+              def famille(code):
+                  if 200 <= code <= 299:
+                      return "succès"
+                  elif 300 <= code <= 399:
+                      return "redirection"
+                  elif 400 <= code <= 499:
+                      return "erreur client"
+                  elif 500 <= code <= 599:
+                      return "erreur serveur"
+                  return "inconnu"
+
+              print(famille(404))
+            tests:
+              - { label: "200 est un succès", code: "assert famille(200) == 'succès'" }
+              - { label: "301 est une redirection", code: "assert famille(301) == 'redirection'" }
+              - { label: "404 et 429 sont des erreurs client", code: "assert famille(404) == 'erreur client' and famille(429) == 'erreur client'" }
+              - { label: "503 est une erreur serveur", code: "assert famille(503) == 'erreur serveur'" }
+              - { label: "42 est inconnu", code: "assert famille(42) == 'inconnu'" }
+            hints:
+              - "Python permet d'écrire `200 <= code <= 299`."
+            model: "En Python, les comparaisons s'enchaînent (`200 <= code <= 299`), ce qui rend ce genre de classement très lisible. Une variante élégante : `code // 100` donne le premier chiffre (2, 3, 4, 5)."
+      - id: fond-programmer
+        title: Penser comme un programmeur
+        objectives:
+          - Distinguer algorithme et programme
+          - Reconnaître variables, conditions, boucles, fonctions
+          - Appliquer une méthode pour décomposer un problème
+        quiz:
+          - type: qcm
+            q: Quelle brique permet de répéter une action pour chaque ligne d'un fichier ?
+            choices: ["Une variable", "Une condition", "Une boucle", "Un commentaire"]
+            answer: 2
+            explain: La boucle répète un bloc d'instructions.
+          - type: qcm
+            q: Quelle est la première étape pour résoudre un problème de programmation ?
+            choices: ["Écrire le code", "Clarifier les entrées et la sortie attendue", "Chercher sur Internet", "Choisir un langage"]
+            answer: 1
+            explain: On reformule le problème avant tout ; le code vient ensuite.
+          - type: vf
+            q: Avec l'IA qui génère du code, savoir décomposer un problème devient inutile.
+            answer: false
+            explain: Il faut savoir spécifier, relire, tester et corriger le code produit ; la pensée algorithmique est plus utile que jamais.
+        flashcards:
+          - { q: "Les 4 briques", a: "Variables, conditions, boucles, fonctions." }
+          - { q: "Cas limites", a: "Les situations extrêmes à tester : liste vide, zéro, valeur manquante, très grand nombre." }
+        exercises:
+          - id: ex-premier-programme
+            type: code
+            lang: python
+            title: Votre premier programme
+            statement: |
+              Complétez la fonction `total_ttc(prix_ht)` qui reçoit une **liste** de prix hors taxes et renvoie le total **toutes taxes comprises** (TVA de 20 %), arrondi à 2 décimales.
+
+              Exemple : `total_ttc([10, 20])` renvoie `36.0`.
+            starter: |
+              def total_ttc(prix_ht):
+                  total = 0
+                  # pour chaque prix, ajouter le prix TTC au total
+                  return round(total, 2)
+
+              print(total_ttc([10, 20]))
+            solution: |
+              def total_ttc(prix_ht):
+                  total = 0
+                  for prix in prix_ht:
+                      total = total + prix * 1.20
+                  return round(total, 2)
+
+              print(total_ttc([10, 20]))
+            tests:
+              - { label: "[10, 20] → 36.0", code: "assert total_ttc([10, 20]) == 36.0, total_ttc([10, 20])" }
+              - { label: "Liste vide → 0", code: "assert total_ttc([]) == 0" }
+              - { label: "[12.5, 30, 7.9] → 60.48", code: "assert total_ttc([12.5, 30, 7.9]) == 60.48, total_ttc([12.5, 30, 7.9])" }
+            hints:
+              - "Une boucle `for prix in prix_ht:` parcourt la liste."
+              - "Prix TTC = prix HT × 1,20 (en Python : `prix * 1.20`)."
+            model: "Boucle + accumulation dans une variable : c'est le motif le plus courant en programmation. En Python avancé, on écrirait `round(sum(p * 1.2 for p in prix_ht), 2)`."
+      - id: fond-cloud
+        title: Le cloud en une leçon
+        objectives:
+          - Définir le cloud computing et ses cinq caractéristiques
+          - Connaître les principaux fournisseurs
+          - Comprendre ce que le cloud change pour les métiers
+        docs:
+          - { title: "NIST SP 800-145 — définition du cloud computing", url: "https://csrc.nist.gov/pubs/sp/800/145/final" }
+          - { title: "ANSSI — qualification SecNumCloud", url: "https://cyber.gouv.fr/secnumcloud-pour-les-fournisseurs-de-services-cloud" }
+        quiz:
+          - type: qcm
+            q: Quelle caractéristique permet d'absorber un pic de trafic pendant les soldes ?
+            choices: ["La mutualisation", "L'élasticité", "Le libre-service", "Le chiffrement"]
+            answer: 1
+            explain: L'élasticité permet d'augmenter puis de réduire la capacité en quelques minutes.
+          - type: vf
+            q: Dans le cloud, une machine oubliée allumée continue d'être facturée.
+            answer: true
+            explain: Le paiement à l'usage est un avantage… et un piège ; la maîtrise des coûts (FinOps) est un vrai métier.
+          - type: qcm
+            q: Que désigne SecNumCloud en France ?
+            choices: ["Un fournisseur cloud", "Une qualification de l'ANSSI pour les offres de confiance", "Un langage", "Un format de fichier"]
+            answer: 1
+            explain: La qualification SecNumCloud distingue les offres cloud répondant aux exigences de sécurité de l'ANSSI.
+        flashcards:
+          - { q: "Cloud computing", a: "Location de ressources informatiques à la demande, via Internet, payées à l'usage." }
+          - { q: "5 caractéristiques (NIST)", a: "Libre-service, accès réseau, mutualisation, élasticité, paiement à l'usage." }
+        exercises:
+          - id: ex-cout-cloud
+            type: calcul
+            title: Le paiement à l'usage, en chiffres
+            statement: Une machine virtuelle coûte 0,10 € de l'heure. Répondez par un nombre (en euros).
+            questions:
+              - { q: "Coût si elle tourne 24 h sur 24 pendant 30 jours ?", answer: 72, unit: €, explain: "0,10 × 24 × 30 = 72 €." }
+              - { q: "Coût si on l'éteint la nuit et le week-end (10 h par jour, 22 jours ouvrés) ?", answer: 22, unit: €, explain: "0,10 × 10 × 22 = 22 €, soit près de 70 % d'économie." }
+              - { q: "Pour un pic de 3 jours, on loue 20 machines identiques 24 h sur 24. Coût du pic ?", answer: 144, unit: €, explain: "20 × 0,10 × 24 × 3 = 144 €. Sans le cloud, il aurait fallu acheter 20 serveurs." }

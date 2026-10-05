@@ -1,0 +1,107 @@
+# Parcours métiers : l'ordre recommandé des domaines, jalonné par de
+# vraies certifications (identifiants de _certifications.yaml).
+# Les durées sont indicatives, pour environ 8 à 10 heures de travail par semaine.
+- id: data-engineer
+  title: Data engineer
+  icon: 🛢️
+  color: "#0d9488"
+  pitch: Construire les « tuyaux » qui collectent, nettoient et mettent à disposition les données de l'entreprise — le socle de l'analyse et de l'IA.
+  jobs: [Data engineer, Analytics engineer, Ingénieur big data, Ingénieur plateforme data, Data ops]
+  steps:
+    - title: Bien démarrer
+      packs: [methode, metiers, fondamentaux]
+      months: 1
+      note: Apprendre à apprendre, comprendre le métier visé et les bases de l'ordinateur et d'Internet.
+    - title: Le socle technique
+      packs: [linux, git]
+      months: 2
+      note: Le terminal et Git sont utilisés tous les jours. Premier jalon peu coûteux et très parlant pour un débutant.
+      milestones: [linux-essentials, github-foundations]
+    - title: Programmer en Python
+      packs: [python, algo]
+      months: 3
+      note: Python est le langage n° 1 de la data. L'algorithmique prépare aussi aux entretiens techniques.
+      milestones: [pcep]
+    - title: Maîtriser les données avec SQL
+      packs: [sql]
+      months: 2
+      note: SQL est la compétence la plus demandée dans les offres data. Elle est validée par les certifications data qui suivent.
+    - title: Découvrir le cloud
+      packs: [cloud, reseaux]
+      months: 1
+      note: Les plateformes data modernes vivent dans le cloud. Une certification de base rassure tout recruteur.
+      milestones: [aws-ccp]
+    - title: Data engineering
+      packs: [data-eng]
+      months: 4
+      note: Pipelines, formats, entrepôts, dbt, Airflow, qualité, Spark, streaming. C'est le cœur du métier.
+      milestones: [airflow-fundamentals, dbt-ae]
+    - title: Industrialiser
+      packs: [conteneurs, devops, securite]
+      months: 2
+      note: Conteneuriser, automatiser, sécuriser : ce qui distingue un junior « prêt pour la production ».
+    - title: Décrocher le poste
+      packs: [ia-data]
+      months: 2
+      note: La certification data d'un grand fournisseur cloud, plus vos projets de portfolio, font la différence en entretien.
+      milestones: [aws-dea]
+  certifications: [databricks-dea, snowpro-core, dp-700, gcp-pde, ccdak, pcap]
+  projects:
+    - "Pipeline ETL en Python : télécharger un jeu de données ouvert (data.gouv.fr), le nettoyer, le charger dans PostgreSQL, avec tests"
+    - "Entrepôt de données en étoile + transformations dbt + tests de qualité, documenté sur GitHub"
+    - "Orchestration avec Airflow (DAG quotidien, reprise sur erreur, alertes)"
+    - "Pipeline cloud de bout en bout : stockage objet, traitement, tableau de bord, le tout décrit en Terraform"
+    - "Bonus temps réel : flux d'événements avec Kafka et agrégations par fenêtre"
+- id: cloud-devops
+  title: Ingénieur cloud / DevOps
+  icon: ☁️
+  color: "#4f46e5"
+  pitch: Concevoir, automatiser et faire tourner les infrastructures cloud sur lesquelles reposent les applications — fiables, sécurisées, économes.
+  jobs: [Ingénieur cloud, Ingénieur DevOps, SRE, Platform engineer, Administrateur systèmes et réseaux cloud, Architecte cloud (à terme)]
+  steps:
+    - title: Bien démarrer
+      packs: [methode, metiers, fondamentaux]
+      months: 1
+      note: Apprendre à apprendre, comprendre le métier visé et les bases de l'ordinateur et d'Internet.
+    - title: Linux et réseaux
+      packs: [linux, reseaux]
+      months: 3
+      note: Le cloud, ce sont des serveurs Linux reliés par des réseaux. C'est le socle de tout le reste.
+      milestones: [linux-essentials]
+    - title: Git et automatisation
+      packs: [git, python]
+      months: 2
+      note: Tout se versionne et tout s'automatise. Python sert aux scripts et outils d'exploitation.
+      milestones: [github-foundations]
+    - title: Le cloud
+      packs: [cloud, securite]
+      months: 3
+      note: Comprendre les services, l'identité, le réseau cloud et les coûts ; puis une certification associée très demandée.
+      milestones: [aws-ccp, aws-saa]
+    - title: Conteneurs et Kubernetes
+      packs: [conteneurs]
+      months: 3
+      note: Docker puis Kubernetes, l'outil d'orchestration standard.
+      milestones: [kcna]
+    - title: Infrastructure as code
+      packs: [iac]
+      months: 2
+      note: Décrire l'infrastructure en code avec Terraform. Certification au rapport coût/valeur excellent.
+      milestones: [terraform-associate]
+    - title: DevOps et fiabilité
+      packs: [devops, sql]
+      months: 2
+      note: Intégration et déploiement continus, observabilité, gestion des incidents.
+      milestones: [github-actions]
+    - title: Décrocher le poste
+      packs: [algo, data-eng]
+      months: 2
+      note: La certification Kubernetes pratique est l'un des meilleurs signaux pour un poste DevOps/SRE.
+      milestones: [cka]
+  certifications: [az-900, az-104, az-400, gcp-ace, lfcs, isc2-cc, security-plus]
+  projects:
+    - "Site web statique déployé automatiquement dans le cloud par GitHub Actions, avec nom de domaine et HTTPS"
+    - "Application conteneurisée (Docker Compose : API + base de données) avec tests dans la CI"
+    - "Infrastructure complète décrite en Terraform (réseau, machines, base, stockage), avec état distant"
+    - "Déploiement sur Kubernetes : Deployment, Service, Ingress, mise à l'échelle, déploiement progressif"
+    - "Observabilité : métriques Prometheus, tableau de bord Grafana, alertes et un post-mortem rédigé"

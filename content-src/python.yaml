@@ -1,0 +1,1052 @@
+id: python
+version: 2026.10.1
+title: Programmer en Python
+branch: Socle
+icon: 🐍
+color: "#3776ab"
+order: 13
+updatedAt: 2026-10-05
+description: Du premier print aux tests automatisés et aux API — le langage n° 1 de la data et de l'automatisation, pratiqué dans un vrai Python.
+outlook: Python domine la data, l'IA et l'automatisation d'infrastructure ; c'est le langage le plus demandé dans les offres data engineer.
+glossary:
+  - { term: Variable, en: variable, def: "Nom qui désigne une valeur." }
+  - { term: Chaîne de caractères, en: string (str), def: "Valeur texte, entre guillemets." }
+  - { term: Liste, en: list, def: "Suite ordonnée et modifiable de valeurs, entre crochets." }
+  - { term: Dictionnaire, en: dictionary (dict), def: "Association de clés et de valeurs, entre accolades." }
+  - { term: Fonction, en: function, def: "Bloc de code nommé, réutilisable, qui reçoit des paramètres et renvoie un résultat." }
+  - { term: Boucle, en: loop, def: "Répétition d'un bloc (for sur une séquence, while tant qu'une condition est vraie)." }
+  - { term: Exception, en: exception, def: "Erreur levée pendant l'exécution, que l'on peut attraper avec try/except." }
+  - { term: f-string, en: f-string, def: "Chaîne préfixée par f, dans laquelle les {variables} sont remplacées par leur valeur." }
+  - { term: Module, en: module, def: "Fichier Python dont on peut importer les fonctions." }
+  - { term: Paquet, en: package, def: "Bibliothèque installable avec pip depuis PyPI." }
+  - { term: Environnement virtuel, en: virtual environment, def: "Dossier isolé contenant les dépendances d'un projet (python -m venv .venv)." }
+  - { term: Classe, en: class, def: "Modèle qui regroupe données (attributs) et comportements (méthodes)." }
+  - { term: Compréhension de liste, en: list comprehension, def: "Construction concise d'une liste : [x * 2 for x in valeurs if x > 0]." }
+  - { term: Générateur, en: generator, def: "Fonction qui produit ses valeurs une à une avec yield, sans tout charger en mémoire." }
+  - { term: Test unitaire, en: unit test, def: "Test automatisé d'une fonction isolée." }
+  - { term: Pagination, en: pagination, def: "Découpage des résultats d'une API en pages successives." }
+modules:
+  - id: m1
+    title: Les bases
+    level: 1
+    summary: Variables et types, conditions, boucles, listes et dictionnaires, fonctions.
+    lessons:
+      - id: py-premiers-pas
+        title: Premiers pas — afficher, calculer, nommer
+        objectives:
+          - Utiliser print, les opérateurs et les variables
+          - Connaître les types de base et convertir entre eux
+          - Mettre en forme avec les f-strings
+        docs:
+          - { title: "Tutoriel Python officiel (français)", url: "https://docs.python.org/fr/3/tutorial/introduction.html" }
+        quiz:
+          - type: qcm
+            q: Que vaut 7 // 2 en Python ?
+            choices: ["3.5", "3", "4", "1"]
+            answer: 1
+            explain: "// est la division entière ; 7 % 2 donnerait le reste, 1."
+          - type: qcm
+            q: Que provoque "36" + 1 ?
+            choices: ["37", "\"361\"", "Une TypeError", "36"]
+            answer: 2
+            explain: On ne peut pas additionner du texte et un nombre ; il faut convertir avec int("36").
+          - type: qcm
+            q: Quel nom de variable respecte les conventions Python ?
+            choices: ["NbClients", "nb clients", "nb_clients", "2clients"]
+            answer: 2
+            explain: snake_case, sans espace, sans commencer par un chiffre.
+          - type: qcm
+            q: Que produit f"{3.14159:.2f}" ?
+            choices: ["3.14159", "3.14", "3", "3.1"]
+            answer: 1
+            explain: ":.2f arrondit l'affichage à 2 décimales."
+        flashcards:
+          - { q: "Types de base", a: "int, float, str, bool, None." }
+          - { q: "Convertir un texte en nombre", a: "int(\"36\"), float(\"12.5\")" }
+          - { q: "f-string", a: "f\"Bonjour {nom}\" ; f\"{x:.2f}\" pour 2 décimales." }
+        exercises:
+          - id: ex-facture
+            type: code
+            lang: python
+            title: Une première facture
+            statement: |
+              Complétez le programme pour qu'il calcule le **total TTC** d'une commande et l'affiche exactement ainsi :
+
+              ```text
+              Total TTC : 179.64 €
+              ```
+
+              - prix unitaire hors taxes : 49.90 €
+              - quantité : 3
+              - TVA : 20 %
+            starter: |
+              prix_ht = 49.90
+              quantite = 3
+              tva = 0.20
+
+              total_ttc = 0  # à calculer
+
+              print(f"Total TTC : {total_ttc} €")
+            solution: |
+              prix_ht = 49.90
+              quantite = 3
+              tva = 0.20
+
+              total_ttc = prix_ht * quantite * (1 + tva)
+
+              print(f"Total TTC : {total_ttc:.2f} €")
+            tests:
+              - { label: "La variable total_ttc vaut environ 179.64", code: "assert abs(total_ttc - 179.64) < 0.01, f'total_ttc vaut {total_ttc}'" }
+              - { label: "L'affichage est exactement « Total TTC : 179.64 € »", stdout: "Total TTC : 179.64 €" }
+            hints:
+              - "Total HT = prix × quantité ; total TTC = total HT × (1 + tva)."
+              - "Pour afficher 2 décimales : {total_ttc:.2f} dans la f-string."
+            model: "`49.90 * 3 * 1.2` donne `179.64000000000001` à cause de la représentation des nombres à virgule en binaire : d'où l'importance de `:.2f` à l'affichage (et, pour de la vraie comptabilité, du module `decimal`)."
+      - id: py-conditions
+        title: Prendre des décisions — if, elif, else
+        objectives:
+          - Écrire des conditions avec if / elif / else
+          - Combiner des conditions avec and, or, not
+          - Tester l'absence de valeur avec is None
+        docs:
+          - { title: "Tutoriel Python — l'instruction if", url: "https://docs.python.org/fr/3/tutorial/controlflow.html#if-statements" }
+        quiz:
+          - type: qcm
+            q: Quel opérateur teste l'égalité ?
+            choices: ["=", "==", "===", ":="]
+            answer: 1
+            explain: "= affecte une valeur ; == compare."
+          - type: qcm
+            q: Laquelle de ces valeurs est considérée comme « fausse » dans un if ?
+            choices: ["\"0\"", "[0]", "\"\"", "\"False\""]
+            answer: 2
+            explain: Le texte vide est faux ; "0" et "False" sont des textes non vides, donc vrais.
+          - type: vf
+            q: En Python, l'indentation sert seulement à rendre le code plus joli.
+            answer: false
+            explain: Elle définit les blocs ; une indentation incorrecte provoque une erreur ou un comportement différent.
+        flashcards:
+          - { q: "Tester l'absence de valeur", a: "if x is None:" }
+          - { q: "Comparaisons enchaînées", a: "18 <= age < 65" }
+        exercises:
+          - id: ex-qualite
+            type: code
+            lang: python
+            title: Règles de qualité des données
+            statement: |
+              Écrivez `controler(age)` qui renvoie :
+              - `"manquant"` si `age` est `None` ;
+              - `"invalide"` si `age` est négatif ou supérieur à 120 ;
+              - `"mineur"` si `age` est inférieur à 18 ;
+              - `"majeur"` sinon.
+            starter: |
+              def controler(age):
+                  # à compléter
+                  return "majeur"
+
+              print(controler(None), controler(-3), controler(12), controler(40))
+            solution: |
+              def controler(age):
+                  if age is None:
+                      return "manquant"
+                  if age < 0 or age > 120:
+                      return "invalide"
+                  if age < 18:
+                      return "mineur"
+                  return "majeur"
+
+              print(controler(None), controler(-3), controler(12), controler(40))
+            tests:
+              - { label: "None → manquant", code: "assert controler(None) == 'manquant'" }
+              - { label: "-3 et 150 → invalide", code: "assert controler(-3) == 'invalide' and controler(150) == 'invalide'" }
+              - { label: "12 → mineur", code: "assert controler(12) == 'mineur'" }
+              - { label: "18 et 40 → majeur", code: "assert controler(18) == 'majeur' and controler(40) == 'majeur'" }
+            hints:
+              - "Testez d'abord None : comparer None avec un nombre provoquerait une erreur."
+              - "L'ordre des tests compte : du plus particulier au plus général."
+            model: "L'ordre des conditions est essentiel : `None` d'abord (sinon `None < 0` plante), puis l'invalide, puis les catégories. Chaque `return` sort de la fonction, d'où l'absence de `elif` nécessaire."
+      - id: py-boucles
+        title: Répéter — for, range, while
+        objectives:
+          - Parcourir une séquence avec for
+          - Accumuler un résultat dans une boucle
+          - Utiliser while, break et continue sans boucle infinie
+        docs:
+          - { title: "Tutoriel Python — for et range", url: "https://docs.python.org/fr/3/tutorial/controlflow.html#for-statements" }
+        quiz:
+          - type: qcm
+            q: Quelles valeurs produit range(2, 6) ?
+            choices: ["2, 3, 4, 5, 6", "2, 3, 4, 5", "3, 4, 5, 6", "0 à 6"]
+            answer: 1
+            explain: La borne de fin est exclue.
+          - type: qcm
+            q: Que fait « continue » dans une boucle ?
+            choices: ["Sort de la boucle", "Passe directement au tour suivant", "Recommence la boucle depuis le début", "Arrête le programme"]
+            answer: 1
+            explain: break sort de la boucle ; continue saute le reste du tour courant.
+          - type: vf
+            q: Une boucle while dont la condition ne change jamais peut tourner indéfiniment.
+            answer: true
+            explain: C'est la boucle infinie ; quelque chose doit faire évoluer la condition.
+        flashcards:
+          - { q: "enumerate", a: "Donne le numéro et l'élément : for i, x in enumerate(liste)." }
+          - { q: "zip", a: "Parcourt plusieurs listes en parallèle." }
+        exercises:
+          - id: ex-stats
+            type: code
+            lang: python
+            title: Statistiques d'une journée de ventes
+            statement: |
+              Écrivez `resume(montants)` qui renvoie un **tuple** `(total, nb_ventes, plus_grosse)` à partir d'une liste de montants.
+
+              **Sans utiliser** `sum()` ni `max()` : l'objectif est de pratiquer la boucle et l'accumulation.
+              Pour une liste vide, renvoyez `(0, 0, None)`.
+            starter: |
+              def resume(montants):
+                  total = 0
+                  nb = 0
+                  plus_grosse = None
+                  # une boucle for ici
+                  return (total, nb, plus_grosse)
+
+              print(resume([120, 80.5, 45, 300]))
+            solution: |
+              def resume(montants):
+                  total = 0
+                  nb = 0
+                  plus_grosse = None
+                  for m in montants:
+                      total += m
+                      nb += 1
+                      if plus_grosse is None or m > plus_grosse:
+                          plus_grosse = m
+                  return (total, nb, plus_grosse)
+
+              print(resume([120, 80.5, 45, 300]))
+            tests:
+              - { label: "Cas nominal", code: "assert resume([120, 80.5, 45, 300]) == (545.5, 4, 300)" }
+              - { label: "Liste vide", code: "assert resume([]) == (0, 0, None)" }
+              - { label: "Montants tous négatifs (le max est -1)", code: "assert resume([-5, -1, -9]) == (-15, 3, -1)" }
+            hints:
+              - "Initialisez plus_grosse à None, et remplacez-la si elle est None ou si m est plus grand."
+              - "Le cas « tous négatifs » piège ceux qui initialisent plus_grosse à 0."
+            model: "Initialiser le maximum à `None` (et non à 0) est le réflexe correct : avec 0, une liste de montants négatifs donnerait un maximum faux. C'est un excellent exemple de **cas limite**."
+          - id: ex-retry
+            type: code
+            lang: python
+            title: Réessayer jusqu'à trois fois
+            statement: |
+              La fonction `appeler_api()` (fournie) échoue parfois : elle renvoie `None` en cas d'échec, ou une donnée en cas de succès.
+
+              Écrivez `appeler_avec_reessais(max_tentatives=3)` qui appelle `appeler_api()` **jusqu'à** `max_tentatives` fois, s'arrête dès qu'un appel réussit, et renvoie un tuple `(resultat, nombre_de_tentatives)`. Si tout échoue : `(None, max_tentatives)`.
+            setup: |
+              _reponses = []
+              def preparer(reponses):
+                  _reponses.clear()
+                  _reponses.extend(reponses)
+              def appeler_api():
+                  return _reponses.pop(0) if _reponses else None
+              preparer([None, None, {"ok": True}])
+            starter: |
+              def appeler_avec_reessais(max_tentatives=3):
+                  tentative = 0
+                  # une boucle while ici
+                  return (None, tentative)
+
+              print(appeler_avec_reessais())
+            solution: |
+              def appeler_avec_reessais(max_tentatives=3):
+                  tentative = 0
+                  while tentative < max_tentatives:
+                      tentative += 1
+                      resultat = appeler_api()
+                      if resultat is not None:
+                          return (resultat, tentative)
+                  return (None, tentative)
+
+              print(appeler_avec_reessais())
+            tests:
+              - { label: "Succès à la 3e tentative", code: "preparer([None, None, {'ok': True}]); assert appeler_avec_reessais() == ({'ok': True}, 3)" }
+              - { label: "Succès immédiat", code: "preparer([{'ok': 1}]); assert appeler_avec_reessais() == ({'ok': 1}, 1)" }
+              - { label: "Échec après 3 tentatives (et pas une de plus)", code: "preparer([None, None, None, {'trop': 'tard'}]); assert appeler_avec_reessais() == (None, 3)" }
+              - { label: "max_tentatives est respecté", code: "preparer([None] * 10); assert appeler_avec_reessais(5) == (None, 5)" }
+            hints:
+              - "while tentative < max_tentatives:"
+              - "Dès qu'un résultat n'est pas None, un return sort de la fonction (et donc de la boucle)."
+            model: "Dans la vraie vie, on ajoute une **attente croissante** entre les tentatives (`time.sleep(2 ** tentative)`) et on journalise chaque échec. Des bibliothèques comme `tenacity` fournissent ce motif tout fait."
+      - id: py-listes-dicts
+        title: Listes et dictionnaires
+        objectives:
+          - Manipuler les listes (indices, tranches, méthodes)
+          - Manipuler les dictionnaires (clés, get, items)
+          - Regrouper des données (le motif group by)
+        docs:
+          - { title: "Tutoriel Python — Structures de données", url: "https://docs.python.org/fr/3/tutorial/datastructures.html" }
+        quiz:
+          - type: qcm
+            q: Avec ventes = [10, 20, 30], que vaut ventes[-1] ?
+            choices: ["10", "30", "Une erreur", "20"]
+            answer: 1
+            explain: Les indices négatifs partent de la fin.
+          - type: qcm
+            q: Comment lire une clé qui peut être absente sans provoquer d'erreur ?
+            choices: ["d[\"cle\"]", "d.get(\"cle\")", "d.cle", "get(d, cle)"]
+            answer: 1
+            explain: get renvoie None (ou la valeur par défaut fournie) si la clé manque.
+          - type: qcm
+            q: Quelle structure supprime automatiquement les doublons ?
+            choices: ["list", "tuple", "set", "dict"]
+            answer: 2
+            explain: Un ensemble (set) ne contient chaque valeur qu'une fois.
+        flashcards:
+          - { q: "Regrouper et sommer par clé", a: "d[k] = d.get(k, 0) + valeur" }
+          - { q: "Parcourir un dictionnaire", a: "for cle, valeur in d.items():" }
+        exercises:
+          - id: ex-group-by
+            type: code
+            lang: python
+            title: Chiffre d'affaires par ville
+            statement: |
+              La variable `commandes` (fournie) est une liste de dictionnaires `{"client", "ville", "montant"}`.
+
+              Écrivez `ca_par_ville(commandes)` qui renvoie un dictionnaire `{ville: total des montants}`.
+            setup: |
+              commandes = [
+                  {"client": "Ada", "ville": "Lyon", "montant": 120},
+                  {"client": "Linus", "ville": "Paris", "montant": 80},
+                  {"client": "Grace", "ville": "Lyon", "montant": 45},
+                  {"client": "Ken", "ville": "Lille", "montant": 200},
+                  {"client": "Ada", "ville": "Lyon", "montant": 60},
+              ]
+            starter: |
+              def ca_par_ville(commandes):
+                  totaux = {}
+                  # à compléter
+                  return totaux
+
+              print(ca_par_ville(commandes))
+            solution: |
+              def ca_par_ville(commandes):
+                  totaux = {}
+                  for c in commandes:
+                      totaux[c["ville"]] = totaux.get(c["ville"], 0) + c["montant"]
+                  return totaux
+
+              print(ca_par_ville(commandes))
+            tests:
+              - { label: "Totaux corrects", code: "assert ca_par_ville(commandes) == {'Lyon': 225, 'Paris': 80, 'Lille': 200}, ca_par_ville(commandes)" }
+              - { label: "Liste vide → dictionnaire vide", code: "assert ca_par_ville([]) == {}" }
+            hints:
+              - "totaux.get(ville, 0) renvoie 0 la première fois qu'on rencontre la ville."
+            model: "C'est un **GROUP BY** écrit à la main. En SQL : `SELECT ville, SUM(montant) FROM commandes GROUP BY ville`. Avec pandas : `df.groupby(\"ville\")[\"montant\"].sum()`. Comprendre la version manuelle permet de comprendre les deux autres."
+          - id: ex-dedoublonner
+            type: code
+            lang: python
+            title: Dédoublonner en gardant l'ordre
+            statement: |
+              Écrivez `uniques(valeurs)` qui renvoie la liste des valeurs **sans doublons**, dans l'ordre de leur **première apparition**, en ignorant la casse et les espaces autour (`" Lyon"`, `"lyon"` et `"LYON"` sont la même ville). Renvoyez les valeurs nettoyées en minuscules.
+            starter: |
+              def uniques(valeurs):
+                  vues = set()
+                  resultat = []
+                  # à compléter
+                  return resultat
+
+              print(uniques([" Lyon", "Paris", "lyon", "LILLE", "paris "]))
+            solution: |
+              def uniques(valeurs):
+                  vues = set()
+                  resultat = []
+                  for v in valeurs:
+                      propre = v.strip().lower()
+                      if propre not in vues:
+                          vues.add(propre)
+                          resultat.append(propre)
+                  return resultat
+
+              print(uniques([" Lyon", "Paris", "lyon", "LILLE", "paris "]))
+            tests:
+              - { label: "Ordre de première apparition, nettoyé", code: "assert uniques([' Lyon', 'Paris', 'lyon', 'LILLE', 'paris ']) == ['lyon', 'paris', 'lille']" }
+              - { label: "Liste vide", code: "assert uniques([]) == []" }
+            hints:
+              - "Un set retient ce qu'on a déjà vu ; une liste conserve l'ordre."
+            model: "`set(valeurs)` supprimerait les doublons mais perdrait l'ordre (et ne nettoierait pas la casse). Le couple « set des valeurs vues + liste résultat » est un motif classique. Variante concise : `list(dict.fromkeys(v.strip().lower() for v in valeurs))`."
+      - id: py-fonctions
+        title: Les fonctions
+        objectives:
+          - Définir des fonctions avec paramètres, valeurs par défaut et return
+          - Distinguer return et print
+          - Écrire des fonctions courtes, nommées et documentées
+        docs:
+          - { title: "Tutoriel Python — Définir des fonctions", url: "https://docs.python.org/fr/3/tutorial/controlflow.html#defining-functions" }
+        quiz:
+          - type: qcm
+            q: Que renvoie une fonction sans instruction return ?
+            choices: ["0", "Une erreur", "None", "Le dernier calcul"]
+            answer: 2
+            explain: Sans return explicite, une fonction renvoie None.
+          - type: qcm
+            q: Dans def remise(prix, taux=0.1), que vaut taux si on appelle remise(100) ?
+            choices: ["0", "0.1", "None", "Une erreur"]
+            answer: 1
+            explain: Le paramètre prend sa valeur par défaut.
+          - type: vf
+            q: Une variable créée dans une fonction est accessible partout dans le programme.
+            answer: false
+            explain: Elle est locale à la fonction.
+        flashcards:
+          - { q: "return vs print", a: "return renvoie la valeur à l'appelant ; print l'affiche seulement." }
+          - { q: "Docstring", a: "Chaîne en triples guillemets sous le def, qui documente la fonction." }
+        exercises:
+          - id: ex-normaliser-tel
+            type: code
+            lang: python
+            title: Normaliser des numéros de téléphone
+            statement: |
+              Écrivez `normaliser_tel(numero)` qui transforme un numéro français dans un format unique `+33XXXXXXXXX` :
+              - on retire espaces, points et tirets ;
+              - `06 12 34 56 78` → `+33612345678` (on remplace le 0 initial par `+33`) ;
+              - `+33 6 12 34 56 78` → `+33612345678` ;
+              - si le résultat n'a pas exactement 9 chiffres après `+33`, renvoyez `None`.
+            starter: |
+              def normaliser_tel(numero):
+                  """Renvoie le numéro au format +33XXXXXXXXX, ou None s'il est invalide."""
+                  # à compléter
+                  return None
+
+              print(normaliser_tel("06 12 34 56 78"))
+            solution: |
+              def normaliser_tel(numero):
+                  """Renvoie le numéro au format +33XXXXXXXXX, ou None s'il est invalide."""
+                  n = numero.replace(" ", "").replace(".", "").replace("-", "")
+                  if n.startswith("+33"):
+                      corps = n[3:]
+                  elif n.startswith("0"):
+                      corps = n[1:]
+                  else:
+                      return None
+                  if len(corps) != 9 or not corps.isdigit():
+                      return None
+                  return "+33" + corps
+
+              print(normaliser_tel("06 12 34 56 78"))
+            tests:
+              - { label: "06 12 34 56 78", code: "assert normaliser_tel('06 12 34 56 78') == '+33612345678'" }
+              - { label: "06.12.34.56.78 et 06-12-34-56-78", code: "assert normaliser_tel('06.12.34.56.78') == '+33612345678' and normaliser_tel('06-12-34-56-78') == '+33612345678'" }
+              - { label: "+33 6 12 34 56 78", code: "assert normaliser_tel('+33 6 12 34 56 78') == '+33612345678'" }
+              - { label: "Numéros invalides → None", code: "assert normaliser_tel('0612') is None and normaliser_tel('06 12 34 56 7X') is None" }
+            hints:
+              - "Enchaînez les .replace() pour retirer les séparateurs."
+              - "Gérez deux cas de préfixe : « +33 » ou « 0 »."
+              - "str.isdigit() vérifie que le texte ne contient que des chiffres."
+            model: "Une fonction de normalisation doit être **stricte** : mieux vaut renvoyer `None` (et compter les rejets) que fabriquer un faux numéro. Ces fonctions sont idéales à tester : entrées et sorties simples, cas limites nombreux."
+  - id: m2
+    title: Python pour les données
+    level: 2
+    summary: Texte, fichiers CSV et JSON, gestion des erreurs, modules et environnements.
+    lessons:
+      - id: py-texte
+        title: Manipuler du texte
+        objectives:
+          - Utiliser les méthodes de chaînes (strip, split, join, replace…)
+          - Mettre en forme avec les f-strings
+          - Découvrir les expressions régulières
+        docs:
+          - { title: "Python — Méthodes de str", url: "https://docs.python.org/fr/3/library/stdtypes.html#string-methods" }
+          - { title: "Python — Module re", url: "https://docs.python.org/fr/3/library/re.html" }
+        quiz:
+          - type: qcm
+            q: Que renvoie "a;b;c".split(";") ?
+            choices: ["\"abc\"", "[\"a\", \"b\", \"c\"]", "(\"a\", \"b\", \"c\")", "3"]
+            answer: 1
+            explain: split découpe en liste selon le séparateur.
+          - type: qcm
+            q: Que fait "  Lyon ".strip() ?
+            choices: ["Supprime le texte", "Retire les espaces au début et à la fin", "Met en majuscules", "Remplace les espaces par des tirets"]
+            answer: 1
+            explain: strip retire les espaces (et retours à la ligne) aux extrémités.
+          - type: qcm
+            q: En expression régulière, que signifie \d+ ?
+            choices: ["Une lettre", "Un ou plusieurs chiffres", "Exactement un chiffre", "Un espace"]
+            answer: 1
+            explain: "\\d = un chiffre ; + = un ou plusieurs."
+        flashcards:
+          - { q: "\"-\".join([\"a\", \"b\"])", a: "\"a-b\" : join colle une liste de textes avec un séparateur." }
+          - { q: "re.findall(r\"\\d+\", texte)", a: "Liste de tous les nombres présents dans le texte." }
+        exercises:
+          - id: ex-parse-log
+            type: code
+            lang: python
+            title: Analyser une ligne de journal
+            statement: |
+              Les journaux d'un serveur web ont ce format :
+
+              ```text
+              2026-10-05 08:12:30 GET /api/clients 200 35ms
+              ```
+
+              Écrivez `analyser(ligne)` qui renvoie un dictionnaire :
+              `{"date": "2026-10-05", "methode": "GET", "chemin": "/api/clients", "statut": 200, "duree_ms": 35}`
+
+              (`statut` et `duree_ms` sont des **entiers**.)
+            starter: |
+              def analyser(ligne):
+                  morceaux = ligne.split()
+                  # à compléter
+                  return {}
+
+              print(analyser("2026-10-05 08:12:30 GET /api/clients 200 35ms"))
+            solution: |
+              def analyser(ligne):
+                  date, heure, methode, chemin, statut, duree = ligne.split()
+                  return {
+                      "date": date,
+                      "methode": methode,
+                      "chemin": chemin,
+                      "statut": int(statut),
+                      "duree_ms": int(duree.removesuffix("ms")),
+                  }
+
+              print(analyser("2026-10-05 08:12:30 GET /api/clients 200 35ms"))
+            tests:
+              - { label: "Ligne nominale", code: "assert analyser('2026-10-05 08:12:30 GET /api/clients 200 35ms') == {'date': '2026-10-05', 'methode': 'GET', 'chemin': '/api/clients', 'statut': 200, 'duree_ms': 35}" }
+              - { label: "Autre ligne (POST, 500, 1204ms)", code: "r = analyser('2026-10-06 23:59:01 POST /api/commandes 500 1204ms'); assert r['statut'] == 500 and r['duree_ms'] == 1204 and r['methode'] == 'POST'" }
+            hints:
+              - "ligne.split() découpe sur les espaces : 6 morceaux."
+              - "Le déballage `a, b, c = liste` affecte chaque morceau à une variable."
+              - "\"35ms\".removesuffix(\"ms\") donne \"35\" ; int() le convertit."
+            model: "Transformer des lignes de texte en enregistrements structurés (*parsing*) est une tâche quotidienne. Une fois les lignes sous forme de dictionnaires, on peut calculer le taux d'erreurs 5xx, la durée moyenne par chemin, etc."
+      - id: py-fichiers
+        title: Fichiers, CSV et JSON
+        objectives:
+          - Lire et écrire des fichiers texte avec with et un encodage explicite
+          - Lire et écrire du CSV avec le module csv
+          - Lire et écrire du JSON
+        docs:
+          - { title: "Python — Module csv", url: "https://docs.python.org/fr/3/library/csv.html" }
+          - { title: "Python — Module json", url: "https://docs.python.org/fr/3/library/json.html" }
+        quiz:
+          - type: qcm
+            q: Pourquoi utiliser « with open(...) as f » ?
+            choices: ["C'est plus rapide", "Le fichier est refermé automatiquement, même en cas d'erreur", "C'est obligatoire pour lire", "Pour compresser le fichier"]
+            answer: 1
+            explain: with garantit la fermeture du fichier.
+          - type: qcm
+            q: Pourquoi ne pas découper un CSV avec split(",") ?
+            choices: ["C'est trop lent", "Une valeur peut contenir une virgule entre guillemets", "split ne marche pas sur les fichiers", "Les CSV n'ont pas de virgules"]
+            answer: 1
+            explain: Le module csv gère guillemets, virgules internes et retours à la ligne.
+          - type: qcm
+            q: Quelle fonction transforme un texte JSON en objets Python ?
+            choices: ["json.dumps", "json.loads", "json.text", "json.parse"]
+            answer: 1
+            explain: loads = load string (texte → objet) ; dumps fait l'inverse.
+        flashcards:
+          - { q: "Lire un CSV ligne à ligne en dictionnaires", a: "csv.DictReader(f)" }
+          - { q: "Modes d'ouverture", a: "\"r\" lire, \"w\" écrire (écrase), \"a\" ajouter." }
+        exercises:
+          - id: ex-csv-json
+            type: code
+            lang: python
+            title: Du CSV au JSON
+            statement: |
+              Le fichier `ventes.csv` (créé par le code de préparation) contient `produit,quantite,prix_unitaire`.
+
+              Écrivez `convertir(chemin_csv, chemin_json)` qui :
+              1. lit le CSV avec `csv.DictReader` ;
+              2. calcule pour chaque ligne `total = quantite × prix_unitaire` (attention aux types !) ;
+              3. écrit dans `chemin_json` une liste de dictionnaires `{"produit", "total"}` ;
+              4. renvoie le **nombre de lignes** écrites.
+            setup: |
+              with open("ventes.csv", "w", encoding="utf-8") as f:
+                  f.write("produit,quantite,prix_unitaire\nclavier,2,89.9\nsouris,5,29.9\n\"écran, 27 pouces\",1,249\n")
+            starter: |
+              import csv
+              import json
+
+              def convertir(chemin_csv, chemin_json):
+                  lignes = []
+                  # lire le CSV et remplir lignes
+                  with open(chemin_json, "w", encoding="utf-8") as f:
+                      json.dump(lignes, f, ensure_ascii=False)
+                  return len(lignes)
+
+              print(convertir("ventes.csv", "ventes.json"))
+              print(open("ventes.json", encoding="utf-8").read())
+            solution: |
+              import csv
+              import json
+
+              def convertir(chemin_csv, chemin_json):
+                  lignes = []
+                  with open(chemin_csv, encoding="utf-8") as f:
+                      for ligne in csv.DictReader(f):
+                          total = int(ligne["quantite"]) * float(ligne["prix_unitaire"])
+                          lignes.append({"produit": ligne["produit"], "total": round(total, 2)})
+                  with open(chemin_json, "w", encoding="utf-8") as f:
+                      json.dump(lignes, f, ensure_ascii=False)
+                  return len(lignes)
+
+              print(convertir("ventes.csv", "ventes.json"))
+              print(open("ventes.json", encoding="utf-8").read())
+            tests:
+              - { label: "3 lignes converties", code: "assert convertir('ventes.csv', 'out.json') == 3" }
+              - { label: "Totaux corrects, virgule dans le nom gérée", code: "import json; d = json.load(open('out.json', encoding='utf-8')); assert d == [{'produit': 'clavier', 'total': 179.8}, {'produit': 'souris', 'total': 149.5}, {'produit': 'écran, 27 pouces', 'total': 249.0}], d" }
+            hints:
+              - "csv.DictReader(f) donne des dictionnaires dont toutes les valeurs sont du texte."
+              - "Convertissez : int(ligne[\"quantite\"]) et float(ligne[\"prix_unitaire\"])."
+              - "Arrondissez le total à 2 décimales avec round()."
+            model: "Le produit « écran, 27 pouces » contient une virgule : un `split(\",\")` naïf aurait décalé toutes les colonnes. Le module `csv` gère les guillemets. Et tout ce qui sort d'un CSV est du texte : on convertit avant de calculer."
+      - id: py-erreurs
+        title: Gérer les erreurs proprement
+        objectives:
+          - Attraper une exception précise avec try/except
+          - Lever ses propres erreurs avec raise
+          - Isoler les lignes en erreur sans arrêter tout le traitement
+        docs:
+          - { title: "Tutoriel Python — Erreurs et exceptions", url: "https://docs.python.org/fr/3/tutorial/errors.html" }
+          - { title: "Python — Module logging (tutoriel)", url: "https://docs.python.org/fr/3/howto/logging.html" }
+        quiz:
+          - type: qcm
+            q: Pourquoi éviter « except: pass » ?
+            choices: ["C'est trop lent", "Cela masque toutes les erreurs, même imprévues", "Ce n'est pas du Python valide", "Cela arrête le programme"]
+            answer: 1
+            explain: On attrape uniquement les erreurs qu'on sait traiter.
+          - type: qcm
+            q: Quelle exception lève float("abc") ?
+            choices: ["TypeError", "ValueError", "KeyError", "IndexError"]
+            answer: 1
+            explain: Le type (str) est accepté, mais la valeur n'est pas convertible.
+          - type: vf
+            q: En production, on préfère logging à print.
+            answer: true
+            explain: logging horodate, gère des niveaux et peut écrire dans des fichiers ou des outils de supervision.
+        flashcards:
+          - { q: "try / except", a: "Le code risqué dans try ; except ErreurPrécise: pour la traiter." }
+          - { q: "raise", a: "raise ValueError(\"message\") : échouer tôt et clairement." }
+        exercises:
+          - id: ex-rejets
+            type: code
+            lang: python
+            title: Trier les lignes valides et les rejets
+            statement: |
+              Écrivez `nettoyer(lignes, seuil_rejet=0.2)` qui reçoit des montants sous forme de texte (`"12,5"`, `"80"`, `"N/A"`, `""`…) :
+              - convertit chaque montant en `float` (la virgule décimale doit être acceptée) ;
+              - met de côté les lignes non convertibles ;
+              - renvoie `(valides, rejets)` ;
+              - **lève une `ValueError`** si la proportion de rejets dépasse `seuil_rejet`.
+            starter: |
+              def nettoyer(lignes, seuil_rejet=0.2):
+                  valides, rejets = [], []
+                  for l in lignes:
+                      valides.append(float(l))
+                  return valides, rejets
+
+              print(nettoyer(["120", "80,5", "N/A", "45", "300"]))
+            solution: |
+              def nettoyer(lignes, seuil_rejet=0.2):
+                  valides, rejets = [], []
+                  for l in lignes:
+                      try:
+                          valides.append(float(l.replace(",", ".")))
+                      except ValueError:
+                          rejets.append(l)
+                  if lignes and len(rejets) / len(lignes) > seuil_rejet:
+                      raise ValueError(f"Trop de rejets : {len(rejets)} sur {len(lignes)}")
+                  return valides, rejets
+
+              print(nettoyer(["120", "80,5", "N/A", "45", "300"]))
+            tests:
+              - { label: "Virgule acceptée, N/A rejeté", code: "assert nettoyer(['120', '80,5', 'N/A', '45', '300']) == ([120.0, 80.5, 45.0, 300.0], ['N/A'])" }
+              - { label: "Trop de rejets → ValueError", code: "try:\n    nettoyer(['x', 'y', '1'])\n    assert False, 'une ValueError était attendue'\nexcept ValueError:\n    pass" }
+              - { label: "Liste vide → ([], [])", code: "assert nettoyer([]) == ([], [])" }
+            hints:
+              - "Remplacez la virgule par un point avant float()."
+              - "try: … except ValueError: rejets.append(l)"
+              - "Proportion de rejets = len(rejets) / len(lignes) (attention à la liste vide)."
+            model: "Ce motif (isoler les lignes en erreur, compter, échouer au-delà d'un seuil) est utilisé dans tous les pipelines de qualité. Un pipeline qui « avale » silencieusement 30 % de lignes invalides est pire qu'un pipeline qui s'arrête et alerte."
+      - id: py-modules
+        title: Modules, paquets et environnements virtuels
+        objectives:
+          - Importer des modules de la bibliothèque standard
+          - Installer des paquets avec pip et figer les dépendances
+          - Isoler chaque projet dans un environnement virtuel
+        docs:
+          - { title: "Python — Environnements virtuels et paquets", url: "https://docs.python.org/fr/3/tutorial/venv.html" }
+          - { title: "uv — documentation", url: "https://docs.astral.sh/uv/" }
+        quiz:
+          - type: qcm
+            q: À quoi sert un environnement virtuel ?
+            choices: ["À accélérer Python", "À isoler les dépendances de chaque projet", "À sécuriser le mot de passe", "À exécuter Python dans le navigateur"]
+            answer: 1
+            explain: Chaque projet a ses propres versions de bibliothèques.
+          - type: qcm
+            q: Quelle commande enregistre les dépendances installées dans un fichier ?
+            choices: ["pip save", "pip freeze > requirements.txt", "pip export", "python -m venv"]
+            answer: 1
+            explain: Le fichier se réinstalle ensuite avec pip install -r requirements.txt.
+          - type: vf
+            q: Le dossier .venv doit être commité dans Git.
+            answer: false
+            explain: On commite le fichier de dépendances, pas l'environnement (lourd et propre à chaque machine).
+        flashcards:
+          - { q: "Créer et activer un venv (Linux)", a: "python -m venv .venv puis source .venv/bin/activate" }
+          - { q: "if __name__ == \"__main__\":", a: "Code exécuté seulement si le fichier est lancé directement." }
+        exercises:
+          - id: ex-venv-ordre
+            type: ordre
+            title: Démarrer un projet Python proprement
+            statement: Remettez dans l'ordre les étapes de démarrage d'un projet Python professionnel.
+            items:
+              - Créer le dossier du projet et faire git init
+              - Créer l'environnement virtuel (python -m venv .venv)
+              - Ajouter .venv/ au .gitignore
+              - Activer l'environnement virtuel
+              - Installer les dépendances (pip install pandas requests)
+              - Figer les dépendances (pip freeze > requirements.txt)
+              - Commiter le code et requirements.txt
+            model: Un collègue n'aura qu'à cloner, créer son propre environnement et lancer pip install -r requirements.txt.
+          - id: ex-stdlib
+            type: code
+            lang: python
+            title: La bibliothèque standard à la rescousse
+            statement: |
+              Sans installer quoi que ce soit, utilisez la bibliothèque standard pour écrire `echeance(date_texte, jours)` qui reçoit une date `"AAAA-MM-JJ"` et un nombre de jours, et renvoie la date d'échéance au même format.
+
+              Exemple : `echeance("2026-10-05", 30)` → `"2026-11-04"`.
+            starter: |
+              from datetime import date, timedelta
+
+              def echeance(date_texte, jours):
+                  # date.fromisoformat() lit une date AAAA-MM-JJ
+                  return date_texte
+
+              print(echeance("2026-10-05", 30))
+            solution: |
+              from datetime import date, timedelta
+
+              def echeance(date_texte, jours):
+                  d = date.fromisoformat(date_texte)
+                  return (d + timedelta(days=jours)).isoformat()
+
+              print(echeance("2026-10-05", 30))
+            tests:
+              - { label: "5 octobre + 30 jours", code: "assert echeance('2026-10-05', 30) == '2026-11-04'" }
+              - { label: "Passage d'année", code: "assert echeance('2026-12-20', 15) == '2027-01-04'" }
+              - { label: "Année bissextile 2028", code: "assert echeance('2028-02-28', 1) == '2028-02-29'" }
+            hints:
+              - "date.fromisoformat(\"2026-10-05\") renvoie un objet date."
+              - "On ajoute timedelta(days=jours), puis .isoformat() pour revenir au texte."
+            model: "Ne calculez jamais les dates « à la main » : fins de mois, années bissextiles et fuseaux horaires sont des pièges classiques. `datetime` les gère."
+  - id: m3
+    title: Python professionnel
+    level: 3
+    summary: Programmation orientée objet, code pythonique, tests automatisés, API web.
+    lessons:
+      - id: py-poo
+        title: Programmation orientée objet
+        objectives:
+          - Définir une classe avec constructeur, attributs et méthodes
+          - Utiliser l'héritage et le polymorphisme
+          - Utiliser les dataclasses
+        docs:
+          - { title: "Tutoriel Python — Classes", url: "https://docs.python.org/fr/3/tutorial/classes.html" }
+          - { title: "Python — dataclasses", url: "https://docs.python.org/fr/3/library/dataclasses.html" }
+        quiz:
+          - type: qcm
+            q: Que désigne self dans une méthode ?
+            choices: ["La classe", "L'objet sur lequel la méthode est appelée", "Le module", "Le parent"]
+            answer: 1
+            explain: self est l'instance courante.
+          - type: qcm
+            q: Quelle méthode est appelée à la création d'un objet ?
+            choices: ["__repr__", "__init__", "__main__", "__new_object__"]
+            answer: 1
+            explain: __init__ est le constructeur.
+          - type: vf
+            q: Il faut toujours préférer une classe à une fonction.
+            answer: false
+            explain: Une fonction simple est souvent plus lisible ; la classe se justifie quand données et comportements vont ensemble.
+        flashcards:
+          - { q: "Classe / objet", a: "Classe = modèle ; objet = exemplaire créé à partir du modèle." }
+          - { q: "@dataclass", a: "Génère automatiquement constructeur et affichage pour un enregistrement." }
+        exercises:
+          - id: ex-stock
+            type: code
+            lang: python
+            title: Une classe Stock
+            statement: |
+              Écrivez une classe `Stock` :
+              - `Stock(produit, quantite=0)` ;
+              - `entrer(n)` ajoute `n` ;
+              - `sortir(n)` retire `n`, mais **lève une `ValueError`** si le stock est insuffisant ou si `n` n'est pas positif ;
+              - `est_en_rupture()` renvoie `True` si la quantité est 0.
+            starter: |
+              class Stock:
+                  def __init__(self, produit, quantite=0):
+                      self.produit = produit
+                      self.quantite = quantite
+
+                  # méthodes à écrire
+
+              s = Stock("clavier", 5)
+              print(s.quantite)
+            solution: |
+              class Stock:
+                  def __init__(self, produit, quantite=0):
+                      self.produit = produit
+                      self.quantite = quantite
+
+                  def entrer(self, n):
+                      if n <= 0:
+                          raise ValueError("La quantité doit être positive")
+                      self.quantite += n
+
+                  def sortir(self, n):
+                      if n <= 0:
+                          raise ValueError("La quantité doit être positive")
+                      if n > self.quantite:
+                          raise ValueError("Stock insuffisant")
+                      self.quantite -= n
+
+                  def est_en_rupture(self):
+                      return self.quantite == 0
+
+              s = Stock("clavier", 5)
+              print(s.quantite)
+            tests:
+              - { label: "Entrées et sorties", code: "s = Stock('souris', 2); s.entrer(3); s.sortir(4); assert s.quantite == 1" }
+              - { label: "Rupture", code: "s = Stock('x', 1); s.sortir(1); assert s.est_en_rupture() is True" }
+              - { label: "Sortie impossible → ValueError, stock inchangé", code: "s = Stock('x', 1)\ntry:\n    s.sortir(5)\n    assert False, 'ValueError attendue'\nexcept ValueError:\n    pass\nassert s.quantite == 1" }
+              - { label: "Quantité négative refusée", code: "s = Stock('x', 1)\ntry:\n    s.sortir(-2)\n    assert False, 'ValueError attendue'\nexcept ValueError:\n    pass" }
+            hints:
+              - "Chaque méthode reçoit self en premier paramètre."
+              - "Vérifiez les erreurs AVANT de modifier self.quantite."
+            model: "La classe protège sa propre cohérence : impossible d'avoir un stock négatif. C'est l'un des intérêts de la POO : les règles vivent avec les données."
+      - id: py-pythonique
+        title: Écrire du code pythonique
+        objectives:
+          - Utiliser compréhensions et générateurs
+          - Appliquer les idiomes Python
+          - Respecter la PEP 8 avec les outils adaptés
+        docs:
+          - { title: "PEP 8 — Guide de style", url: "https://peps.python.org/pep-0008/" }
+          - { title: "Ruff — documentation", url: "https://docs.astral.sh/ruff/" }
+        quiz:
+          - type: qcm
+            q: Que produit [x * 2 for x in range(4) if x % 2 == 0] ?
+            choices: ["[0, 2, 4, 6]", "[0, 4]", "[2, 6]", "[0, 2]"]
+            answer: 1
+            explain: "x vaut 0 et 2 (pairs), doublés : [0, 4]."
+          - type: qcm
+            q: Quel est l'intérêt d'un générateur (yield) ?
+            choices: ["Il est plus joli", "Il produit les valeurs à la demande, sans tout charger en mémoire", "Il est obligatoire pour les boucles", "Il trie les données"]
+            answer: 1
+            explain: Indispensable pour traiter un fichier de plusieurs Go ligne par ligne.
+          - type: qcm
+            q: Quel outil vérifie et reformate le style d'un code Python ?
+            choices: ["pip", "ruff", "venv", "pytest"]
+            answer: 1
+            explain: ruff est un linter et formateur très rapide.
+        flashcards:
+          - { q: "any / all", a: "any : au moins un vrai ; all : tous vrais." }
+          - { q: "PEP 8 en bref", a: "4 espaces, snake_case, PascalCase pour les classes, lignes courtes." }
+        exercises:
+          - id: ex-comprehensions
+            type: code
+            lang: python
+            title: Réécrire en compréhensions
+            statement: |
+              Réécrivez les trois fonctions en **une seule ligne** chacune (un `return` avec une compréhension), sans changer leur comportement.
+            starter: |
+              def emails_valides(emails):
+                  res = []
+                  for e in emails:
+                      if "@" in e:
+                          res.append(e.lower())
+                  return res
+
+              def index_par_id(clients):
+                  res = {}
+                  for c in clients:
+                      res[c["id"]] = c["nom"]
+                  return res
+
+              def villes_distinctes(clients):
+                  res = set()
+                  for c in clients:
+                      res.add(c["ville"])
+                  return res
+            solution: |
+              def emails_valides(emails):
+                  return [e.lower() for e in emails if "@" in e]
+
+              def index_par_id(clients):
+                  return {c["id"]: c["nom"] for c in clients}
+
+              def villes_distinctes(clients):
+                  return {c["ville"] for c in clients}
+            tests:
+              - { label: "emails_valides", code: "assert emails_valides(['Ada@EX.com', 'pas-un-mail', 'g@h.io']) == ['ada@ex.com', 'g@h.io']" }
+              - { label: "index_par_id", code: "assert index_par_id([{'id': 1, 'nom': 'Ada', 'ville': 'Lyon'}, {'id': 2, 'nom': 'Ken', 'ville': 'Lyon'}]) == {1: 'Ada', 2: 'Ken'}" }
+              - { label: "villes_distinctes", code: "assert villes_distinctes([{'ville': 'Lyon'}, {'ville': 'Lyon'}, {'ville': 'Lille'}]) == {'Lyon', 'Lille'}" }
+              - { label: "Chaque fonction tient en une ligne de corps", code: "for f in (emails_valides, index_par_id, villes_distinctes):\n    lignes = {l for _, _, l in f.__code__.co_lines() if l} - {f.__code__.co_firstlineno}\n    assert len(lignes) == 1, f'{f.__name__} : le corps occupe {len(lignes)} lignes'" }
+            hints:
+              - "Liste : [expression for e in emails if condition]"
+              - "Dictionnaire : {clé: valeur for c in clients}"
+              - "Ensemble : {expression for c in clients}"
+            model: "Les trois formes de compréhension (liste, dictionnaire, ensemble) remplacent avantageusement les boucles d'accumulation simples. Pour une logique plus complexe, la boucle reste plus lisible."
+      - id: py-tests
+        title: Tester son code
+        objectives:
+          - Écrire des assertions et des tests pytest
+          - Choisir les cas à tester (nominal, limites, erreurs)
+          - Situer tests unitaires, d'intégration et de bout en bout
+        docs:
+          - { title: "pytest — Bien démarrer", url: "https://docs.pytest.org/en/stable/getting-started.html" }
+        quiz:
+          - type: qcm
+            q: Comment pytest reconnaît-il un test ?
+            choices: ["Par un commentaire # test", "Une fonction dont le nom commence par test_ dans un fichier test_*.py", "Par un décorateur obligatoire", "Il faut les lister dans un fichier"]
+            answer: 1
+            explain: Convention de nommage, sans configuration.
+          - type: qcm
+            q: Quel type de test doit être le plus nombreux ?
+            choices: ["Bout en bout", "Intégration", "Unitaire", "Manuel"]
+            answer: 2
+            explain: La pyramide des tests : beaucoup de tests unitaires, rapides et ciblés.
+          - type: vf
+            q: Quand on corrige un bug, il est utile d'ajouter un test qui le reproduit.
+            answer: true
+            explain: Le test empêche le bug de revenir (test de non-régression).
+        flashcards:
+          - { q: "Les 4 familles de cas à tester", a: "Nominal, limites, entrées invalides, bugs passés." }
+          - { q: "pytest.raises", a: "with pytest.raises(ValueError): … vérifie qu'une erreur est levée." }
+        exercises:
+          - id: ex-ecrire-tests
+            type: code
+            lang: python
+            title: Écrire les tests d'une fonction
+            statement: |
+              La fonction `remise(prix, client)` (fournie) applique une remise : 10 % pour les clients `"fidele"`, 20 % pour les `"vip"`, 0 sinon ; elle refuse les prix négatifs.
+
+              Écrivez une fonction `tester_remise()` qui contient **au moins 4 assertions** couvrant : le client standard, le fidèle, le VIP et le prix négatif (qui doit lever une `ValueError`).
+
+              L'application vérifiera que vos tests passent sur la bonne fonction… **et qu'ils détectent une version boguée.**
+            setup: |
+              def _remise_correcte(prix, client):
+                  if prix < 0:
+                      raise ValueError("prix négatif")
+                  taux = {"fidele": 0.10, "vip": 0.20}.get(client, 0)
+                  return round(prix * (1 - taux), 2)
+              remise = _remise_correcte
+            starter: |
+              def tester_remise():
+                  assert remise(100, "standard") == 100
+                  # ajoutez vos assertions
+
+              tester_remise()
+              print("Tests passés")
+            solution: |
+              def tester_remise():
+                  assert remise(100, "standard") == 100
+                  assert remise(100, "fidele") == 90
+                  assert remise(100, "vip") == 80
+                  try:
+                      remise(-1, "vip")
+                      assert False, "une ValueError était attendue"
+                  except ValueError:
+                      pass
+
+              tester_remise()
+              print("Tests passés")
+            tests:
+              - { label: "Vos tests passent sur la bonne fonction", code: "remise = _remise_correcte\ntester_remise()" }
+              - { label: "Ils détectent une remise VIP erronée", code: "def remise(p, c):\n    return round(p * (1 - {'fidele': 0.1, 'vip': 0.25}.get(c, 0)), 2) if p >= 0 else (_ for _ in ()).throw(ValueError())\nglobals()['remise'] = remise\ntry:\n    tester_remise()\n    raise AssertionError('vos tests ne détectent pas une remise VIP de 25 %')\nexcept AssertionError as e:\n    if 'ne détectent pas' in str(e):\n        raise\nfinally:\n    globals()['remise'] = _remise_correcte" }
+              - { label: "Ils détectent l'oubli du contrôle des prix négatifs", code: "def remise(p, c):\n    return round(p * (1 - {'fidele': 0.1, 'vip': 0.2}.get(c, 0)), 2)\nglobals()['remise'] = remise\ntry:\n    tester_remise()\n    raise AssertionError('vos tests ne détectent pas l oubli du contrôle des prix négatifs')\nexcept AssertionError as e:\n    if 'ne détectent pas' in str(e):\n        raise\nfinally:\n    globals()['remise'] = _remise_correcte" }
+            hints:
+              - "Une assertion par catégorie de client."
+              - "Pour l'erreur : try: remise(-1, ...) puis assert False ; except ValueError: pass"
+            model: "Un bon test **échoue** quand le code est faux. C'est exactement ce que vérifie cet exercice : on remplace la fonction par des versions boguées et on regarde si vos tests les attrapent (c'est le principe des « tests de mutation »)."
+      - id: py-api
+        title: Interroger une API web
+        objectives:
+          - Construire une requête HTTP avec requests (paramètres, en-têtes, timeout)
+          - Parcourir une API paginée
+          - Gérer limites et erreurs (429, 5xx) avec des réessais
+        docs:
+          - { title: "Requests — Quickstart", url: "https://requests.readthedocs.io/en/latest/user/quickstart/" }
+          - { title: "FastAPI — Tutoriel", url: "https://fastapi.tiangolo.com/fr/tutorial/" }
+        quiz:
+          - type: qcm
+            q: Pourquoi indiquer un timeout dans requests.get ?
+            choices: ["Pour aller plus vite", "Pour ne pas bloquer indéfiniment si le serveur ne répond pas", "C'est obligatoire", "Pour chiffrer la requête"]
+            answer: 1
+            explain: Sans timeout, un appel peut rester suspendu pour toujours.
+          - type: qcm
+            q: Une API répond 429. Que faire ?
+            choices: ["Réessayer immédiatement en boucle", "Ralentir et réessayer après un délai", "Changer de jeton", "Abandonner définitivement"]
+            answer: 1
+            explain: 429 = trop de requêtes ; l'en-tête Retry-After indique souvent combien attendre.
+          - type: vf
+            q: On peut écrire le jeton d'accès d'une API directement dans le code commité.
+            answer: false
+            explain: Le jeton se lit dans une variable d'environnement alimentée par un gestionnaire de secrets.
+        flashcards:
+          - { q: "raise_for_status()", a: "Lève une erreur si la réponse HTTP est un code 4xx ou 5xx." }
+          - { q: "Backoff exponentiel", a: "Attendre 1 s, 2 s, 4 s… entre les tentatives en cas d'erreur temporaire." }
+        exercises:
+          - id: ex-pagination
+            type: code
+            lang: python
+            title: Récupérer toutes les pages d'une API
+            statement: |
+              La fonction `appeler_page(numero)` (fournie) simule une API paginée. Elle renvoie un dictionnaire :
+
+              ```text
+              {"commandes": [...], "page_suivante": True ou False}
+              ```
+
+              Écrivez `toutes_les_commandes()` qui parcourt toutes les pages à partir de la page 1, et renvoie la liste complète des commandes. Elle doit aussi renvoyer **le nombre d'appels** effectués : `(commandes, nb_appels)`.
+            setup: |
+              _pages = {1: ([101, 102, 103], True), 2: ([104, 105, 106], True), 3: ([107], False)}
+              _appels = []
+              def appeler_page(numero):
+                  _appels.append(numero)
+                  if numero not in _pages:
+                      raise ValueError(f"La page {numero} n'existe pas : il fallait s'arrêter avant !")
+                  cmds, suivante = _pages[numero]
+                  return {"commandes": [{"id": c} for c in cmds], "page_suivante": suivante}
+            starter: |
+              def toutes_les_commandes():
+                  commandes = []
+                  page = 1
+                  nb_appels = 0
+                  # boucle à écrire
+                  return commandes, nb_appels
+
+              cmds, n = toutes_les_commandes()
+              print(len(cmds), "commandes en", n, "appels")
+            solution: |
+              def toutes_les_commandes():
+                  commandes = []
+                  page = 1
+                  nb_appels = 0
+                  while True:
+                      donnees = appeler_page(page)
+                      nb_appels += 1
+                      commandes.extend(donnees["commandes"])
+                      if not donnees["page_suivante"]:
+                          break
+                      page += 1
+                  return commandes, nb_appels
+
+              cmds, n = toutes_les_commandes()
+              print(len(cmds), "commandes en", n, "appels")
+            tests:
+              - { label: "Les 7 commandes sont récupérées dans l'ordre", code: "cmds, n = toutes_les_commandes(); assert [c['id'] for c in cmds] == [101, 102, 103, 104, 105, 106, 107]" }
+              - { label: "Exactement 3 appels (pas de page en trop)", code: "cmds, n = toutes_les_commandes(); assert n == 3, n" }
+            hints:
+              - "while True: … break quand page_suivante est faux."
+              - "liste.extend(autre_liste) ajoute tous les éléments."
+            model: "Selon les API, la pagination se fait par numéro de page, par décalage (*offset*) ou par curseur (un jeton renvoyé par l'API) ; le principe de la boucle reste le même. En production, on y ajoute timeout, réessais et journalisation."

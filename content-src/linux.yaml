@@ -1,0 +1,703 @@
+id: linux
+version: 2026.10.1
+title: Linux et ligne de commande
+branch: Socle
+icon: 🐧
+color: "#e8590c"
+order: 11
+updatedAt: 2026-10-05
+description: Piloter un serveur au clavier — fichiers, recherche, tubes, droits, processus, scripts, SSH, automatisation.
+outlook: Linux fait tourner l'essentiel du cloud, des conteneurs et des plateformes data. Le terminal est l'outil de travail quotidien des data engineers, ingénieurs cloud, DevOps et SRE — et il le restera.
+glossary:
+  - { term: Shell, en: shell, def: "Programme qui interprète les commandes tapées dans le terminal (bash, zsh)." }
+  - { term: Invite, en: prompt, def: "Texte affiché avant le curseur, qui indique l'utilisateur, la machine et le dossier courant." }
+  - { term: Chemin absolu, en: absolute path, def: "Adresse d'un fichier depuis la racine /, valable quel que soit le dossier courant." }
+  - { term: Chemin relatif, en: relative path, def: "Adresse d'un fichier à partir du dossier courant (sans / au début)." }
+  - { term: Tube, en: pipe, def: "Le caractère | qui envoie la sortie d'une commande dans l'entrée de la suivante." }
+  - { term: Redirection, en: redirection, def: "Envoi de la sortie d'une commande vers un fichier (> écrase, >> ajoute)." }
+  - { term: Permissions, en: permissions, def: "Droits de lecture (r), écriture (w) et exécution (x) d'un fichier pour son propriétaire, son groupe et les autres." }
+  - { term: root, en: root, def: "Le super-administrateur d'un système Linux, qui a tous les droits." }
+  - { term: sudo, en: sudo, def: "Préfixe qui exécute une seule commande avec les droits d'administrateur." }
+  - { term: Processus, en: process, def: "Programme en cours d'exécution, identifié par un numéro (PID)." }
+  - { term: Service, en: service / daemon, def: "Programme qui tourne en permanence en arrière-plan, géré par systemd." }
+  - { term: Variable d'environnement, en: environment variable, def: "Valeur nommée transmise aux programmes lancés depuis le shell (PATH, HOME…), souvent utilisée pour la configuration." }
+  - { term: Script, en: script, def: "Fichier texte contenant une suite de commandes à exécuter automatiquement." }
+  - { term: SSH, en: Secure Shell, def: "Protocole de connexion chiffrée à une machine distante." }
+  - { term: Clé publique, en: public key, def: "Moitié partageable d'une paire de clés ; on la dépose sur les serveurs. La clé privée, elle, ne se partage jamais." }
+  - { term: cron, en: cron, def: "Planificateur de tâches de Linux ; chaque ligne de crontab associe un calendrier à une commande." }
+  - { term: Idempotence, en: idempotence, def: "Propriété d'une opération qui donne le même résultat qu'on l'exécute une ou plusieurs fois." }
+modules:
+  - id: m1
+    title: Premiers pas dans le terminal
+    level: 1
+    summary: Se repérer, se déplacer, créer et ranger des fichiers, lire et fouiller leur contenu, combiner les commandes.
+    lessons:
+      - id: linux-pourquoi
+        title: Pourquoi Linux et le terminal ? Vos premières commandes
+        objectives:
+          - Comprendre ce qu'est Linux et pourquoi il domine les serveurs
+          - Distinguer terminal, shell et invite
+          - Utiliser pwd, ls et cd
+        docs:
+          - { title: "Ubuntu — Tutoriel : la ligne de commande pour débutants", url: "https://ubuntu.com/tutorials/command-line-for-beginners" }
+          - { title: "Manuel de ls (man7.org)", url: "https://man7.org/linux/man-pages/man1/ls.1.html" }
+        quiz:
+          - type: qcm
+            q: Que fait la commande pwd ?
+            choices: ["Elle change de dossier", "Elle affiche le dossier courant", "Elle liste les fichiers", "Elle affiche le mot de passe"]
+            answer: 1
+            explain: "pwd = print working directory : elle affiche le chemin du dossier dans lequel on se trouve."
+          - type: qcm
+            q: "Dans « ls -l /etc », que représente « -l » ?"
+            choices: ["L'argument", "La commande", "Une option", "Le dossier courant"]
+            answer: 2
+            explain: "Les options commencent par un tiret et modifient le comportement de la commande ; /etc est l'argument."
+          - type: vf
+            q: "« LS » et « ls » sont deux façons équivalentes d'écrire la même commande."
+            answer: false
+            explain: Le shell est sensible à la casse ; seule la forme en minuscules existe.
+          - type: qcm
+            q: Quelle touche complète automatiquement un nom de fichier ou de commande ?
+            choices: ["Entrée", "Tab", "Échap", "Ctrl+C"]
+            answer: 1
+            explain: "Tab complète ; si plusieurs possibilités existent, un second appui les liste."
+          - type: qcm
+            q: Comment revenir à son dossier personnel ?
+            choices: ["cd /", "cd ..", "cd ~", "cd home"]
+            answer: 2
+            explain: "~ désigne le dossier personnel (cd tout seul fait la même chose). / est la racine, .. le dossier parent."
+        flashcards:
+          - { q: "pwd", a: "Affiche le dossier courant (print working directory)." }
+          - { q: "ls -la", a: "Liste le contenu du dossier en format détaillé, fichiers cachés compris." }
+          - { q: "cd ..", a: "Remonte au dossier parent." }
+          - { q: "Obtenir l'aide d'une commande", a: "man commande (q pour quitter) ou commande --help." }
+        exercises:
+          - id: ex-premiers-pas
+            type: terminal
+            title: Premier contact avec le terminal
+            statement: |
+              Bienvenue dans votre premier terminal ! Il est simulé : vous ne pouvez rien casser.
+
+              Accomplissez les objectifs ci-dessous. Ils se cochent tout seuls dès qu'ils sont atteints.
+            files:
+              Documents/lisez-moi.txt: "Bravo, vous avez trouvé le fichier caché dans Documents !\n"
+              .config/: ""
+            tasks:
+              - label: Afficher le dossier courant
+                check: { type: ran, regex: "^pwd$" }
+                hint: Tapez pwd puis Entrée.
+              - label: Lister le contenu du dossier personnel, fichiers cachés compris
+                check: { type: ran, regex: "^ls\\s+-(la|al|a)\\b" }
+                hint: "L'option qui montre les fichiers cachés est -a ; vous pouvez la combiner avec -l : ls -la"
+              - label: Aller dans le dossier Documents
+                check: { type: cwd, path: "Documents" }
+                hint: "cd Documents (pensez à la touche Tab pour compléter le nom)"
+              - label: Revenir dans votre dossier personnel
+                check: { type: ran, regex: "^cd( ~| \\.\\.)?$" }
+                hint: "cd .. ou cd ~ ou simplement cd"
+            commands: ["pwd", "ls -la", "cd Documents", "cd .."]
+            model: |
+              Les quatre commandes : `pwd`, `ls -la`, `cd Documents`, puis `cd ..` (ou `cd ~`, ou `cd`).
+
+              Remarquez que `ls` sans option n'affiche pas le dossier `.config` : les noms qui commencent par un point sont **cachés**. C'est là que les programmes rangent leur configuration.
+      - id: linux-fichiers
+        title: Fichiers, dossiers et chemins
+        objectives:
+          - Comprendre l'arborescence Linux et la racine /
+          - Distinguer chemins absolus et relatifs
+          - Créer, copier, déplacer, renommer et supprimer
+        docs:
+          - { title: "GNU Coreutils — manuel (cp, mv, rm, mkdir…)", url: "https://www.gnu.org/software/coreutils/manual/coreutils.html" }
+        quiz:
+          - type: qcm
+            q: "Vous êtes dans /home/apprenant. Quel chemin désigne le même fichier que /home/apprenant/projet/data.csv ?"
+            choices: ["/projet/data.csv", "projet/data.csv", "../projet/data.csv", "~/data.csv"]
+            answer: 1
+            explain: "Un chemin relatif part du dossier courant : projet/data.csv. /projet/... partirait de la racine."
+          - type: qcm
+            q: Quelle commande renomme fichier.txt en notes.txt ?
+            choices: ["cp fichier.txt notes.txt", "rename fichier.txt", "mv fichier.txt notes.txt", "rm fichier.txt notes.txt"]
+            answer: 2
+            explain: "mv déplace… et renommer, c'est déplacer vers un nouveau nom. cp laisserait l'original en place."
+          - type: vf
+            q: "Un fichier supprimé avec rm peut être récupéré dans la corbeille."
+            answer: false
+            explain: Il n'y a pas de corbeille en ligne de commande ; rm est définitif.
+          - type: qcm
+            q: "Que fait « mkdir -p a/b/c » si le dossier a n'existe pas ?"
+            choices: ["Une erreur", "Il crée a, puis b, puis c", "Il crée seulement c", "Il demande confirmation"]
+            answer: 1
+            explain: "-p crée toute la chaîne de dossiers parents manquants, sans erreur."
+          - type: qcm
+            q: "Que liste « ls *.csv » ?"
+            choices: ["Le fichier nommé *.csv", "Tous les fichiers dont le nom finit par .csv", "Les dossiers csv", "Rien, * est interdit"]
+            answer: 1
+            explain: "* remplace n'importe quelle suite de caractères : le shell remplace le motif par la liste des fichiers qui correspondent."
+        flashcards:
+          - { q: "Chemin absolu vs relatif", a: "Absolu : commence par / (depuis la racine). Relatif : depuis le dossier courant." }
+          - { q: "Copier un dossier", a: "cp -r source destination" }
+          - { q: "Renommer un fichier", a: "mv ancien_nom nouveau_nom" }
+          - { q: "Créer une chaîne de dossiers", a: "mkdir -p a/b/c" }
+        exercises:
+          - id: ex-ranger
+            type: terminal
+            title: Ranger un dossier de projet
+            statement: |
+              Votre dossier personnel contient des fichiers en vrac. Organisez un projet propre :
+
+              ```text
+              ventes/
+              ├── data/
+              │   └── brut/        ← les fichiers CSV
+              ├── scripts/         ← le script Python
+              └── README.md
+              ```
+            files:
+              ventes_janvier.csv: "date,montant\n2026-01-03,120\n"
+              ventes_fevrier.csv: "date,montant\n2026-02-07,95\n"
+              nettoyage.py: "print('nettoyage')\n"
+              brouillon.tmp: "à supprimer\n"
+            tasks:
+              - label: Créer ventes/data/brut et ventes/scripts
+                check: { type: exists, path: "ventes/data/brut", kind: dir }
+                hint: "mkdir -p ventes/data/brut ventes/scripts"
+              - label: Les deux CSV sont dans ventes/data/brut
+                check: { type: exists, path: "ventes/data/brut/ventes_fevrier.csv", kind: file }
+                hint: "mv *.csv ventes/data/brut/"
+              - label: nettoyage.py est dans ventes/scripts
+                check: { type: exists, path: "ventes/scripts/nettoyage.py", kind: file }
+              - label: Un fichier README.md (vide) existe dans ventes
+                check: { type: exists, path: "ventes/README.md", kind: file }
+                hint: touch ventes/README.md
+              - label: Le fichier brouillon.tmp a disparu
+                check: { type: absent, path: "brouillon.tmp" }
+            commands:
+              - mkdir -p ventes/data/brut ventes/scripts
+              - mv *.csv ventes/data/brut/
+              - mv nettoyage.py ventes/scripts/
+              - touch ventes/README.md
+              - rm brouillon.tmp
+              - tree ventes
+            model: |
+              ```bash
+              mkdir -p ventes/data/brut ventes/scripts
+              mv *.csv ventes/data/brut/
+              mv nettoyage.py ventes/scripts/
+              touch ventes/README.md
+              rm brouillon.tmp
+              tree ventes
+              ```
+              Le motif `*.csv` déplace les deux fichiers en une seule commande. `tree` permet de vérifier le résultat d'un coup d'œil.
+      - id: linux-lire
+        title: Lire et chercher dans les fichiers
+        objectives:
+          - Afficher tout ou partie d'un fichier (cat, head, tail)
+          - Compter des lignes avec wc
+          - Chercher dans le contenu avec grep et des noms de fichiers avec find
+        docs:
+          - { title: "Manuel de grep (GNU)", url: "https://www.gnu.org/software/grep/manual/grep.html" }
+        quiz:
+          - type: qcm
+            q: Quelle commande affiche les 20 dernières lignes d'un journal ?
+            choices: ["head -n 20 app.log", "tail -n 20 app.log", "cat -20 app.log", "grep 20 app.log"]
+            answer: 1
+            explain: "tail affiche la fin d'un fichier ; dans un journal, les événements récents sont à la fin."
+          - type: qcm
+            q: "Que fait « grep -c ERROR app.log » ?"
+            choices: ["Affiche les lignes contenant ERROR", "Compte les lignes contenant ERROR", "Supprime les lignes ERROR", "Cherche un fichier nommé ERROR"]
+            answer: 1
+            explain: "-c (count) compte les lignes correspondantes au lieu de les afficher."
+          - type: qcm
+            q: Pour trouver tous les fichiers .log dans /var, on utilise…
+            choices: ["grep .log /var", "find /var -name \"*.log\"", "ls /var/*.log", "cat /var/*.log"]
+            answer: 1
+            explain: "find cherche des fichiers par nom dans toute une arborescence ; grep cherche dans le contenu."
+          - type: vf
+            q: "« grep -v DEBUG » affiche uniquement les lignes contenant DEBUG."
+            answer: false
+            explain: "-v inverse la sélection : ce sont les lignes qui NE contiennent PAS DEBUG."
+        flashcards:
+          - { q: "Suivre un journal en direct", a: "tail -f fichier.log" }
+          - { q: "Compter les lignes d'un fichier", a: "wc -l fichier" }
+          - { q: "grep -i", a: "Recherche insensible à la casse (majuscules/minuscules)." }
+          - { q: "grep ou find ?", a: "grep cherche dans le contenu des fichiers ; find cherche des fichiers par leur nom." }
+        exercises:
+          - id: ex-enquete-logs
+            type: terminal
+            title: "Enquête : des connexions suspectes"
+            statement: |
+              Le journal système `/var/log/syslog` contient des tentatives de connexion échouées.
+
+              Menez l'enquête avec les commandes vues dans la leçon. Les objectifs vérifient que vous avez **affiché** les bonnes informations.
+            tasks:
+              - label: Afficher les 3 premières lignes du journal
+                check: { type: ran, regex: "head\\s+(-n\\s*3|-3)\\s+/var/log/syslog" }
+                hint: "head -n 3 /var/log/syslog"
+              - label: Afficher les lignes contenant « Failed », avec leur numéro de ligne
+                check: { type: ran, regex: "grep\\s+(-n\\s+.*Failed|.*Failed.*-n|-\\w*n\\w*\\s+.*Failed)" }
+                hint: "grep -n Failed /var/log/syslog"
+              - label: Compter les lignes contenant « failed », quelle que soit la casse
+                check: { type: output, regex: "^3$" }
+                hint: "grep -i -c failed /var/log/syslog"
+              - label: Trouver le chemin de tous les fichiers dont le nom se termine par .log ou syslog dans /var
+                check: { type: ran, regex: "find\\s+/var" }
+                hint: "find /var -name \"*log\""
+            commands:
+              - head -n 3 /var/log/syslog
+              - grep -n Failed /var/log/syslog
+              - grep -i -c failed /var/log/syslog
+              - find /var -name "*log"
+            model: |
+              ```bash
+              head -n 3 /var/log/syslog
+              grep -n Failed /var/log/syslog
+              grep -i -c failed /var/log/syslog     # 3
+              find /var -name "*log"
+              ```
+              Trois échecs de connexion, tous depuis la même adresse 203.0.113.7, dont deux sur le compte root : c'est typique d'une attaque par force brute. Sur un vrai serveur, on bloquerait cette adresse (pare-feu, fail2ban) et on interdirait la connexion SSH directe en root.
+      - id: linux-tubes
+        title: Redirections et tubes — combiner les commandes
+        objectives:
+          - Écrire dans un fichier avec > et >>
+          - Brancher les commandes avec |
+          - Compter des occurrences avec sort | uniq -c
+        quiz:
+          - type: qcm
+            q: "Quelle est la différence entre > et >> ?"
+            choices: ["Aucune", "> ajoute, >> écrase", "> écrase, >> ajoute à la fin", "> affiche, >> enregistre"]
+            answer: 2
+            explain: "> remplace le contenu du fichier ; >> ajoute à la fin."
+          - type: qcm
+            q: "Pourquoi écrit-on souvent « sort | uniq -c » plutôt que « uniq -c » seul ?"
+            choices: ["Pour aller plus vite", "Parce que uniq ne fusionne que les doublons consécutifs", "Parce que uniq ne marche pas seul", "Pour trier par ordre alphabétique inverse"]
+            answer: 1
+            explain: "uniq ne compare que des lignes voisines : il faut d'abord regrouper les valeurs identiques en triant."
+          - type: qcm
+            q: "Que fait « cut -d, -f2 clients.csv » ?"
+            choices: ["Supprime la 2e ligne", "Affiche la 2e colonne d'un fichier séparé par des virgules", "Coupe le fichier en deux", "Affiche les 2 premières lignes"]
+            answer: 1
+            explain: "-d donne le séparateur (ici la virgule), -f le numéro de colonne."
+          - type: vf
+            q: "Dans « mkdir rapport && cd rapport », le cd n'est exécuté que si mkdir a réussi."
+            answer: true
+            explain: "&& n'exécute la commande suivante qu'en cas de succès de la précédente."
+        flashcards:
+          - { q: "Le tube |", a: "Envoie la sortie d'une commande dans l'entrée de la suivante." }
+          - { q: "Compter les occurrences d'une colonne", a: "cut -d, -fN fichier | sort | uniq -c | sort -rn" }
+          - { q: "> vs >>", a: "> écrase le fichier ; >> ajoute à la fin." }
+        exercises:
+          - id: ex-pipeline-csv
+            type: terminal
+            title: Analyser un fichier de commandes sans tableur
+            statement: |
+              Le fichier `commandes.csv` contient les commandes d'une boutique en ligne : `id,client,ville,montant`.
+
+              Répondez aux questions de la direction **uniquement avec la ligne de commande**, et produisez un petit rapport.
+            files:
+              commandes.csv: |
+                id,client,ville,montant
+                1,Ada,Lyon,120
+                2,Linus,Paris,80
+                3,Grace,Lyon,45
+                4,Ada,Lyon,60
+                5,Ken,Lille,200
+                6,Grace,Paris,30
+                7,Linus,Paris,75
+                8,Ada,Lyon,15
+            tasks:
+              - label: Compter le nombre de lignes du fichier (en-tête compris)
+                check: { type: output, regex: "^9( commandes\\.csv)?$" }
+                hint: "wc -l commandes.csv"
+              - label: Afficher le nombre de commandes par ville (avec uniq -c)
+                check: { type: output, regex: "4 Lyon" }
+                hint: "Extraire la 3e colonne (cut -d, -f3), retirer l'en-tête (tail -n +2 ou grep -v ville), trier, compter."
+              - label: Créer rapport.txt contenant la liste des clients distincts (une ligne par client, sans l'en-tête)
+                check: { type: content, path: "rapport.txt", regex: "^Ada\\nGrace\\nKen\\nLinus\\n$" }
+                hint: "cut -d, -f2 commandes.csv | grep -v client | sort -u > rapport.txt"
+            commands:
+              - wc -l commandes.csv
+              - cut -d, -f3 commandes.csv | grep -v ville | sort | uniq -c
+              - cut -d, -f2 commandes.csv | grep -v client | sort -u > rapport.txt
+              - cat rapport.txt
+            model: |
+              ```bash
+              wc -l commandes.csv
+              cut -d, -f3 commandes.csv | grep -v ville | sort | uniq -c
+              cut -d, -f2 commandes.csv | grep -v client | sort -u > rapport.txt
+              cat rapport.txt
+              ```
+              `grep -v ville` retire la ligne d'en-tête (on aurait aussi pu écrire `tail -n +2` sur un vrai système). `sort -u` trie en supprimant les doublons : c'est un raccourci de `sort | uniq`.
+
+              Retenez la démarche : on construit la chaîne une étape à la fois, en regardant le résultat intermédiaire.
+  - id: m2
+    title: Administrer une machine Linux
+    level: 2
+    summary: Droits et sécurité, processus et services, variables et scripts, réseau et SSH.
+    lessons:
+      - id: linux-droits
+        title: Utilisateurs, permissions et sudo
+        objectives:
+          - Lire les permissions rwx d'un fichier
+          - Convertir des permissions en notation chiffrée
+          - Modifier les droits avec chmod en respectant le moindre privilège
+        docs:
+          - { title: "Manuel de chmod (GNU)", url: "https://www.gnu.org/software/coreutils/manual/html_node/chmod-invocation.html" }
+        quiz:
+          - type: qcm
+            q: "Que signifient les droits rwxr-x--- ?"
+            choices: ["Tout le monde peut tout faire", "Propriétaire : tout ; groupe : lire et exécuter ; autres : rien", "Propriétaire : lire ; groupe : écrire ; autres : exécuter", "Fichier en lecture seule"]
+            answer: 1
+            explain: "Trois trios : propriétaire rwx, groupe r-x, autres ---."
+          - type: qcm
+            q: "Quelle valeur chiffrée correspond à rw-r--r-- ?"
+            choices: ["755", "644", "600", "664"]
+            answer: 1
+            explain: "rw- = 4+2 = 6 ; r-- = 4 ; r-- = 4 → 644."
+          - type: qcm
+            q: "« Permission denied » en lançant ./script.sh : la bonne réaction ?"
+            choices: ["sudo ./script.sh", "chmod 777 script.sh", "chmod +x script.sh", "Supprimer le fichier"]
+            answer: 2
+            explain: "Il manque le droit d'exécution. 777 ouvrirait le fichier à tout le monde ; sudo est inutile et dangereux."
+          - type: vf
+            q: "Une clé privée SSH doit avoir les droits 600."
+            answer: true
+            explain: "Seul le propriétaire doit pouvoir la lire et l'écrire ; SSH refuse une clé trop ouverte."
+        flashcards:
+          - { q: "r, w, x en chiffres", a: "r = 4, w = 2, x = 1 (on additionne par trio)." }
+          - { q: "755", a: "rwxr-xr-x : propriétaire tout, groupe et autres lire + exécuter (scripts, dossiers)." }
+          - { q: "644", a: "rw-r--r-- : fichier ordinaire." }
+          - { q: "Principe du moindre privilège", a: "Ne donner que les droits strictement nécessaires." }
+        exercises:
+          - id: ex-chmod-calcul
+            type: calcul
+            title: Convertir des permissions
+            statement: Donnez la valeur chiffrée (octale) de chaque jeu de permissions.
+            questions:
+              - { q: "rwxr-xr-x", answer: 755, explain: "rwx = 7, r-x = 5, r-x = 5." }
+              - { q: "rw-------", answer: 600, explain: "rw- = 6, --- = 0, --- = 0. Typique d'une clé privée." }
+              - { q: "rw-rw-r--", answer: 664, explain: "rw- = 6, rw- = 6, r-- = 4." }
+              - { q: "r--r-----", answer: 440, explain: "r-- = 4, r-- = 4, --- = 0. Lecture seule pour le propriétaire et le groupe." }
+          - id: ex-chmod-terminal
+            type: terminal
+            title: Sécuriser des fichiers
+            statement: |
+              Un collègue vous a laissé un script de déploiement et un fichier de mots de passe avec des droits incorrects. Corrigez-les.
+            files:
+              deploy.sh: "#!/bin/bash\necho Déploiement\n"
+              secrets.env: "DB_PASSWORD=change-moi\n"
+            tasks:
+              - label: deploy.sh est exécutable
+                check: { type: exec, path: "deploy.sh" }
+                hint: "chmod +x deploy.sh (ou chmod 755 deploy.sh)"
+              - label: "secrets.env n'est lisible que par vous (droits 600)"
+                check: { type: ran, regex: "chmod\\s+(600|u=rw,go=|go-rwx)\\s+secrets\\.env" }
+                hint: "chmod 600 secrets.env"
+              - label: Vérifier les droits avec ls -l
+                check: { type: ran, regex: "^ls\\s+-\\w*l" }
+            commands:
+              - chmod +x deploy.sh
+              - chmod 600 secrets.env
+              - ls -l
+            model: |
+              ```bash
+              chmod +x deploy.sh
+              chmod 600 secrets.env
+              ls -l
+              ```
+              Résultat attendu : `-rwxr-xr-x … deploy.sh` et `-rw------- … secrets.env`.
+      - id: linux-processus
+        title: Processus, services et ressources
+        objectives:
+          - Distinguer programme et processus
+          - Observer et arrêter des processus
+          - Gérer un service avec systemctl et surveiller disque et mémoire
+        docs:
+          - { title: "systemctl — manuel (freedesktop.org via man7)", url: "https://man7.org/linux/man-pages/man1/systemctl.1.html" }
+        quiz:
+          - type: qcm
+            q: Qu'est-ce qu'un PID ?
+            choices: ["Un mot de passe", "L'identifiant unique d'un processus", "Un type de fichier", "Une adresse IP"]
+            answer: 1
+            explain: "Process ID : chaque processus en cours a un numéro unique."
+          - type: qcm
+            q: Quelle commande vérifie l'espace disque restant ?
+            choices: ["free -h", "du -sh", "df -h", "top"]
+            answer: 2
+            explain: "df (disk free) affiche l'occupation des disques ; free concerne la mémoire vive ; du la taille d'un dossier."
+          - type: qcm
+            q: "Pourquoi éviter « kill -9 » en premier réflexe ?"
+            choices: ["Il ne fonctionne pas", "Il ne laisse pas au programme le temps de s'arrêter proprement", "Il redémarre la machine", "Il demande sudo"]
+            answer: 1
+            explain: "Le signal KILL tue immédiatement le processus, qui ne peut ni sauvegarder ni libérer ses ressources."
+          - type: vf
+            q: "« systemctl enable nginx » démarre nginx automatiquement au démarrage de la machine."
+            answer: true
+            explain: "enable configure le démarrage automatique ; start le démarre maintenant."
+        flashcards:
+          - { q: "Voir les processus qui consomment le plus", a: "top (ou htop)" }
+          - { q: "Relancer un service", a: "sudo systemctl restart nom" }
+          - { q: "Lire les journaux d'un service", a: "journalctl -u nom -n 50" }
+          - { q: "df -h / free -h", a: "Espace disque / mémoire vive, en unités lisibles." }
+        exercises:
+          - id: ex-diagnostic
+            type: ordre
+            title: Diagnostiquer un serveur qui « ne marche plus »
+            statement: Un site web ne répond plus. Remettez dans un ordre logique les étapes du diagnostic.
+            items:
+              - Se connecter au serveur en SSH
+              - Vérifier l'état du service avec systemctl status
+              - Lire les dernières lignes de ses journaux (journalctl -u)
+              - Vérifier l'espace disque (df -h) et la mémoire (free -h)
+              - Corriger la cause (libérer de l'espace, corriger la configuration…)
+              - Relancer le service avec systemctl restart
+              - Vérifier que le site répond (curl)
+            model: On observe avant d'agir, on corrige la cause avant de relancer, et on vérifie toujours le résultat.
+      - id: linux-scripts
+        title: Variables d'environnement et scripts bash
+        objectives:
+          - Créer et lire des variables, exporter des variables d'environnement
+          - Écrire un script bash avec shebang et set -e
+          - Rendre un script exécutable et le lancer
+        docs:
+          - { title: "Manuel de Bash (GNU)", url: "https://www.gnu.org/software/bash/manual/bash.html" }
+          - { title: "The Twelve-Factor App — Configuration", url: "https://12factor.net/fr/config" }
+        quiz:
+          - type: qcm
+            q: Quelle affectation est correcte en bash ?
+            choices: ["PROJET = ventes", "PROJET=ventes", "$PROJET=ventes", "set PROJET ventes"]
+            answer: 1
+            explain: "Pas d'espaces autour du = ; le $ sert seulement à lire la variable."
+          - type: qcm
+            q: "À quoi sert « set -e » au début d'un script ?"
+            choices: ["À afficher chaque commande", "À arrêter le script à la première erreur", "À exporter les variables", "À rendre le script exécutable"]
+            answer: 1
+            explain: Sans set -e, un script continue après une erreur et peut laisser un état incohérent.
+          - type: qcm
+            q: "Pourquoi lance-t-on un script avec ./script.sh et non script.sh ?"
+            choices: ["Par habitude", "Parce que le dossier courant n'est pas dans le PATH", "Pour l'exécuter en root", "Pour le compiler"]
+            answer: 1
+            explain: Par sécurité, le shell ne cherche pas les commandes dans le dossier courant ; ./ indique le chemin explicitement.
+          - type: vf
+            q: "On peut stocker le mot de passe de la base de données directement dans un script versionné sur Git."
+            answer: false
+            explain: Les secrets ne vont jamais dans le code ; on les passe par des variables d'environnement alimentées par un gestionnaire de secrets.
+        flashcards:
+          - { q: "Shebang", a: "#!/bin/bash en première ligne : indique l'interpréteur du script." }
+          - { q: "export VAR=valeur", a: "Crée une variable d'environnement transmise aux programmes lancés." }
+          - { q: "PATH", a: "Liste des dossiers où le shell cherche les commandes." }
+        exercises:
+          - id: ex-premier-script
+            type: terminal
+            title: Votre premier script d'automatisation
+            statement: |
+              Écrivez un script `prepare.sh` qui prépare l'espace de travail d'un traitement de données, puis exécutez-le.
+
+              Le script doit :
+              1. commencer par le shebang `#!/bin/bash` et `set -e` ;
+              2. créer le dossier `travail/entrees` (avec `mkdir -p`) ;
+              3. écrire la ligne `date,montant` dans `travail/entrees/modele.csv`.
+
+              Astuce : tapez `edit prepare.sh` pour ouvrir l'éditeur intégré. Vous pouvez aussi construire le fichier avec `echo` et `>>`.
+            tasks:
+              - label: prepare.sh existe et commence par le shebang
+                check: { type: content, path: "prepare.sh", regex: "^#!/bin/bash" }
+              - label: Le script contient set -e
+                check: { type: content, path: "prepare.sh", includes: "set -e" }
+              - label: prepare.sh est exécutable
+                check: { type: exec, path: "prepare.sh" }
+              - label: Le script a été exécuté et a créé travail/entrees/modele.csv
+                check: { type: content, path: "travail/entrees/modele.csv", includes: "date,montant" }
+                hint: "./prepare.sh (après chmod +x)"
+            commands:
+              - echo '#!/bin/bash' > prepare.sh
+              - echo 'set -e' >> prepare.sh
+              - echo 'mkdir -p travail/entrees' >> prepare.sh
+              - echo 'echo "date,montant" > travail/entrees/modele.csv' >> prepare.sh
+              - chmod +x prepare.sh
+              - bash prepare.sh
+              - cat travail/entrees/modele.csv
+            model: |
+              Contenu de `prepare.sh` :
+              ```bash
+              #!/bin/bash
+              set -e
+              mkdir -p travail/entrees
+              echo "date,montant" > travail/entrees/modele.csv
+              ```
+              Puis :
+              ```bash
+              chmod +x prepare.sh
+              ./prepare.sh
+              ```
+              Le script est **idempotent** : `mkdir -p` ne plante pas si le dossier existe, et `>` réécrit le fichier au lieu d'ajouter une ligne à chaque exécution.
+          - id: ex-variables
+            type: terminal
+            title: Configurer par variables d'environnement
+            statement: |
+              Une application lit sa configuration dans des variables d'environnement.
+
+              1. Créez la variable d'environnement `ENVIRONNEMENT` valant `recette`.
+              2. Affichez-la avec `echo`.
+              3. Enregistrez la phrase `Déploiement en recette` dans `deploiement.log` **en utilisant la variable** (pas le mot tapé en dur).
+            tasks:
+              - label: ENVIRONNEMENT est exportée avec la valeur recette
+                check: { type: ran, regex: "export\\s+ENVIRONNEMENT=recette" }
+              - label: La variable est affichée
+                check: { type: output, regex: "^recette$" }
+                hint: "echo $ENVIRONNEMENT"
+              - label: deploiement.log contient « Déploiement en recette » grâce à la variable
+                check: { type: ran, regex: "echo.*\\$\\{?ENVIRONNEMENT\\}?.*>+\\s*deploiement\\.log" }
+                hint: "echo \"Déploiement en $ENVIRONNEMENT\" >> deploiement.log"
+            commands:
+              - export ENVIRONNEMENT=recette
+              - echo $ENVIRONNEMENT
+              - echo "Déploiement en $ENVIRONNEMENT" >> deploiement.log
+              - cat deploiement.log
+            model: |
+              ```bash
+              export ENVIRONNEMENT=recette
+              echo $ENVIRONNEMENT
+              echo "Déploiement en $ENVIRONNEMENT" >> deploiement.log
+              ```
+              Notez les **guillemets doubles** : à l'intérieur, `$ENVIRONNEMENT` est remplacé par sa valeur. Avec des guillemets simples, le texte serait pris littéralement.
+      - id: linux-reseau-ssh
+        title: Réseau en ligne de commande et SSH
+        objectives:
+          - Diagnostiquer avec ip, ping, curl, nslookup
+          - Se connecter à distance avec SSH
+          - Créer et protéger une paire de clés SSH
+        docs:
+          - { title: "GitHub — Générer une nouvelle clé SSH", url: "https://docs.github.com/fr/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" }
+        quiz:
+          - type: qcm
+            q: Quelle partie d'une paire de clés SSH dépose-t-on sur le serveur ?
+            choices: ["La clé privée", "La clé publique", "Les deux", "Aucune, on utilise un mot de passe"]
+            answer: 1
+            explain: "La clé publique (.pub) est faite pour être distribuée ; la privée ne quitte jamais votre machine."
+          - type: qcm
+            q: Quelle commande teste qu'une API web répond ?
+            choices: ["ping", "curl", "ssh", "ip a"]
+            answer: 1
+            explain: "curl envoie une requête HTTP et affiche la réponse ; ping teste seulement la joignabilité réseau."
+          - type: vf
+            q: "Le trafic d'une session SSH circule en clair sur le réseau."
+            answer: false
+            explain: SSH chiffre toute la connexion.
+        flashcards:
+          - { q: "Se connecter à un serveur", a: "ssh utilisateur@hôte (option -i pour indiquer une clé)" }
+          - { q: "Créer une paire de clés moderne", a: "ssh-keygen -t ed25519" }
+          - { q: "Copier un fichier vers un serveur", a: "scp fichier utilisateur@hôte:/chemin/ (ou rsync)" }
+        exercises:
+          - id: ex-ssh-keys
+            type: terminal
+            title: Préparer son accès SSH
+            statement: |
+              Vous rejoignez une équipe : il faut fournir votre **clé publique** à l'administrateur.
+
+              1. Générez une paire de clés ed25519.
+              2. Vérifiez que la clé privée a bien les droits 600 (`ls -l ~/.ssh`).
+              3. Affichez votre clé **publique** pour pouvoir la copier.
+            tasks:
+              - label: Une paire de clés ed25519 existe dans ~/.ssh
+                check: { type: exists, path: ".ssh/id_ed25519.pub", kind: file }
+                hint: "ssh-keygen -t ed25519"
+              - label: Les droits de ~/.ssh ont été vérifiés
+                check: { type: ran, regex: "ls\\s+-\\w*l\\w*\\s+(~/)?\\.ssh" }
+              - label: La clé publique a été affichée
+                check: { type: output, regex: "^ssh-ed25519 " }
+                hint: "cat ~/.ssh/id_ed25519.pub"
+            commands:
+              - ssh-keygen -t ed25519
+              - ls -l ~/.ssh
+              - cat ~/.ssh/id_ed25519.pub
+            model: |
+              ```bash
+              ssh-keygen -t ed25519
+              ls -l ~/.ssh
+              cat ~/.ssh/id_ed25519.pub
+              ```
+              On transmet **uniquement** le contenu du fichier `.pub`. Si quelqu'un vous demande votre clé privée « pour configurer l'accès », c'est une erreur (ou une arnaque).
+  - id: m3
+    title: Automatiser et exploiter
+    level: 3
+    summary: Planifier des tâches, journaliser, rendre une automatisation fiable.
+    lessons:
+      - id: linux-automatiser
+        title: Planifier avec cron et fiabiliser ses automatisations
+        objectives:
+          - Lire et écrire une expression cron
+          - Journaliser la sortie et les erreurs d'une tâche
+          - Appliquer les qualités d'une bonne automatisation (idempotence, alerte…)
+        docs:
+          - { title: "crontab(5) — format", url: "https://man7.org/linux/man-pages/man5/crontab.5.html" }
+          - { title: "crontab.guru — traducteur d'expressions cron", url: "https://crontab.guru/" }
+        quiz:
+          - type: qcm
+            q: "Que signifie l'expression cron « 0 6 * * 1-5 » ?"
+            choices: ["Toutes les 6 minutes", "À 6 h, du lundi au vendredi", "Le 6 de chaque mois", "À 0 h 06 chaque jour"]
+            answer: 1
+            explain: "minute 0, heure 6, tous les jours du mois, tous les mois, jours de la semaine 1 à 5 (lundi à vendredi)."
+          - type: qcm
+            q: "« */15 * * * * » déclenche une tâche…"
+            choices: ["à 15 h", "toutes les 15 minutes", "le 15 du mois", "15 fois par jour"]
+            answer: 1
+            explain: "*/15 dans le champ minute signifie : toutes les minutes divisibles par 15."
+          - type: qcm
+            q: "Dans « script.sh >> job.log 2>&1 », que fait 2>&1 ?"
+            choices: ["Exécute le script deux fois", "Envoie aussi les erreurs dans le journal", "Supprime les erreurs", "Crée deux journaux"]
+            answer: 1
+            explain: "Le canal d'erreur (2) est redirigé vers la sortie standard (1), elle-même ajoutée au fichier."
+          - type: vf
+            q: "« echo ligne >> fichier » est une opération idempotente."
+            answer: false
+            explain: Chaque exécution ajoute une ligne : le résultat change à chaque fois.
+        flashcards:
+          - { q: "Les 5 champs de cron", a: "minute, heure, jour du mois, mois, jour de la semaine." }
+          - { q: "Idempotent", a: "Une ou plusieurs exécutions donnent le même résultat." }
+          - { q: "Code de retour 0", a: "La commande a réussi ; toute autre valeur signale une erreur." }
+        exercises:
+          - id: ex-cron
+            type: calcul
+            title: Lire des expressions cron
+            statement: |
+              Pour chaque expression cron, répondez par un nombre.
+            questions:
+              - { q: "« 30 2 * * * » : à quelle heure la tâche se déclenche-t-elle ? (donnez l'heure seule)", answer: 2, explain: "Minute 30, heure 2 : chaque jour à 2 h 30." }
+              - { q: "« */10 * * * * » : combien de fois par heure ?", answer: 6, explain: "Aux minutes 0, 10, 20, 30, 40, 50." }
+              - { q: "« 0 9 * * 1-5 » : combien de fois par semaine ?", answer: 5, explain: "Une fois par jour ouvré, du lundi (1) au vendredi (5)." }
+              - { q: "« 0 0 1 * * » : combien de fois par an ?", answer: 12, explain: "À minuit le 1er de chaque mois." }
+          - id: ex-tache-fiable
+            type: projet
+            title: Concevoir une tâche nocturne fiable
+            statement: |
+              Chaque nuit, un script doit télécharger le fichier des ventes de la veille depuis un serveur partenaire, le déposer dans `/data/ventes/brut/` et le charger dans la base de données.
+
+              Décrivez (en quelques paragraphes ou en liste) :
+              1. la ligne de crontab que vous écririez ;
+              2. ce que fait le script, étape par étape ;
+              3. comment vous garantissez qu'il est **idempotent** ;
+              4. comment l'équipe est prévenue en cas d'échec ;
+              5. où vous rangez le script et comment vous le faites évoluer.
+            rubric:
+              - Une expression cron correcte, à une heure creuse
+              - Étapes claires, avec vérification du fichier reçu (présence, taille, nombre de lignes)
+              - Idempotence expliquée (fichier daté, chargement qui remplace la journée plutôt que d'ajouter)
+              - Journalisation de la sortie et des erreurs
+              - Alerte en cas d'échec (code de retour, notification)
+              - Script versionné dans Git
+            model: |
+              **Crontab** : `15 3 * * * /opt/etl/ventes.sh >> /var/log/etl/ventes.log 2>&1` (3 h 15, heure creuse, après la mise à disposition du fichier par le partenaire).
+
+              **Script** (`set -euo pipefail`) :
+              1. calculer la date de la veille et le nom du fichier attendu (`ventes_2026-10-04.csv`) ;
+              2. télécharger le fichier (`curl --fail`), avec 3 tentatives espacées ;
+              3. vérifier : fichier non vide, en-tête attendu, nombre de lignes plausible ;
+              4. le déposer dans `/data/ventes/brut/` (jamais modifié ensuite) ;
+              5. charger dans la base **en remplaçant** les données de cette date (supprimer puis insérer, dans une transaction) ;
+              6. écrire « OK + nombre de lignes » dans le journal.
+
+              **Idempotence** : fichier daté + chargement par remplacement de la journée : relancer le script ne crée pas de doublons.
+
+              **Alerte** : si le script sort avec un code ≠ 0, un message est envoyé à l'équipe (courriel, messagerie) ; idéalement un outil de supervision vérifie aussi que le journal contient bien un « OK » du jour.
+
+              **Évolution** : script dans un dépôt Git, relu par un collègue, déployé sur le serveur par la chaîne d'intégration. À terme, une telle tâche migre vers un orchestrateur (Airflow) qui gère reprises et historique.

@@ -1,0 +1,425 @@
+id: iac
+version: 2026.10.1
+title: Infrastructure as Code
+branch: Cloud & DevOps
+icon: 🏗️
+color: "#7b42bc"
+order: 33
+updatedAt: 2026-10-05
+description: Décrire l'infrastructure en code avec Terraform/OpenTofu, gérer l'état en équipe, configurer avec Ansible, protéger avec la policy as code.
+outlook: Plus personne ne construit d'infrastructure cloud à la main en entreprise ; Terraform est l'une des compétences les plus citées dans les offres DevOps et cloud, avec une certification au très bon rapport coût/valeur.
+glossary:
+  - { term: Infrastructure as code, en: Infrastructure as Code (IaC), def: "Description de l'infrastructure dans des fichiers versionnés, appliqués automatiquement." }
+  - { term: Déclaratif, en: declarative, def: "On décrit l'état voulu ; l'outil calcule les actions nécessaires." }
+  - { term: HCL, en: HashiCorp Configuration Language, def: "Langage des fichiers Terraform (.tf)." }
+  - { term: Provider, en: provider, def: "Extension Terraform qui pilote un service (AWS, Azure, Kubernetes…)." }
+  - { term: Plan, en: plan, def: "Aperçu des changements que Terraform va appliquer : création, modification, destruction." }
+  - { term: État, en: state, def: "Fichier qui relie le code Terraform aux ressources réellement créées." }
+  - { term: Backend, en: backend, def: "Emplacement de stockage de l'état (distant, chiffré, verrouillé en équipe)." }
+  - { term: Dérive, en: drift, def: "Écart entre l'infrastructure réelle et le code, causé par des modifications manuelles." }
+  - { term: Module, en: module, def: "Ensemble réutilisable de fichiers Terraform, avec entrées et sorties." }
+  - { term: Playbook, en: playbook, def: "Fichier YAML Ansible décrivant les tâches à appliquer à des groupes de machines." }
+  - { term: Policy as code, en: policy as code, def: "Règles de conformité vérifiées automatiquement sur le code ou le plan (OPA, Checkov)." }
+  - { term: OpenTofu, en: OpenTofu, def: "Fork libre de Terraform hébergé par la Linux Foundation." }
+modules:
+  - id: m1
+    title: Terraform
+    level: 2
+    summary: Principes de l'IaC, premiers fichiers Terraform, variables et modules, état et travail en équipe.
+    lessons:
+      - id: iac-pourquoi
+        title: Pourquoi l'infrastructure as code ?
+        objectives:
+          - Identifier les limites de la configuration manuelle
+          - Distinguer déclaratif et impératif
+          - Situer Terraform, OpenTofu, Ansible et les outils des fournisseurs
+        docs:
+          - { title: "HashiCorp — Qu'est-ce que l'infrastructure as code ?", url: "https://developer.hashicorp.com/terraform/tutorials/aws-get-started/infrastructure-as-code" }
+          - { title: "OpenTofu — documentation", url: "https://opentofu.org/docs/" }
+        quiz:
+          - type: qcm
+            q: Quel est l'avantage principal de l'approche déclarative ?
+            choices: ["Elle est plus courte à écrire", "On décrit l'état voulu, l'outil ne fait que ce qui manque (idempotence)", "Elle ne nécessite pas Git", "Elle est plus rapide à exécuter"]
+            answer: 1
+            explain: Appliquer deux fois la même description ne change rien la seconde fois.
+          - type: qcm
+            q: Qu'est-ce que la dérive d'infrastructure ?
+            choices: ["Une panne réseau", "Un écart entre la réalité et le code dû à des modifications manuelles", "Un coût imprévu", "Un bug Terraform"]
+            answer: 1
+            explain: Le plan suivant la révèle.
+          - type: vf
+            q: Ansible sert surtout à configurer des machines existantes, Terraform à créer l'infrastructure.
+            answer: true
+            explain: Les deux se complètent.
+        flashcards:
+          - { q: "Déclaratif vs impératif", a: "État voulu (idempotent) vs suite d'étapes." }
+          - { q: "Source de vérité", a: "Le code versionné dans Git, pas la console." }
+      - id: iac-terraform
+        title: Premiers pas avec Terraform
+        objectives:
+          - Écrire des blocs terraform, provider et resource
+          - Utiliser le cycle init, validate, plan, apply, destroy
+          - Faire référence à une ressource depuis une autre
+        docs:
+          - { title: "Terraform — Démarrer avec AWS (tutoriel)", url: "https://developer.hashicorp.com/terraform/tutorials/aws-get-started" }
+          - { title: "Terraform — Langage (resources)", url: "https://developer.hashicorp.com/terraform/language/resources/syntax" }
+        quiz:
+          - type: qcm
+            q: Quelle commande montre ce qui va changer sans rien modifier ?
+            choices: ["terraform apply", "terraform plan", "terraform init", "terraform destroy"]
+            answer: 1
+            explain: Le plan se lit attentivement avant tout apply.
+          - type: qcm
+            q: Dans resource "aws_s3_bucket" "donnees", que représente « donnees » ?
+            choices: ["Le nom réel du compartiment", "Un nom local pour faire référence à la ressource dans le code", "La région", "Le provider"]
+            answer: 1
+            explain: Le nom réel est l'argument bucket ; « donnees » sert aux références (aws_s3_bucket.donnees.arn).
+          - type: vf
+            q: Les identifiants d'accès au cloud doivent être écrits dans le bloc provider.
+            answer: false
+            explain: Ils proviennent de l'environnement (variables, rôles), jamais du code.
+        flashcards:
+          - { q: "Cycle Terraform", a: "init → fmt → validate → plan → apply (destroy)." }
+          - { q: "Symboles du plan", a: "+ créé, ~ modifié, − détruit." }
+        exercises:
+          - id: ex-tf-cycle
+            type: terminal
+            title: Le cycle de vie Terraform
+            statement: |
+              Le dossier `~/infra` contient un `main.tf` qui décrit un compartiment de stockage.
+
+              1. Initialisez Terraform, validez, affichez le plan, appliquez.
+              2. Relancez un plan : il ne doit plus y avoir de changement (idempotence).
+              3. Ajoutez au fichier un second compartiment (une ligne suffit : `resource "aws_s3_bucket" "journaux" {}`), affichez le plan et appliquez.
+              4. Détruisez tout.
+            files:
+              infra/main.tf: |
+                resource "aws_s3_bucket" "donnees" {
+                  bucket = "techcampus-donnees-brutes"
+                }
+            tasks:
+              - label: Terraform initialisé
+                check: { type: output, regex: "successfully initialized" }
+                hint: "cd infra puis terraform init"
+              - label: Configuration validée
+                check: { type: output, regex: "configuration is valid" }
+              - label: Premier apply (1 ressource ajoutée)
+                check: { type: output, regex: "Apply complete! Resources: 1 added" }
+              - label: Plan sans changement (idempotence)
+                check: { type: output, regex: "No changes" }
+              - label: Second compartiment ajouté et appliqué
+                check: { type: content, path: "infra/terraform.tfstate", includes: "aws_s3_bucket.journaux" }
+              - label: Tout détruit
+                check: { type: output, regex: "Destroy complete! Resources: 2 destroyed" }
+            commands:
+              - cd infra
+              - terraform init
+              - terraform validate
+              - terraform plan
+              - terraform apply
+              - terraform plan
+              - echo 'resource "aws_s3_bucket" "journaux" {}' >> main.tf
+              - terraform plan
+              - terraform apply
+              - terraform destroy
+            model: |
+              ```bash
+              cd infra
+              terraform init
+              terraform validate
+              terraform plan        # + aws_s3_bucket.donnees
+              terraform apply
+              terraform plan        # No changes : idempotence
+              echo 'resource "aws_s3_bucket" "journaux" {}' >> main.tf
+              terraform plan        # + aws_s3_bucket.journaux (seulement celui-là)
+              terraform apply
+              terraform destroy
+              ```
+              Le second plan ne propose que la nouvelle ressource : Terraform compare le code à son état et ne fait que la différence.
+          - id: ex-tf-config
+            type: config
+            title: Écrire une configuration Terraform
+            filename: main.tf
+            syntax: hcl
+            statement: |
+              Écrivez un `main.tf` qui :
+              - déclare le provider `aws` (source `hashicorp/aws`) dans un bloc `terraform { required_providers { … } }` ;
+              - configure le provider pour la région de Paris `eu-west-3` ;
+              - crée un VPC `principal` en `10.0.0.0/16` ;
+              - crée un sous-réseau `prive_a` en `10.0.11.0/24` **rattaché au VPC par référence** (`aws_vpc.principal.id`).
+            starter: |
+              provider "aws" {
+              }
+            solution: |
+              terraform {
+                required_providers {
+                  aws = {
+                    source  = "hashicorp/aws"
+                    version = "~> 6.0"
+                  }
+                }
+              }
+
+              provider "aws" {
+                region = "eu-west-3"
+              }
+
+              resource "aws_vpc" "principal" {
+                cidr_block = "10.0.0.0/16"
+              }
+
+              resource "aws_subnet" "prive_a" {
+                vpc_id     = aws_vpc.principal.id
+                cidr_block = "10.0.11.0/24"
+              }
+            checks:
+              - { label: "Provider aws déclaré (source hashicorp/aws)", regex: "required_providers\\s*\\{[\\s\\S]*source\\s*=\\s*\"hashicorp/aws\"" }
+              - { label: "Région eu-west-3", regex: "provider\\s+\"aws\"\\s*\\{[\\s\\S]*region\\s*=\\s*\"eu-west-3\"" }
+              - { label: "VPC principal en 10.0.0.0/16", regex: "resource\\s+\"aws_vpc\"\\s+\"principal\"\\s*\\{[^}]*cidr_block\\s*=\\s*\"10\\.0\\.0\\.0/16\"" }
+              - { label: "Sous-réseau prive_a en 10.0.11.0/24", regex: "resource\\s+\"aws_subnet\"\\s+\"prive_a\"\\s*\\{[^}]*cidr_block\\s*=\\s*\"10\\.0\\.11\\.0/24\"" }
+              - { label: "Sous-réseau rattaché au VPC par référence", regex: "vpc_id\\s*=\\s*aws_vpc\\.principal\\.id" }
+              - { label: "Aucun identifiant d'accès dans le code", regex: "access_key|secret_key", not: true }
+            hints:
+              - "Une référence s'écrit sans guillemets : aws_vpc.principal.id"
+              - "Chaque bloc s'ouvre par { et se ferme par }."
+            model: "La référence `aws_vpc.principal.id` crée une dépendance : Terraform créera le VPC avant le sous-réseau, et le détruira après. Les identifiants viennent de l'environnement (profil, variables, rôle), jamais du fichier."
+      - id: iac-variables
+        title: Variables, sorties et modules
+        objectives:
+          - Paramétrer une configuration avec des variables
+          - Exposer des sorties
+          - Réutiliser du code avec for_each et les modules
+        docs:
+          - { title: "Terraform — Variables d'entrée", url: "https://developer.hashicorp.com/terraform/language/values/variables" }
+          - { title: "Terraform — Modules", url: "https://developer.hashicorp.com/terraform/language/modules" }
+        quiz:
+          - type: qcm
+            q: Comment utiliser la variable environnement dans un nom ?
+            choices: ["\"techcampus-$environnement\"", "\"techcampus-${var.environnement}\"", "\"techcampus-{environnement}\"", "\"techcampus-\" + environnement"]
+            answer: 1
+            explain: L'interpolation s'écrit ${var.nom}.
+          - type: qcm
+            q: Que fait for_each = toset(["bronze", "silver", "gold"]) sur une ressource ?
+            choices: ["Crée une seule ressource", "Crée trois ressources, une par élément", "Trie la liste", "Rien"]
+            answer: 1
+            explain: each.key prend successivement chaque valeur.
+          - type: vf
+            q: Un mot de passe passé en variable doit être marqué sensitive.
+            answer: true
+            explain: Il n'apparaît alors pas dans les affichages du plan.
+        flashcards:
+          - { q: "variable / output / locals", a: "Entrée / sortie / valeur calculée réutilisable." }
+          - { q: "Module", a: "Dossier Terraform réutilisable avec variables (entrées) et outputs (sorties)." }
+        exercises:
+          - id: ex-tf-variables
+            type: config
+            title: Paramétrer un data lake par environnement
+            filename: datalake.tf
+            syntax: hcl
+            statement: |
+              Écrivez la configuration qui crée les trois zones d'un data lake pour un environnement donné :
+              - une variable `environnement` de type `string` avec une description ;
+              - une ressource `aws_s3_bucket` nommée `zones`, créée avec `for_each` sur `bronze`, `silver` et `gold` ;
+              - le nom de chaque compartiment : `techcampus-<environnement>-<zone>` (interpolation de `var.environnement` et `each.key`) ;
+              - une sortie `noms_des_zones` (avec `output`).
+            starter: |
+              resource "aws_s3_bucket" "zones" {
+                bucket = "techcampus-dev-bronze"
+              }
+            solution: |
+              variable "environnement" {
+                type        = string
+                description = "Nom de l'environnement (dev, recette, prod)"
+              }
+
+              resource "aws_s3_bucket" "zones" {
+                for_each = toset(["bronze", "silver", "gold"])
+                bucket   = "techcampus-${var.environnement}-${each.key}"
+              }
+
+              output "noms_des_zones" {
+                value = [for z in aws_s3_bucket.zones : z.bucket]
+              }
+            checks:
+              - { label: "Variable environnement de type string", regex: "variable\\s+\"environnement\"\\s*\\{[^}]*type\\s*=\\s*string" }
+              - { label: "Description de la variable", regex: "variable\\s+\"environnement\"\\s*\\{[^}]*description\\s*=" }
+              - { label: "for_each sur bronze, silver, gold", regex: "for_each\\s*=\\s*toset\\(\\s*\\[[^\\]]*\"bronze\"[^\\]]*\"silver\"[^\\]]*\"gold\"" }
+              - { label: "Nom interpolé avec var.environnement et each.key", regex: "bucket\\s*=\\s*\"techcampus-\\$\\{var\\.environnement\\}-\\$\\{each\\.key\\}\"" }
+              - { label: "Sortie noms_des_zones", regex: "output\\s+\"noms_des_zones\"\\s*\\{" }
+              - { label: "Aucun nom d'environnement écrit en dur", regex: "techcampus-dev-", not: true }
+            hints:
+              - "Interpolation dans une chaîne : \"techcampus-${var.environnement}-${each.key}\""
+              - "for_each = toset([\"bronze\", \"silver\", \"gold\"])"
+            model: "Le même fichier crée `techcampus-dev-bronze`… en dev et `techcampus-prod-bronze`… en production, selon le `terraform.tfvars` de chaque environnement. Aucun copier-coller, aucune divergence."
+      - id: iac-etat
+        title: L'état Terraform et le travail en équipe
+        objectives:
+          - Comprendre le rôle et les risques du fichier d'état
+          - Configurer un backend distant avec verrouillage
+          - Organiser le flux de travail IaC en équipe
+        docs:
+          - { title: "Terraform — State", url: "https://developer.hashicorp.com/terraform/language/state" }
+          - { title: "Terraform — Backend S3", url: "https://developer.hashicorp.com/terraform/language/backend/s3" }
+        quiz:
+          - type: qcm
+            q: Pourquoi ne jamais commiter terraform.tfstate dans Git ?
+            choices: ["Il est trop gros", "Il peut contenir des secrets et doit être partagé de façon verrouillée", "Git ne gère pas le JSON", "Ce n'est pas utile"]
+            answer: 1
+            explain: L'état contient des valeurs sensibles ; on utilise un backend distant chiffré.
+          - type: qcm
+            q: À quoi sert le verrouillage de l'état ?
+            choices: ["À chiffrer l'état", "À empêcher deux applications simultanées qui le corrompraient", "À accélérer le plan", "À supprimer l'état"]
+            answer: 1
+            explain: Une seule opération à la fois peut modifier l'état.
+        flashcards:
+          - { q: "Backend distant", a: "État partagé, chiffré, versionné et verrouillé (S3, Azure Storage, GCS…)." }
+          - { q: ".gitignore Terraform", a: "*.tfstate*, .terraform/, et les fichiers de variables sensibles." }
+        exercises:
+          - id: ex-iac-flux
+            type: ordre
+            title: Modifier la production, le bon chemin
+            statement: Un port doit être ouvert sur un groupe de sécurité de production. Remettez les étapes dans l'ordre.
+            items:
+              - Créer une branche et modifier le fichier Terraform
+              - Ouvrir une pull request
+              - La CI exécute fmt, validate, les règles de sécurité et terraform plan
+              - Un collègue relit le code et le plan affiché dans la PR
+              - Fusionner la pull request
+              - La CI exécute terraform apply avec ses droits dédiés
+              - Vérifier que le service fonctionne et que le plan suivant est vide
+            model: Personne n'applique depuis son poste ; chaque changement est relu, tracé et reproductible.
+  - id: m2
+    title: Configuration et gouvernance
+    level: 3
+    summary: Ansible pour configurer, bonnes pratiques et policy as code pour protéger.
+    lessons:
+      - id: iac-ansible
+        title: Configurer des machines avec Ansible
+        objectives:
+          - Écrire un inventaire et un playbook
+          - Utiliser des modules idempotents
+          - Articuler Terraform et Ansible
+        docs:
+          - { title: "Ansible — Premiers pas", url: "https://docs.ansible.com/ansible/latest/getting_started/index.html" }
+        quiz:
+          - type: qcm
+            q: Comment Ansible se connecte-t-il aux machines ?
+            choices: ["Par un agent installé", "En SSH, sans agent", "Par FTP", "Par le DNS"]
+            answer: 1
+            explain: Ansible est sans agent.
+          - type: qcm
+            q: Que signifie state present dans le module apt ?
+            choices: ["Supprimer le paquet", "S'assurer que le paquet est installé", "Mettre à jour le système", "Afficher le paquet"]
+            answer: 1
+            explain: L'état voulu est décrit ; si le paquet est déjà là, rien ne change.
+        flashcards:
+          - { q: "become: true", a: "Exécuter les tâches avec les droits d'administrateur." }
+          - { q: "Lancer un playbook", a: "ansible-playbook -i inventaire.ini site.yml" }
+        exercises:
+          - id: ex-ansible
+            type: config
+            title: Un playbook pour les serveurs web
+            filename: site.yml
+            syntax: yaml
+            statement: |
+              Écrivez un playbook qui, sur le groupe `web`, avec les droits d'administrateur :
+              1. installe le paquet `nginx` (module `ansible.builtin.apt`, `state: present`) ;
+              2. démarre le service `nginx` et l'active au démarrage (module `ansible.builtin.service`, `state: started`, `enabled: true`).
+            starter: |
+              - name: Configurer les serveurs web
+                hosts: tous
+                tasks: []
+            solution: |
+              - name: Configurer les serveurs web
+                hosts: web
+                become: true
+                tasks:
+                  - name: Installer nginx
+                    ansible.builtin.apt:
+                      name: nginx
+                      state: present
+                      update_cache: true
+                  - name: Démarrer nginx et l'activer au démarrage
+                    ansible.builtin.service:
+                      name: nginx
+                      state: started
+                      enabled: true
+            checks:
+              - { label: "Cible le groupe web", path: "[*].hosts", equals: "web" }
+              - { label: "Droits d'administrateur (become)", path: "[*].become", equals: true }
+              - { label: "nginx installé avec le module apt (state present)", regex: "ansible\\.builtin\\.apt:\\s*\\n(\\s+\\w+:.*\\n)*?\\s+name:\\s*nginx[\\s\\S]*?state:\\s*present|ansible\\.builtin\\.apt:\\s*\\n(\\s+\\w+:.*\\n)*?\\s+state:\\s*present[\\s\\S]*?name:\\s*nginx" }
+              - { label: "Service nginx démarré (module service, state started)", regex: "ansible\\.builtin\\.service:[\\s\\S]*?state:\\s*started" }
+              - { label: "Service activé au démarrage (enabled true)", regex: "ansible\\.builtin\\.service:[\\s\\S]*?enabled:\\s*(true|yes)" }
+            hints:
+              - "Le playbook est une liste : il commence par « - name: »."
+              - "Chaque tâche : un nom, puis le module (ansible.builtin.apt:) avec ses paramètres indentés."
+            model: "Relancer ce playbook dix fois ne change rien après la première : chaque module vérifie l'état et n'agit que si nécessaire. C'est l'idempotence, comme avec Terraform."
+      - id: iac-pratiques
+        title: Bonnes pratiques et policy as code
+        objectives:
+          - Organiser un dépôt d'infrastructure par environnements et modules
+          - Protéger les ressources critiques
+          - Bloquer automatiquement les configurations dangereuses
+        docs:
+          - { title: "Open Policy Agent — documentation", url: "https://www.openpolicyagent.org/docs/latest/" }
+          - { title: "Checkov — documentation", url: "https://www.checkov.io/" }
+        quiz:
+          - type: qcm
+            q: À quoi sert lifecycle { prevent_destroy = true } ?
+            choices: ["À accélérer apply", "À faire échouer tout plan qui détruirait la ressource", "À chiffrer la ressource", "À la rendre publique"]
+            answer: 1
+            explain: Un garde-fou pour les bases de données et autres ressources critiques.
+          - type: qcm
+            q: Qu'est-ce que la policy as code ?
+            choices: ["Écrire la politique RH en code", "Des règles de conformité vérifiées automatiquement sur le code d'infrastructure", "Un type de provider", "Un format de fichier"]
+            answer: 1
+            explain: Par exemple « aucun stockage public », vérifié dans la CI.
+        flashcards:
+          - { q: "Outils de policy as code", a: "OPA/Conftest, Checkov, Trivy, Sentinel." }
+          - { q: "Un état par…", a: "… environnement (dev, recette, prod)." }
+        exercises:
+          - id: ex-policy
+            type: code
+            lang: python
+            title: Écrire une règle de conformité
+            statement: |
+              Un plan Terraform peut être exporté en JSON. La variable `ressources` (fournie) en est une version simplifiée : une liste de dictionnaires `{"type", "nom", "config"}`.
+
+              Écrivez `violations(ressources)` qui renvoie la liste des messages pour chaque ressource qui enfreint une règle :
+              - un `aws_s3_bucket` dont `config["public"]` vaut `True` → `"<nom> : compartiment public interdit"` ;
+              - toute ressource sans étiquette `projet` dans `config.get("tags", {})` → `"<nom> : étiquette projet manquante"`.
+            setup: |
+              ressources = [
+                  {"type": "aws_s3_bucket", "nom": "donnees", "config": {"public": False, "tags": {"projet": "ventes"}}},
+                  {"type": "aws_s3_bucket", "nom": "site", "config": {"public": True, "tags": {"projet": "vitrine"}}},
+                  {"type": "aws_instance", "nom": "bastion", "config": {"tags": {}}},
+                  {"type": "aws_s3_bucket", "nom": "archives", "config": {"public": True}},
+              ]
+            starter: |
+              def violations(ressources):
+                  messages = []
+                  # parcourir les ressources et appliquer les deux règles
+                  return messages
+
+              for m in violations(ressources):
+                  print(m)
+            solution: |
+              def violations(ressources):
+                  messages = []
+                  for r in ressources:
+                      config = r.get("config", {})
+                      if r["type"] == "aws_s3_bucket" and config.get("public") is True:
+                          messages.append(f"{r['nom']} : compartiment public interdit")
+                      if "projet" not in config.get("tags", {}):
+                          messages.append(f"{r['nom']} : étiquette projet manquante")
+                  return messages
+
+              for m in violations(ressources):
+                  print(m)
+            tests:
+              - { label: "Toutes les violations, dans l'ordre", code: "assert violations(ressources) == ['site : compartiment public interdit', 'bastion : étiquette projet manquante', 'archives : compartiment public interdit', 'archives : étiquette projet manquante'], violations(ressources)" }
+              - { label: "Aucune violation sur une configuration conforme", code: "assert violations([{'type': 'aws_s3_bucket', 'nom': 'ok', 'config': {'public': False, 'tags': {'projet': 'x'}}}]) == []" }
+            hints:
+              - "config.get(\"tags\", {}) renvoie un dictionnaire vide si la clé manque."
+              - "Une ressource peut enfreindre les deux règles : deux messages."
+            model: "C'est exactement ce que font OPA, Checkov ou Trivy, à grande échelle et avec des centaines de règles : lire le plan, appliquer des règles, bloquer la pull request s'il y a des violations."

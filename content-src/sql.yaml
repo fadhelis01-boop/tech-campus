@@ -1,0 +1,714 @@
+id: sql
+version: 2026.10.1
+title: SQL et bases de données
+branch: Data
+icon: 🗄️
+color: "#336791"
+order: 14
+updatedAt: 2026-10-05
+description: Interroger, agréger, joindre, modéliser et optimiser — le langage universel des données, pratiqué sur de vraies bases.
+outlook: SQL a plus de quarante ans et reste la compétence la plus demandée des offres data ; les entrepôts cloud (BigQuery, Snowflake, Databricks) parlent tous SQL.
+glossary:
+  - { term: Table, en: table, def: "Ensemble de lignes (enregistrements) ayant les mêmes colonnes typées." }
+  - { term: Clé primaire, en: primary key, def: "Colonne (ou ensemble de colonnes) qui identifie chaque ligne de façon unique." }
+  - { term: Clé étrangère, en: foreign key, def: "Colonne qui fait référence à la clé primaire d'une autre table." }
+  - { term: SGBD, en: DBMS, def: "Système de gestion de bases de données (PostgreSQL, MySQL, SQLite…)." }
+  - { term: Jointure, en: join, def: "Réunion de lignes de plusieurs tables selon une condition (JOIN … ON)." }
+  - { term: Agrégation, en: aggregation, def: "Résumé de plusieurs lignes en une valeur (COUNT, SUM, AVG…), souvent par groupe (GROUP BY)." }
+  - { term: NULL, en: NULL, def: "Valeur inconnue ou absente ; se teste avec IS NULL." }
+  - { term: CTE, en: Common Table Expression, def: "Résultat intermédiaire nommé avec WITH, qui rend les requêtes lisibles." }
+  - { term: Fonction de fenêtre, en: window function, def: "Calcul par ligne sur un ensemble de lignes voisines, avec OVER (PARTITION BY … ORDER BY …)." }
+  - { term: Normalisation, en: normalization, def: "Organisation des tables pour que chaque information soit stockée à un seul endroit." }
+  - { term: Index, en: index, def: "Structure qui accélère la recherche sur une colonne, au prix d'écritures plus lentes." }
+  - { term: Plan d'exécution, en: query plan, def: "Façon dont le SGBD exécute une requête, visible avec EXPLAIN." }
+  - { term: Transaction, en: transaction, def: "Groupe d'opérations appliquées en tout ou rien (BEGIN, COMMIT, ROLLBACK)." }
+  - { term: ACID, en: ACID, def: "Atomicité, Cohérence, Isolation, Durabilité : garanties des transactions." }
+  - { term: Upsert, en: upsert, def: "Insertion qui met à jour la ligne si elle existe déjà (INSERT … ON CONFLICT, MERGE)." }
+modules:
+  - id: m1
+    title: Interroger les données
+    level: 1
+    summary: Tables et clés, SELECT et filtres, agrégations, jointures.
+    lessons:
+      - id: sql-bases
+        title: Les bases de données relationnelles
+        objectives:
+          - Comprendre tables, lignes, colonnes, clés primaires et étrangères
+          - Écrire un premier SELECT
+          - Situer les principaux SGBD
+        docs:
+          - { title: "Documentation PostgreSQL (français) — Le langage SQL", url: "https://docs.postgresql.fr/current/tutorial-sql.html" }
+          - { title: "SQLite — SELECT", url: "https://www.sqlite.org/lang_select.html" }
+        quiz:
+          - type: qcm
+            q: À quoi sert une clé primaire ?
+            choices: ["À chiffrer la table", "À identifier chaque ligne de façon unique", "À trier la table", "À relier deux bases"]
+            answer: 1
+            explain: Deux lignes ne peuvent pas avoir la même clé primaire.
+          - type: qcm
+            q: Dans la table commandes, que représente client_id ?
+            choices: ["Une clé primaire", "Une clé étrangère vers clients", "Un index", "Un nom de client"]
+            answer: 1
+            explain: Elle fait référence à clients.id.
+          - type: vf
+            q: SELECT * est recommandé dans un programme en production.
+            answer: false
+            explain: On ne récupère que les colonnes utiles ; * sert à explorer.
+        flashcards:
+          - { q: "Clé primaire / étrangère", a: "Primaire : identifiant unique. Étrangère : référence vers la clé primaire d'une autre table." }
+          - { q: "Requête minimale", a: "SELECT colonnes FROM table;" }
+        exercises:
+          - id: ex-sql-premier
+            type: code
+            lang: sql
+            title: Votre première requête
+            setup: "@boutique"
+            statement: |
+              Affichez le **nom** et la **catégorie** de tous les produits.
+
+              Cliquez sur « 🗂️ Voir les tables » pour découvrir la structure de la base.
+            starter: |
+              SELECT
+              FROM produits;
+            solution: |
+              SELECT nom, categorie
+              FROM produits;
+            hints:
+              - "Les colonnes s'écrivent après SELECT, séparées par une virgule."
+            model: "`SELECT nom, categorie FROM produits;` — l'ordre des colonnes dans le résultat suit celui du SELECT."
+      - id: sql-select
+        title: Filtrer, trier, calculer
+        objectives:
+          - Filtrer avec WHERE (AND, OR, IN, BETWEEN, LIKE, IS NULL)
+          - Trier et limiter (ORDER BY, LIMIT)
+          - Calculer des colonnes et dédoublonner
+        docs:
+          - { title: "PostgreSQL — Requêtes : WHERE, ORDER BY, LIMIT", url: "https://docs.postgresql.fr/current/queries.html" }
+        quiz:
+          - type: qcm
+            q: Comment trouver les clients sans ville renseignée ?
+            choices: ["WHERE ville = NULL", "WHERE ville IS NULL", "WHERE ville = ''", "WHERE NOT ville"]
+            answer: 1
+            explain: Rien n'est égal à NULL ; on utilise IS NULL.
+          - type: qcm
+            q: Que sélectionne nom LIKE 'Livre%' ?
+            choices: ["Les noms égaux à « Livre% »", "Les noms qui commencent par « Livre »", "Les noms qui contiennent un %", "Les noms qui finissent par « Livre »"]
+            answer: 1
+            explain: "% remplace n'importe quelle suite de caractères."
+          - type: qcm
+            q: Comment obtenir les 3 produits les plus chers ?
+            choices: ["ORDER BY prix LIMIT 3", "ORDER BY prix DESC LIMIT 3", "TOP 3 prix", "WHERE prix = MAX"]
+            answer: 1
+            explain: Tri décroissant puis on garde les 3 premières lignes.
+          - type: vf
+            q: BETWEEN 20 AND 80 inclut les bornes 20 et 80.
+            answer: true
+            explain: BETWEEN est inclusif des deux côtés.
+        flashcards:
+          - { q: "Ordre d'écriture", a: "SELECT … FROM … WHERE … GROUP BY … HAVING … ORDER BY … LIMIT" }
+          - { q: "Texte en SQL", a: "Entre apostrophes simples : 'Audio'" }
+        exercises:
+          - id: ex-sql-filtre
+            type: code
+            lang: sql
+            title: Les produits informatiques abordables
+            setup: "@boutique"
+            statement: |
+              Affichez le **nom** et le **prix** des produits de la catégorie `Informatique` qui coûtent **moins de 100 €**, du **moins cher au plus cher**.
+            starter: |
+              SELECT nom, prix
+              FROM produits;
+            solution: |
+              SELECT nom, prix
+              FROM produits
+              WHERE categorie = 'Informatique' AND prix < 100
+              ORDER BY prix;
+            ordered: true
+            hints:
+              - "Deux conditions dans le WHERE, reliées par AND."
+              - "ORDER BY prix (croissant par défaut)."
+            model: "Résultat : tapis de souris, souris sans fil, clavier mécanique. Sans `ORDER BY`, l'ordre des lignes n'est **pas garanti** par SQL, même s'il semble stable."
+          - id: ex-sql-ttc
+            type: code
+            lang: sql
+            title: Prix TTC et clients sans ville
+            setup: "@boutique"
+            statement: |
+              1. (à tester librement) Affichez chaque produit avec son prix TTC (`prix * 1.2` arrondi à 2 décimales, nommé `prix_ttc`).
+              2. **Requête à valider** : listez le **nom** des clients dont la **ville est inconnue**.
+            starter: |
+              SELECT nom
+              FROM clients
+              WHERE ville = NULL;
+            solution: |
+              SELECT nom
+              FROM clients
+              WHERE ville IS NULL;
+            hints:
+              - "La requête de départ ne renvoie rien : pourquoi ? Relisez la section sur NULL."
+            model: "`ville = NULL` est toujours « inconnu », donc jamais vrai : aucune ligne. `IS NULL` est la seule façon correcte. Pour la question 1 : `SELECT nom, ROUND(prix * 1.2, 2) AS prix_ttc FROM produits;`"
+      - id: sql-agregats
+        title: Agréger et regrouper — GROUP BY, HAVING
+        objectives:
+          - Utiliser COUNT, SUM, AVG, MIN, MAX
+          - Regrouper avec GROUP BY
+          - Filtrer des groupes avec HAVING
+          - Connaître l'ordre d'exécution d'une requête
+        docs:
+          - { title: "PostgreSQL — GROUP BY et HAVING", url: "https://docs.postgresql.fr/current/queries-table-expressions.html#QUERIES-GROUP" }
+        quiz:
+          - type: qcm
+            q: Quelle clause filtre des groupes après agrégation ?
+            choices: ["WHERE", "HAVING", "ORDER BY", "LIMIT"]
+            answer: 1
+            explain: WHERE filtre les lignes avant le regroupement ; HAVING filtre les groupes.
+          - type: qcm
+            q: COUNT(ville) sur la table clients compte…
+            choices: ["toutes les lignes", "les villes non NULL", "les villes distinctes", "les villes NULL"]
+            answer: 1
+            explain: COUNT(colonne) ignore les NULL ; COUNT(*) compte toutes les lignes.
+          - type: qcm
+            q: Quelle clause s'exécute en premier ?
+            choices: ["SELECT", "WHERE", "FROM", "ORDER BY"]
+            answer: 2
+            explain: "FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT."
+        flashcards:
+          - { q: "WHERE vs HAVING", a: "WHERE : lignes, avant GROUP BY. HAVING : groupes, après." }
+          - { q: "Règle du GROUP BY", a: "Toute colonne du SELECT non agrégée doit figurer dans le GROUP BY." }
+        exercises:
+          - id: ex-sql-groupby
+            type: code
+            lang: sql
+            title: Commandes par statut
+            setup: "@boutique"
+            statement: |
+              Affichez, pour chaque **statut** de commande, le **nombre de commandes** (colonne `nb`), du statut le plus fréquent au moins fréquent.
+            starter: |
+              SELECT statut
+              FROM commandes;
+            solution: |
+              SELECT statut, COUNT(*) AS nb
+              FROM commandes
+              GROUP BY statut
+              ORDER BY nb DESC;
+            ordered: true
+            hints:
+              - "COUNT(*) compte les lignes de chaque groupe."
+              - "GROUP BY statut, puis ORDER BY nb DESC."
+            model: "livrée (7), en cours (2), annulée (1)."
+          - id: ex-sql-having
+            type: code
+            lang: sql
+            title: Les services à forte masse salariale
+            setup: "@rh"
+            statement: |
+              Base **Ressources humaines**. Affichez pour chaque `service_id` le **nombre d'employés** (`nb`) et le **salaire moyen arrondi à l'euro** (`salaire_moyen`), en ne gardant que les services d'**au moins 3 employés**. Ignorez les employés sans service.
+            starter: |
+              SELECT service_id, COUNT(*) AS nb
+              FROM employes
+              GROUP BY service_id;
+            solution: |
+              SELECT service_id, COUNT(*) AS nb, ROUND(AVG(salaire)) AS salaire_moyen
+              FROM employes
+              WHERE service_id IS NOT NULL
+              GROUP BY service_id
+              HAVING COUNT(*) >= 3;
+            hints:
+              - "WHERE service_id IS NOT NULL retire la directrice technique (sans service)."
+              - "HAVING COUNT(*) >= 3 garde les grands services."
+            model: "Services 1 (Data, 5 employés) et 2 (Cloud, 4 employés). WHERE agit avant le regroupement, HAVING après."
+      - id: sql-jointures
+        title: Les jointures
+        objectives:
+          - Relier des tables avec INNER JOIN
+          - Garder toutes les lignes d'une table avec LEFT JOIN
+          - Enchaîner plusieurs jointures sans multiplier les lignes par erreur
+        docs:
+          - { title: "PostgreSQL — Jointures entre tables", url: "https://docs.postgresql.fr/current/tutorial-join.html" }
+        quiz:
+          - type: qcm
+            q: Quelle jointure garde les clients qui n'ont aucune commande ?
+            choices: ["INNER JOIN", "LEFT JOIN depuis clients", "CROSS JOIN", "Aucune"]
+            answer: 1
+            explain: LEFT JOIN garde toutes les lignes de la table de gauche.
+          - type: qcm
+            q: Après un LEFT JOIN, que valent les colonnes de droite sans correspondance ?
+            choices: ["0", "Une chaîne vide", "NULL", "La valeur précédente"]
+            answer: 2
+            explain: Elles valent NULL, d'où le motif WHERE droite.id IS NULL pour trouver les absents.
+          - type: vf
+            q: Joindre commandes et lignes peut faire apparaître plusieurs fois la même commande.
+            answer: true
+            explain: Une commande à 3 lignes apparaît 3 fois ; il faut savoir ce que représente une ligne du résultat.
+        flashcards:
+          - { q: "Trouver les absents", a: "LEFT JOIN … WHERE droite.id IS NULL" }
+          - { q: "INNER vs LEFT", a: "INNER : correspondances seulement. LEFT : toute la table de gauche." }
+        exercises:
+          - id: ex-sql-join
+            type: code
+            lang: sql
+            title: Qui a commandé quoi ?
+            setup: "@boutique"
+            statement: |
+              Affichez pour chaque commande **livrée** : le numéro de commande (`commande`), le **nom du client** (`client`) et la date, triées par date.
+            starter: |
+              SELECT o.id AS commande, o.date_commande
+              FROM commandes AS o
+              WHERE o.statut = 'livrée'
+              ORDER BY o.date_commande;
+            solution: |
+              SELECT o.id AS commande, c.nom AS client, o.date_commande
+              FROM commandes AS o
+              JOIN clients AS c ON c.id = o.client_id
+              WHERE o.statut = 'livrée'
+              ORDER BY o.date_commande;
+            ordered: true
+            hints:
+              - "JOIN clients AS c ON c.id = o.client_id"
+            model: "La condition `ON` relie la clé étrangère `commandes.client_id` à la clé primaire `clients.id`."
+          - id: ex-sql-left
+            type: code
+            lang: sql
+            title: Les clients qui n'ont jamais commandé
+            setup: "@boutique"
+            statement: |
+              Affichez le **nom** des clients qui n'ont **aucune commande**.
+            starter: |
+              SELECT c.nom
+              FROM clients AS c
+              JOIN commandes AS o ON o.client_id = c.id;
+            solution: |
+              SELECT c.nom
+              FROM clients AS c
+              LEFT JOIN commandes AS o ON o.client_id = c.id
+              WHERE o.id IS NULL;
+            hints:
+              - "Un JOIN classique élimine justement les clients sans commande."
+              - "LEFT JOIN, puis garder les lignes où la commande est NULL."
+            model: "Résultat : Katherine Johnson. Ce motif « LEFT JOIN + IS NULL » (anti-jointure) sert à repérer des clients inactifs, des produits jamais vendus, des fichiers attendus mais non reçus…"
+          - id: ex-sql-ca
+            type: code
+            lang: sql
+            title: Chiffre d'affaires par catégorie
+            setup: "@boutique"
+            statement: |
+              Calculez le **chiffre d'affaires** (`quantite × prix`) par **catégorie de produit**, pour les commandes **livrées** uniquement, arrondi à 2 décimales (colonne `ca`), du plus grand au plus petit.
+            starter: |
+              SELECT p.categorie
+              FROM produits AS p;
+            solution: |
+              SELECT p.categorie, ROUND(SUM(l.quantite * p.prix), 2) AS ca
+              FROM lignes AS l
+              JOIN produits AS p ON p.id = l.produit_id
+              JOIN commandes AS o ON o.id = l.commande_id
+              WHERE o.statut = 'livrée'
+              GROUP BY p.categorie
+              ORDER BY ca DESC;
+            ordered: true
+            hints:
+              - "Trois tables : lignes (quantités), produits (prix, catégorie), commandes (statut)."
+              - "SUM(l.quantite * p.prix) puis GROUP BY p.categorie."
+            model: "Partir de `lignes` (une ligne = un produit dans une commande) évite les doublons : chaque ligne du FROM représente exactement ce que l'on veut sommer."
+  - id: m2
+    title: Écrire et structurer
+    level: 2
+    summary: Créer et modifier des tables, sous-requêtes et CTE, fonctions de fenêtre, modélisation.
+    lessons:
+      - id: sql-ecrire
+        title: Créer et modifier — CREATE, INSERT, UPDATE, DELETE
+        objectives:
+          - Créer une table avec types et contraintes
+          - Insérer, modifier et supprimer des lignes en toute sécurité
+          - Connaître DDL, DML et l'upsert
+        docs:
+          - { title: "PostgreSQL — Création de tables et contraintes", url: "https://docs.postgresql.fr/current/ddl-constraints.html" }
+          - { title: "SQLite — UPSERT", url: "https://www.sqlite.org/lang_upsert.html" }
+        quiz:
+          - type: qcm
+            q: Que fait UPDATE produits SET prix = 0; sans WHERE ?
+            choices: ["Rien", "Une erreur", "Met tous les prix à 0", "Met le premier prix à 0"]
+            answer: 2
+            explain: Sans WHERE, toutes les lignes sont concernées. Testez toujours le WHERE avec un SELECT d'abord.
+          - type: qcm
+            q: Quelle contrainte interdit les doublons dans une colonne ?
+            choices: ["NOT NULL", "UNIQUE", "CHECK", "DEFAULT"]
+            answer: 1
+            explain: UNIQUE refuse deux valeurs identiques.
+          - type: qcm
+            q: CREATE et DROP font partie du…
+            choices: ["DML", "DDL", "DCL", "DQL"]
+            answer: 1
+            explain: Le DDL définit la structure ; le DML manipule les données.
+        flashcards:
+          - { q: "Avant un UPDATE ou DELETE", a: "Écrire le SELECT avec le même WHERE et vérifier les lignes visées." }
+          - { q: "Upsert", a: "INSERT … ON CONFLICT (cle) DO UPDATE SET … (PostgreSQL, SQLite)" }
+        exercises:
+          - id: ex-sql-create
+            type: code
+            lang: sql
+            title: Créer la table des fournisseurs
+            setup: ""
+            statement: |
+              Base vide. Créez une table `fournisseurs` avec :
+              - `id` : entier, clé primaire ;
+              - `nom` : texte obligatoire ;
+              - `pays` : texte, valant `'France'` par défaut ;
+
+              puis insérez deux fournisseurs : `(1, 'Clavitech')` (pays par défaut) et `(2, 'Audiolux', 'Belgique')`.
+            starter: |
+              CREATE TABLE fournisseurs (
+                id INTEGER PRIMARY KEY
+              );
+            solution: |
+              CREATE TABLE fournisseurs (
+                id INTEGER PRIMARY KEY,
+                nom TEXT NOT NULL,
+                pays TEXT DEFAULT 'France'
+              );
+              INSERT INTO fournisseurs (id, nom) VALUES (1, 'Clavitech');
+              INSERT INTO fournisseurs (id, nom, pays) VALUES (2, 'Audiolux', 'Belgique');
+            hints:
+              - "DEFAULT 'France' après le type de la colonne pays."
+              - "Pour profiter de la valeur par défaut, ne mentionnez pas la colonne pays dans l'INSERT."
+            model: "L'état final est comparé à celui attendu : table, colonnes et lignes. `NOT NULL` et `DEFAULT` sont des garde-fous de qualité des données directement dans la base."
+          - id: ex-sql-update
+            type: code
+            lang: sql
+            title: Augmenter les prix d'une catégorie
+            setup: "@boutique"
+            statement: |
+              Le fournisseur des produits **Audio** augmente ses tarifs de **5 %**. Mettez à jour le prix des produits de cette catégorie (arrondi à 2 décimales), **et seulement ceux-là**.
+
+              Conseil de pro : écrivez d'abord le `SELECT` correspondant pour vérifier les lignes visées.
+            starter: |
+              SELECT * FROM produits WHERE categorie = 'Audio';
+            solution: |
+              UPDATE produits
+              SET prix = ROUND(prix * 1.05, 2)
+              WHERE categorie = 'Audio';
+            hints:
+              - "UPDATE produits SET prix = … WHERE …"
+            model: "Casque : 79 → 82,95 ; enceinte : 59 → 61,95. Les autres prix sont inchangés — c'est ce que vérifie la comparaison de l'état final des tables."
+      - id: sql-sousrequetes
+        title: Sous-requêtes, CTE et CASE
+        objectives:
+          - Écrire des sous-requêtes scalaires et avec IN
+          - Structurer une requête complexe avec WITH
+          - Catégoriser avec CASE et remplacer les NULL avec COALESCE
+        docs:
+          - { title: "PostgreSQL — Requêtes WITH (CTE)", url: "https://docs.postgresql.fr/current/queries-with.html" }
+        quiz:
+          - type: qcm
+            q: Quel est l'intérêt principal d'une CTE (WITH) ?
+            choices: ["Accélérer toujours la requête", "Nommer des étapes intermédiaires pour rendre la requête lisible et testable", "Créer une table permanente", "Remplacer les index"]
+            answer: 1
+            explain: Une CTE est une étape nommée, le temps de la requête.
+          - type: qcm
+            q: Que renvoie COALESCE(NULL, 'inconnue') ?
+            choices: ["NULL", "'inconnue'", "Une erreur", "0"]
+            answer: 1
+            explain: COALESCE renvoie la première valeur non NULL.
+        flashcards:
+          - { q: "CASE", a: "CASE WHEN condition THEN valeur … ELSE valeur END" }
+          - { q: "Plusieurs CTE", a: "WITH a AS (…), b AS (… FROM a …) SELECT …" }
+        exercises:
+          - id: ex-sql-moyenne
+            type: code
+            lang: sql
+            title: Plus cher que la moyenne
+            setup: "@boutique"
+            statement: |
+              Affichez le **nom** et le **prix** des produits dont le prix est **supérieur au prix moyen** du catalogue.
+            starter: |
+              SELECT nom, prix
+              FROM produits
+              WHERE prix > 100;
+            solution: |
+              SELECT nom, prix
+              FROM produits
+              WHERE prix > (SELECT AVG(prix) FROM produits);
+            hints:
+              - "Une sous-requête entre parenthèses peut calculer la moyenne."
+            model: "La moyenne (≈ 74,54 €) est calculée par la sous-requête ; écrire `100` en dur serait faux dès que le catalogue change."
+          - id: ex-sql-cte
+            type: code
+            lang: sql
+            title: Montant de chaque commande, avec une CTE
+            setup: "@boutique"
+            statement: |
+              Avec une CTE nommée `montants` qui calcule le montant de chaque commande (`commande_id`, `montant`), affichez pour **chaque commande** : son `id`, son `statut`, son montant arrondi à 2 décimales (`montant`) et une colonne `taille` qui vaut `'grosse'` si le montant dépasse 200 €, `'normale'` sinon. Triez par montant décroissant.
+            starter: |
+              WITH montants AS (
+                SELECT l.commande_id, SUM(l.quantite * p.prix) AS montant
+                FROM lignes AS l
+                JOIN produits AS p ON p.id = l.produit_id
+                GROUP BY l.commande_id
+              )
+              SELECT * FROM montants;
+            solution: |
+              WITH montants AS (
+                SELECT l.commande_id, SUM(l.quantite * p.prix) AS montant
+                FROM lignes AS l
+                JOIN produits AS p ON p.id = l.produit_id
+                GROUP BY l.commande_id
+              )
+              SELECT o.id, o.statut, ROUND(m.montant, 2) AS montant,
+                     CASE WHEN m.montant > 200 THEN 'grosse' ELSE 'normale' END AS taille
+              FROM commandes AS o
+              JOIN montants AS m ON m.commande_id = o.id
+              ORDER BY m.montant DESC;
+            ordered: true
+            hints:
+              - "La CTE est fournie : il reste à la joindre à commandes."
+              - "CASE WHEN m.montant > 200 THEN 'grosse' ELSE 'normale' END AS taille"
+            model: "Chaque CTE est une étape testable seule (`SELECT * FROM montants`). C'est exactement la façon d'écrire les modèles dbt."
+      - id: sql-fenetres
+        title: Les fonctions de fenêtre
+        objectives:
+          - Comprendre OVER, PARTITION BY et ORDER BY
+          - Classer avec ROW_NUMBER, RANK, DENSE_RANK
+          - Calculer des cumuls et comparer avec LAG/LEAD
+        docs:
+          - { title: "PostgreSQL — Fonctions de fenêtrage (tutoriel)", url: "https://docs.postgresql.fr/current/tutorial-window.html" }
+          - { title: "SQLite — Window functions", url: "https://www.sqlite.org/windowfunctions.html" }
+        quiz:
+          - type: qcm
+            q: Quelle est la différence entre GROUP BY et une fonction de fenêtre ?
+            choices: ["Aucune", "GROUP BY réduit les lignes ; la fenêtre conserve chaque ligne", "La fenêtre est plus lente", "GROUP BY ne marche pas avec SUM"]
+            answer: 1
+            explain: Une fonction de fenêtre ajoute une information à chaque ligne sans la supprimer.
+          - type: qcm
+            q: Avec des ex aequo, RANK donne 1, 2, 2… et ensuite ?
+            choices: ["3", "4", "2", "1"]
+            answer: 1
+            explain: RANK saute un rang après les ex aequo ; DENSE_RANK donnerait 3.
+          - type: qcm
+            q: Quelle fonction lit la valeur de la ligne précédente ?
+            choices: ["LEAD", "LAG", "PREV", "FIRST"]
+            answer: 1
+            explain: LAG = précédente ; LEAD = suivante.
+        flashcards:
+          - { q: "Top 1 par groupe", a: "ROW_NUMBER() OVER (PARTITION BY groupe ORDER BY …) dans une CTE, puis WHERE rn = 1." }
+          - { q: "Cumul", a: "SUM(x) OVER (ORDER BY date)" }
+        exercises:
+          - id: ex-sql-rang
+            type: code
+            lang: sql
+            title: Le meilleur salaire de chaque service
+            setup: "@rh"
+            statement: |
+              Base **Ressources humaines**. Pour chaque `service_id` (non nul), affichez l'employé **le mieux payé** : `service_id`, `nom`, `salaire`. Triez par `service_id`.
+            starter: |
+              SELECT service_id, nom, salaire,
+                     ROW_NUMBER() OVER (PARTITION BY service_id ORDER BY salaire DESC) AS rang
+              FROM employes
+              WHERE service_id IS NOT NULL;
+            solution: |
+              WITH classes AS (
+                SELECT service_id, nom, salaire,
+                       ROW_NUMBER() OVER (PARTITION BY service_id ORDER BY salaire DESC) AS rang
+                FROM employes
+                WHERE service_id IS NOT NULL
+              )
+              SELECT service_id, nom, salaire
+              FROM classes
+              WHERE rang = 1
+              ORDER BY service_id;
+            ordered: true
+            hints:
+              - "La requête de départ calcule déjà le rang : mettez-la dans une CTE."
+              - "On ne peut pas filtrer une fonction de fenêtre dans le WHERE de la même requête."
+            model: "Yanis (Data), Sofiane (Cloud), Paul (Sécurité), Zoé (Produit). Ce motif sert aussi à garder « la dernière version » de chaque enregistrement lors d'un dédoublonnage."
+          - id: ex-sql-cumul
+            type: code
+            lang: sql
+            title: Le cumul des commandes de chaque client
+            setup: "@boutique"
+            statement: |
+              Pour chaque commande, affichez `client_id`, `id`, `date_commande`, et :
+              - `numero` : le numéro d'ordre de la commande **pour ce client** (1 pour sa première commande, 2 pour la suivante…) ;
+              - `precedente` : la date de la commande **précédente** du même client (NULL pour la première).
+
+              Triez par `client_id` puis `date_commande`.
+            starter: |
+              SELECT client_id, id, date_commande
+              FROM commandes
+              ORDER BY client_id, date_commande;
+            solution: |
+              SELECT client_id, id, date_commande,
+                     ROW_NUMBER() OVER (PARTITION BY client_id ORDER BY date_commande) AS numero,
+                     LAG(date_commande) OVER (PARTITION BY client_id ORDER BY date_commande) AS precedente
+              FROM commandes
+              ORDER BY client_id, date_commande;
+            ordered: true
+            hints:
+              - "Même fenêtre pour les deux colonnes : PARTITION BY client_id ORDER BY date_commande."
+            model: "Ada (client 1) a passé 3 commandes : numéros 1, 2, 3, et `precedente` permet de calculer le délai entre deux achats — un indicateur classique de fidélité."
+      - id: sql-modelisation
+        title: Modéliser une base de données
+        objectives:
+          - Repérer les anomalies dues à la duplication
+          - Appliquer les trois premières formes normales
+          - Modéliser des relations 1-N et N-N
+        docs:
+          - { title: "PostgreSQL — Clés étrangères", url: "https://docs.postgresql.fr/current/ddl-constraints.html#DDL-CONSTRAINTS-FK" }
+        quiz:
+          - type: qcm
+            q: Comment modéliser « un étudiant suit plusieurs cours, un cours a plusieurs étudiants » ?
+            choices: ["Une colonne cours dans etudiants", "Une table d'association inscriptions(etudiant_id, cours_id)", "Une seule grande table", "Ce n'est pas possible"]
+            answer: 1
+            explain: Les relations plusieurs-à-plusieurs passent par une table d'association.
+          - type: qcm
+            q: Une colonne « langages » contenant « Python, SQL » viole…
+            choices: ["la 1re forme normale", "la 3e forme normale", "aucune règle", "la clé primaire"]
+            answer: 0
+            explain: 1FN = une seule valeur par case.
+          - type: vf
+            q: Un entrepôt de données analytique est souvent volontairement dénormalisé.
+            answer: true
+            explain: Le schéma en étoile privilégie la simplicité et la rapidité des lectures.
+        flashcards:
+          - { q: "3FN", a: "« La clé, toute la clé, rien que la clé. »" }
+          - { q: "OLTP vs OLAP", a: "OLTP : transactions, normalisé. OLAP : analyse, souvent dénormalisé." }
+        exercises:
+          - id: ex-sql-modele
+            type: projet
+            title: Modéliser une plateforme de formation
+            statement: |
+              Une plateforme de formation en ligne gère des **apprenants**, des **cours** (chaque cours a un formateur), des **inscriptions** (date, progression) et des **certifications** obtenues.
+
+              Proposez le modèle : la liste des tables, leurs colonnes (avec la clé primaire et les clés étrangères), et le type de chaque relation (1-N, N-N). Écrivez le `CREATE TABLE` de la table d'inscriptions.
+            rubric:
+              - Tables apprenants, formateurs, cours, inscriptions, certifications (ou équivalent)
+              - Clés primaires et étrangères correctes
+              - La relation apprenants-cours est N-N via la table inscriptions
+              - Aucune information dupliquée (3FN)
+              - CREATE TABLE inscriptions avec contraintes (NOT NULL, CHECK sur la progression, clé unique apprenant+cours)
+            model: |
+              - `apprenants(id PK, nom, email UNIQUE, inscription)`
+              - `formateurs(id PK, nom, specialite)`
+              - `cours(id PK, titre, formateur_id FK → formateurs)` — formateur 1-N cours
+              - `inscriptions(apprenant_id FK, cours_id FK, date_inscription, progression)` — table d'association N-N
+              - `certifications(id PK, apprenant_id FK, intitule, date_obtention, lien_verification)` — apprenant 1-N certifications
+
+              ```sql
+              CREATE TABLE inscriptions (
+                apprenant_id INTEGER NOT NULL REFERENCES apprenants(id),
+                cours_id INTEGER NOT NULL REFERENCES cours(id),
+                date_inscription DATE NOT NULL,
+                progression INTEGER NOT NULL DEFAULT 0 CHECK (progression BETWEEN 0 AND 100),
+                PRIMARY KEY (apprenant_id, cours_id)
+              );
+              ```
+  - id: m3
+    title: SQL en production
+    level: 3
+    summary: Index et plans d'exécution, transactions et concurrence, panorama NoSQL.
+    lessons:
+      - id: sql-performance
+        title: Index et performance
+        objectives:
+          - Comprendre le rôle et le coût d'un index
+          - Lire un plan d'exécution
+          - Appliquer les bonnes pratiques de requêtes efficaces
+        docs:
+          - { title: "PostgreSQL — Utiliser EXPLAIN", url: "https://docs.postgresql.fr/current/using-explain.html" }
+          - { title: "SQLite — EXPLAIN QUERY PLAN", url: "https://www.sqlite.org/eqp.html" }
+        quiz:
+          - type: qcm
+            q: Quel est l'inconvénient d'un index ?
+            choices: ["Il ralentit les lectures", "Il ralentit les écritures et occupe de la place", "Il supprime des données", "Aucun"]
+            answer: 1
+            explain: Chaque INSERT/UPDATE doit aussi mettre à jour l'index.
+          - type: qcm
+            q: Dans un plan SQLite, « SCAN commandes » signifie…
+            choices: ["Utilisation d'un index", "Lecture complète de la table", "Erreur", "Table vide"]
+            answer: 1
+            explain: SEARCH … USING INDEX indiquerait l'utilisation d'un index.
+          - type: vf
+            q: WHERE UPPER(nom) = 'ADA' peut empêcher l'utilisation d'un index sur nom.
+            answer: true
+            explain: Appliquer une fonction à la colonne empêche généralement d'utiliser l'index simple.
+        flashcards:
+          - { q: "Quand indexer ?", a: "Colonnes fréquentes dans WHERE, JOIN, ORDER BY." }
+          - { q: "EXPLAIN ANALYZE (PostgreSQL)", a: "Exécute la requête et montre les temps réels de chaque étape." }
+        exercises:
+          - id: ex-sql-index
+            type: code
+            lang: sql
+            title: Créer l'index qui manque
+            setup: "@boutique"
+            statement: |
+              Les requêtes qui cherchent les commandes d'un client (`WHERE client_id = …`) sont lentes.
+
+              1. Créez un index sur `commandes(client_id)` (le nom est libre).
+              2. Terminez votre script par cette requête de vérification, **sans la modifier** :
+
+              ```sql
+              SELECT tbl_name, sql LIKE '%client_id%' AS sur_client_id
+              FROM sqlite_master
+              WHERE type = 'index' AND sql IS NOT NULL;
+              ```
+
+              Bonus (à tester librement) : comparez `EXPLAIN QUERY PLAN SELECT * FROM commandes WHERE client_id = 3;` avant et après l'index.
+            starter: |
+              SELECT tbl_name, sql LIKE '%client_id%' AS sur_client_id
+              FROM sqlite_master
+              WHERE type = 'index' AND sql IS NOT NULL;
+            solution: |
+              CREATE INDEX idx_commandes_client ON commandes(client_id);
+              SELECT tbl_name, sql LIKE '%client_id%' AS sur_client_id
+              FROM sqlite_master
+              WHERE type = 'index' AND sql IS NOT NULL;
+            hints:
+              - "CREATE INDEX nom_index ON table(colonne);"
+            model: "Avant : `SCAN commandes`. Après : `SEARCH commandes USING INDEX idx_commandes_client (client_id=?)`. Sur 10 lignes la différence est invisible ; sur 100 millions, c'est la différence entre une milliseconde et plusieurs minutes."
+      - id: sql-transactions
+        title: Transactions, ACID et panorama NoSQL
+        objectives:
+          - Utiliser BEGIN, COMMIT, ROLLBACK
+          - Expliquer les propriétés ACID
+          - Situer les grandes familles NoSQL
+        docs:
+          - { title: "PostgreSQL — Transactions (tutoriel)", url: "https://docs.postgresql.fr/current/tutorial-transactions.html" }
+          - { title: "pgvector — recherche vectorielle dans PostgreSQL", url: "https://github.com/pgvector/pgvector" }
+        quiz:
+          - type: qcm
+            q: Que garantit l'atomicité ?
+            choices: ["La rapidité", "Tout ou rien", "Le chiffrement", "La compression"]
+            answer: 1
+            explain: Une transaction s'applique entièrement ou pas du tout.
+          - type: qcm
+            q: Quelle famille NoSQL convient le mieux à un cache de sessions ?
+            choices: ["Graphe", "Clé-valeur (Redis)", "Colonnes larges", "Document"]
+            answer: 1
+            explain: Accès ultra-rapide par clé.
+          - type: vf
+            q: Il vaut mieux garder les transactions courtes.
+            answer: true
+            explain: Une transaction longue bloque les autres (verrous).
+        flashcards:
+          - { q: "ACID", a: "Atomicité, Cohérence, Isolation, Durabilité." }
+          - { q: "ROLLBACK", a: "Annule toutes les opérations depuis BEGIN." }
+        exercises:
+          - id: ex-sql-transaction
+            type: code
+            lang: sql
+            title: Un virement en transaction
+            setup: |
+              CREATE TABLE comptes (id INTEGER PRIMARY KEY, titulaire TEXT, solde REAL CHECK (solde >= 0));
+              INSERT INTO comptes VALUES (1, 'Ada', 500), (2, 'Alan', 120);
+            statement: |
+              Écrivez la transaction qui vire **150 €** du compte 1 (Ada) vers le compte 2 (Alan) : `BEGIN`, les deux mises à jour, `COMMIT`.
+
+              Bonus : que se passerait-il en essayant de virer 600 € ? (la contrainte `CHECK (solde >= 0)` refuserait la première mise à jour).
+            starter: |
+              UPDATE comptes SET solde = solde - 150 WHERE id = 1;
+            solution: |
+              BEGIN;
+              UPDATE comptes SET solde = solde - 150 WHERE id = 1;
+              UPDATE comptes SET solde = solde + 150 WHERE id = 2;
+              COMMIT;
+            hints:
+              - "BEGIN; … COMMIT; encadrent les deux UPDATE."
+            model: "État final : Ada 350, Alan 270. Sans transaction, une panne entre les deux UPDATE ferait disparaître 150 €. Avec un montant trop élevé, la contrainte CHECK déclenche une erreur et l'application fait ROLLBACK : rien n'est modifié."

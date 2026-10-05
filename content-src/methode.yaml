@@ -1,0 +1,462 @@
+id: methode
+version: 2026.10.1
+title: Méthode & astuces
+branch: Méthode & carrière
+icon: 🧭
+color: "#7c3aed"
+order: 1
+updatedAt: 2026-10-05
+description: Apprendre à apprendre, déboguer, chercher, utiliser l'IA, prendre des notes, construire un portfolio, réussir CV, entretiens et certifications.
+outlook: Les technologies changent, la capacité à apprendre vite et à résoudre des problèmes reste. C'est la compétence la plus durable de toutes.
+glossary:
+  - { term: Récupération active, en: retrieval practice, def: "Apprendre en se testant (quiz, réexpliquer) plutôt qu'en relisant." }
+  - { term: Répétition espacée, en: spaced repetition, def: "Revoir une notion à intervalles croissants, juste avant de l'oublier." }
+  - { term: Débogage, en: debugging, def: "Recherche méthodique et correction de la cause d'un dysfonctionnement." }
+  - { term: Exemple minimal reproductible, en: minimal reproducible example, def: "Le plus petit code possible qui reproduit un problème ; indispensable pour demander de l'aide." }
+  - { term: Trace d'appel, en: traceback / stack trace, def: "Message d'erreur qui indique quoi (dernière ligne) et où (lignes au-dessus)." }
+  - { term: README, en: README, def: "Fichier de présentation d'un projet : objectif, installation, utilisation." }
+  - { term: Markdown, en: Markdown, def: "Format de texte simple pour notes et documentation (# titres, - puces, `code`)." }
+  - { term: Portfolio, en: portfolio, def: "Ensemble de projets publiés qui démontrent vos compétences." }
+  - { term: Live coding, en: live coding, def: "Exercice de programmation réalisé en direct pendant un entretien." }
+  - { term: Méthode STAR, en: STAR method, def: "Situation, Tâche, Action, Résultat : structure de réponse aux questions comportementales." }
+  - { term: Examen surveillé en ligne, en: online proctored exam, def: "Examen de certification passé chez soi sous surveillance par webcam." }
+  - { term: ATS, en: applicant tracking system, def: "Logiciel de recrutement qui filtre les CV, notamment par mots-clés." }
+modules:
+  - id: m1
+    title: Apprendre à apprendre l'informatique
+    level: 1
+    summary: Les méthodes qui marchent, l'état d'esprit, déboguer, chercher et utiliser l'IA.
+    lessons:
+      - id: meth-apprendre
+        title: Apprendre efficacement (et utiliser TechCampus)
+        objectives:
+          - Appliquer la récupération active et la répétition espacée
+          - Organiser des séances courtes et régulières
+          - Utiliser au mieux les outils de l'application
+        quiz:
+          - type: qcm
+            q: Quelle méthode fait le mieux retenir une notion ?
+            choices: ["Relire trois fois le cours", "Surligner le texte", "Se tester sans regarder le cours", "Écouter le cours en accéléré"]
+            answer: 2
+            explain: La récupération active (se tester) est l'une des techniques les plus efficaces selon la recherche en sciences cognitives.
+          - type: qcm
+            q: Quel rythme est le plus efficace ?
+            choices: ["7 heures le dimanche", "45 minutes 5 jours par semaine", "2 jours intensifs par mois", "Peu importe"]
+            answer: 1
+            explain: La régularité et le sommeil entre les séances consolident les apprentissages.
+          - type: vf
+            q: Il vaut mieux finir tous les cours avant de commencer à pratiquer.
+            answer: false
+            explain: La pratique doit accompagner la théorie dès le début ; c'est en faisant qu'on apprend.
+        flashcards:
+          - { q: "Récupération active", a: "Se tester (quiz, réexpliquer) plutôt que relire." }
+          - { q: "Séance type", a: "Révisions 5 min → leçon 20 min → exercice 15 min → quiz et note 5 min." }
+        exercises:
+          - id: ex-plan
+            type: projet
+            title: Mon plan d'apprentissage
+            statement: |
+              Rédigez votre plan d'apprentissage personnel pour les trois prochains mois :
+              1. votre objectif (métier visé, date approximative) ;
+              2. le temps que vous pouvez consacrer chaque semaine, et à quels moments ;
+              3. les domaines à suivre dans l'ordre (aidez-vous de la feuille de route) ;
+              4. une première certification visée et une date cible ;
+              5. ce qui pourrait vous faire abandonner, et comment vous l'anticiperez.
+            rubric:
+              - Objectif précis et daté
+              - Créneaux réalistes et réguliers
+              - Ordre des domaines cohérent avec la feuille de route
+              - Une certification d'entrée visée avec une date
+              - Obstacles identifiés et parades concrètes
+            model: |
+              Exemple : « Objectif : poste de data engineer junior (ou alternance) d'ici 15 mois. Temps : 1 h du lundi au jeudi à 6 h 30, 2 h le samedi matin, audio dans les transports. Ordre : Méthode → Fondamentaux → Linux → Git → Python. Certification : Linux Essentials en fin de mois 3. Risques : fatigue après le travail → séances le matin ; découragement → journal de progression relu chaque dimanche, et une question à l'assistant plutôt que de rester bloqué. »
+      - id: meth-etat-esprit
+        title: L'état d'esprit du développeur
+        objectives:
+          - Accepter le blocage comme partie du travail
+          - Adopter l'état d'esprit de croissance
+          - Savoir quand demander de l'aide
+        quiz:
+          - type: qcm
+            q: Vous êtes bloqué depuis 10 minutes sur une erreur. Que faire ?
+            choices: ["Abandonner l'exercice", "Demander tout de suite la solution", "Continuer à chercher méthodiquement un peu, puis demander de l'aide en expliquant ce que vous avez essayé", "Recommencer le cours depuis le début"]
+            answer: 2
+            explain: Chercher seul 15-20 minutes fait progresser ; au-delà d'une heure sans avancer, on demande de l'aide.
+          - type: vf
+            q: Les développeurs expérimentés ne sont jamais bloqués.
+            answer: false
+            explain: Être bloqué fait partie du quotidien de tout développeur ; ils ont simplement des méthodes pour en sortir.
+        flashcards:
+          - { q: "Règle des 20 minutes", a: "Chercher seul 15-20 min ; au-delà d'1 h sans progrès, demander de l'aide." }
+          - { q: "Antidote au syndrome de l'imposteur", a: "Journal de progression, se comparer à soi-même, expliquer à quelqu'un." }
+      - id: meth-deboguer
+        title: Lire une erreur et déboguer avec méthode
+        objectives:
+          - Lire un message d'erreur (quoi, où)
+          - Appliquer la méthode scientifique au débogage
+          - Utiliser print, la réduction du problème et le canard en plastique
+        docs:
+          - { title: "Python — Erreurs et exceptions (tutoriel officiel)", url: "https://docs.python.org/fr/3/tutorial/errors.html" }
+        quiz:
+          - type: qcm
+            q: Dans une trace d'erreur Python, où lire la nature de l'erreur ?
+            choices: ["Sur la première ligne", "Sur la dernière ligne", "Au milieu", "Nulle part, il faut deviner"]
+            answer: 1
+            explain: La dernière ligne donne le type et le message ; les lignes au-dessus indiquent où.
+          - type: qcm
+            q: "« TypeError: unsupported operand type(s) for +: 'int' and 'str' » signifie…"
+            choices: ["Une faute de frappe", "On additionne un nombre et un texte", "Le fichier est introuvable", "La mémoire est pleine"]
+            answer: 1
+            explain: "Typique d'une valeur lue dans un fichier (texte) qu'on n'a pas convertie en nombre."
+          - type: vf
+            q: Pour gagner du temps, il faut modifier plusieurs choses à la fois.
+            answer: false
+            explain: Une modification à la fois, sinon on ne sait pas ce qui a corrigé (ou aggravé) le problème.
+        flashcards:
+          - { q: "Méthode de débogage", a: "Reproduire, observer, hypothèse, tester, corriger une chose, vérifier." }
+          - { q: "Canard en plastique", a: "Expliquer son code ligne par ligne à voix haute pour voir l'erreur." }
+        exercises:
+          - id: ex-debug-py
+            type: code
+            lang: python
+            title: "Enquête : un total qui plante"
+            statement: |
+              Ce programme doit calculer le total des montants d'un petit fichier CSV, mais il plante.
+
+              1. Cliquez sur **Exécuter** et **lisez** l'erreur (dernière ligne, puis la ligne indiquée).
+              2. Formulez une hypothèse, corrigez **une seule chose**.
+              3. Vérifiez avec **✓ Vérifier**.
+            starter: |
+              donnees = """date,montant
+              2026-10-01,120
+              2026-10-02,80.5
+              2026-10-03,45"""
+
+              def total_montants(texte):
+                  lignes = texte.split("\n")[1:]   # on saute l'en-tête
+                  total = 0
+                  for ligne in lignes:
+                      date, montant = ligne.split(",")
+                      total = total + montant
+                  return total
+
+              print(total_montants(donnees))
+            solution: |
+              donnees = """date,montant
+              2026-10-01,120
+              2026-10-02,80.5
+              2026-10-03,45"""
+
+              def total_montants(texte):
+                  lignes = texte.split("\n")[1:]   # on saute l'en-tête
+                  total = 0
+                  for ligne in lignes:
+                      date, montant = ligne.split(",")
+                      total = total + float(montant)
+                  return total
+
+              print(total_montants(donnees))
+            tests:
+              - { label: "Le total vaut 245.5", code: "assert total_montants(donnees) == 245.5, total_montants(donnees)" }
+              - { label: "Fonctionne sur un autre fichier", code: "assert total_montants('d,m\\nx,1\\ny,2.5') == 3.5" }
+            hints:
+              - "La dernière ligne de l'erreur parle d'additionner un `int` et un `str`."
+              - "Le montant lu dans le texte est une chaîne de caractères : il faut le convertir en nombre."
+              - "`float(\"80.5\")` renvoie le nombre 80.5."
+            model: "L'erreur `TypeError: unsupported operand type(s) for +: 'int' and 'str'` à la ligne `total = total + montant` révèle que `montant` est du texte. Correction : `float(montant)`. C'est l'erreur la plus fréquente quand on lit des fichiers : tout ce qui vient d'un fichier texte est d'abord du texte."
+          - id: ex-ordre-debug
+            type: ordre
+            title: Les étapes du débogage
+            statement: Remettez les étapes de la méthode de débogage dans l'ordre.
+            items:
+              - Reproduire le problème à coup sûr
+              - Observer précisément ce qui se passe et ce qui était attendu
+              - Formuler une hypothèse sur la cause
+              - Tester l'hypothèse (print, journaux, isolement)
+              - Corriger une seule chose
+              - Vérifier que le problème est réglé et que rien d'autre n'est cassé
+            model: C'est la méthode scientifique appliquée au code.
+      - id: meth-chercher
+        title: Chercher, lire la doc et utiliser l'IA
+        objectives:
+          - Lire une documentation officielle efficacement
+          - Formuler une recherche efficace
+          - Utiliser l'IA pour apprendre, sans en dépendre
+          - Poser une bonne question
+        docs:
+          - { title: "Stack Overflow — How to create a Minimal, Reproducible Example", url: "https://stackoverflow.com/help/minimal-reproducible-example" }
+        quiz:
+          - type: qcm
+            q: Quelle est la source la plus fiable pour l'option d'une commande Docker ?
+            choices: ["Un forum de 2017", "La documentation officielle de Docker", "Une vidéo au hasard", "Un collègue qui « croit se souvenir »"]
+            answer: 1
+            explain: La documentation officielle est la référence, et elle est à jour (vérifiez la version).
+          - type: vf
+            q: On peut coller une clé d'API de production dans un assistant d'IA pour qu'il débogue la configuration.
+            answer: false
+            explain: Jamais de secrets ni de données personnelles dans un outil d'IA ou un forum.
+          - type: qcm
+            q: Que doit contenir une bonne question d'aide ?
+            choices: ["« Ça marche pas, help »", "Une capture d'écran floue", "Le contexte, le code, l'erreur complète, l'attendu, ce qui a été essayé", "Seulement le code"]
+            answer: 2
+            explain: Plus la question est précise et reproductible, plus la réponse est rapide.
+        flashcards:
+          - { q: "Exemple minimal reproductible", a: "Le plus petit code qui montre le problème." }
+          - { q: "Bon usage de l'IA", a: "Expliquer, donner un indice, vérifier sa compréhension ; toujours tester ; jamais de secret." }
+        exercises:
+          - id: ex-bonne-question
+            type: projet
+            title: Rédiger une question d'aide parfaite
+            statement: |
+              Vous lancez `python nettoyage.py` et obtenez :
+              ```text
+              FileNotFoundError: [Errno 2] No such file or directory: 'data/ventes.csv'
+              ```
+              Le fichier existe pourtant bien, vous l'avez vu dans l'explorateur.
+
+              Rédigez la question que vous posteriez sur un forum (ou à l'assistant), en suivant le modèle de la leçon. Ajoutez deux hypothèses que vous auriez vérifiées avant de poster.
+            rubric:
+              - Contexte clair (ce que fait le script)
+              - Commande exacte et dossier depuis lequel elle est lancée
+              - Message d'erreur complet, copié
+              - Résultat attendu
+              - Essais déjà faits et hypothèses (dossier courant, chemin relatif, faute de frappe, extension cachée)
+            model: |
+              « **Contexte** : script Python qui lit un CSV de ventes et le nettoie. **Commande** : `python nettoyage.py`, lancée depuis `~/projet/scripts`. **Erreur** : `FileNotFoundError: … 'data/ventes.csv'`. **Attendu** : le script lit `~/projet/data/ventes.csv`. **Essais** : le fichier existe (`ls ~/projet/data`). »
+
+              Hypothèses à vérifier avant : 1) le chemin `data/ventes.csv` est **relatif au dossier courant** ; lancé depuis `scripts/`, Python cherche `scripts/data/ventes.csv` → lancer depuis `~/projet` ou construire le chemin à partir de l'emplacement du script ; 2) extension cachée par Windows (`ventes.csv.txt`) ou faute de frappe (majuscule).
+  - id: m2
+    title: Travailler comme un professionnel
+    level: 2
+    summary: Notes et base de connaissances, projets de portfolio, anglais technique, outils et réflexes.
+    lessons:
+      - id: meth-notes
+        title: Prendre des notes techniques utiles
+        objectives:
+          - Écrire des notes qui servent (question, exemple, pourquoi, source)
+          - Tenir des antisèches et un journal « Aujourd'hui j'ai appris »
+          - Écrire en Markdown
+        docs:
+          - { title: "GitHub — syntaxe Markdown de base", url: "https://docs.github.com/fr/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax" }
+        quiz:
+          - type: qcm
+            q: Laquelle est la meilleure note ?
+            choices: ["« grep = chercher »", "« Compter les erreurs : grep -c ERROR app.log (-c compte) — man grep »", "« voir cours Linux »", "« commande utile »"]
+            answer: 1
+            explain: Une bonne note répond à une question, avec l'exemple copiable, le pourquoi et la source.
+          - type: qcm
+            q: En Markdown, comment écrit-on un titre de niveau 2 ?
+            choices: ["## Titre", "**Titre**", "<Titre>", "-- Titre"]
+            answer: 0
+            explain: "# pour le niveau 1, ## pour le niveau 2, etc."
+        flashcards:
+          - { q: "TIL", a: "Today I Learned : journal d'une découverte par entrée." }
+          - { q: "Markdown : gras, code, lien", a: "**gras**, `code`, [texte](url)" }
+      - id: meth-projets
+        title: Apprendre par projets et construire son portfolio
+        objectives:
+          - Choisir un projet de portfolio convaincant
+          - Rédiger un README efficace
+          - Faire grandir un projet au fil de l'apprentissage
+        quiz:
+          - type: qcm
+            q: Qu'est-ce qui rend un projet de portfolio convaincant ?
+            choices: ["Copier un tutoriel populaire", "Un vrai problème, des données réelles, de bout en bout, documenté", "Utiliser le plus de technologies possible", "Ne pas le publier"]
+            answer: 1
+            explain: Un projet personnalisé, complet et documenté montre votre façon de travailler.
+          - type: vf
+            q: Un recruteur lit en général le README d'un projet en moins d'une minute.
+            answer: true
+            explain: D'où l'importance d'un README clair dès les premières lignes.
+        flashcards:
+          - { q: "Un bon README", a: "Quoi, architecture, technologies, comment lancer, difficultés rencontrées." }
+        exercises:
+          - id: ex-readme
+            type: projet
+            title: Écrire le README de votre futur projet
+            statement: |
+              Choisissez un projet que vous pourriez réaliser d'ici quelques mois (inspirez-vous de la liste de votre feuille de route, en l'adaptant à un sujet qui vous intéresse).
+
+              Rédigez son README en Markdown : titre, objectif en deux phrases, architecture (en mots), technologies, comment le lancer, ce que vous comptez apprendre.
+            rubric:
+              - Titre et objectif compréhensibles par un non-spécialiste
+              - Données réelles identifiées (source)
+              - Architecture de bout en bout
+              - Technologies cohérentes avec le métier visé
+              - Instructions de lancement
+              - Markdown correct (titres, listes, code)
+            model: |
+              ```markdown
+              # Météo des vélos en libre-service
+
+              Pipeline qui collecte chaque heure la disponibilité des stations de vélos
+              de ma ville (open data) et affiche les stations souvent vides.
+
+              ## Architecture
+              API open data → script Python (toutes les heures) → PostgreSQL → tableau de bord
+
+              ## Technologies
+              Python, SQL, PostgreSQL, Docker Compose, GitHub Actions
+
+              ## Lancer
+              docker compose up -d
+
+              ## Ce que je veux apprendre
+              Planifier une collecte, modéliser des séries temporelles, déployer avec Docker.
+              ```
+      - id: meth-anglais
+        title: L'anglais technique, le minimum vital
+        objectives:
+          - Connaître le vocabulaire anglais qui revient tous les jours
+          - Mettre en place des habitudes simples pour progresser
+        quiz:
+          - type: qcm
+            q: Que signifie « deprecated » dans une documentation ?
+            choices: ["Recommandé", "Obsolète, à ne plus utiliser", "Payant", "Expérimental"]
+            answer: 1
+            explain: Une fonctionnalité dépréciée fonctionne encore mais sera supprimée ; il faut migrer.
+          - type: qcm
+            q: Un « rollback », c'est…
+            choices: ["Un nouveau déploiement", "Un retour à la version précédente", "Une sauvegarde", "Un test"]
+            answer: 1
+            explain: Après un déploiement raté, on revient à la version précédente qui fonctionnait.
+          - type: qcm
+            q: « On-call » désigne…
+            choices: ["Un appel d'offres", "L'astreinte", "Une réunion", "Un appel d'API"]
+            answer: 1
+            explain: L'ingénieur d'astreinte (on-call) répond aux incidents en dehors des heures de bureau.
+        flashcards:
+          - { q: "deploy / release / fix", a: "déployer / version publiée / correctif" }
+          - { q: "timeout / latency / throughput", a: "délai dépassé / latence / débit" }
+          - { q: "pull request", a: "Demande de fusion de code, avec revue par l'équipe." }
+      - id: meth-astuces
+        title: Outils, raccourcis et réflexes de pro
+        objectives:
+          - Configurer un environnement de travail efficace (VS Code, terminal, WSL)
+          - Adopter les réflexes qui évitent les catastrophes
+        docs:
+          - { title: "VS Code — raccourcis clavier (PDF officiel Windows)", url: "https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf" }
+          - { title: "Microsoft — Installer WSL", url: "https://learn.microsoft.com/fr-fr/windows/wsl/install" }
+        quiz:
+          - type: qcm
+            q: Quel est le moyen le plus simple d'avoir un vrai Linux sur un PC Windows ?
+            choices: ["Réinstaller la machine", "WSL", "Un émulateur de jeux", "Ce n'est pas possible"]
+            answer: 1
+            explain: "wsl --install installe un Ubuntu intégré à Windows."
+          - type: qcm
+            q: Avant de lancer un traitement sur 10 millions de lignes, on…
+            choices: ["le lance directement", "le teste sur un petit échantillon", "achète une plus grosse machine", "supprime les données brutes"]
+            answer: 1
+            explain: Tester sur un échantillon évite d'attendre des heures pour découvrir une erreur.
+        flashcards:
+          - { q: "Ctrl+Maj+P (VS Code)", a: "Palette de commandes : accès à toutes les fonctions." }
+          - { q: "Règle d'automatisation", a: "Ce qu'on fait trois fois, on l'automatise." }
+  - id: m3
+    title: Décrocher le poste
+    level: 3
+    summary: Se rendre visible, réussir les entretiens, choisir et préparer ses certifications.
+    lessons:
+      - id: meth-cv
+        title: CV, LinkedIn et GitHub — se rendre visible
+        objectives:
+          - Construire un CV technique de reconversion
+          - Optimiser LinkedIn et GitHub
+          - Connaître les portes d'entrée des juniors
+        docs:
+          - { title: "Apec — Conseils CV", url: "https://www.apec.fr/candidat/conseils-candidature.html" }
+          - { title: "France Travail — Se reconvertir", url: "https://www.francetravail.fr/candidat/en-formation.html" }
+        quiz:
+          - type: qcm
+            q: Quel titre de CV est le plus efficace ?
+            choices: ["« En reconversion »", "« Data engineer junior »", "« Curriculum vitae »", "« Passionné d'informatique »"]
+            answer: 1
+            explain: Le titre annonce le métier visé ; la reconversion se raconte dans l'accroche et devient un atout.
+          - type: vf
+            q: On peut ajouter sur son CV une technologie jamais utilisée pour passer les filtres automatiques.
+            answer: false
+            explain: Tout ce qui est sur le CV peut être demandé en entretien ; on reprend les mots-clés de l'offre seulement s'ils sont vrais.
+          - type: qcm
+            q: Quelle voie permet d'être formé et payé tout en acquérant de l'expérience ?
+            choices: ["Le bénévolat", "L'alternance", "Le stage d'observation", "Le freelance"]
+            answer: 1
+            explain: L'alternance est une voie très efficace en reconversion, souvent suivie d'une embauche.
+        flashcards:
+          - { q: "Structure du CV technique", a: "Titre métier, accroche, compétences groupées, certifications, 3 projets, expérience transférable, formation." }
+        exercises:
+          - id: ex-accroche
+            type: projet
+            title: Votre accroche de CV
+            statement: |
+              Rédigez l'accroche (3 à 4 lignes) de votre futur CV : le métier visé, vos compétences techniques principales, ce que votre expérience précédente apporte, et ce que vous cherchez (poste, alternance).
+            rubric:
+              - Métier visé explicite
+              - Compétences techniques concrètes
+              - Expérience précédente présentée comme un atout
+              - Type de poste recherché
+              - Concision (4 lignes maximum)
+            model: |
+              « Data engineer junior, certifiée AWS, je conçois des pipelines de données en Python et SQL (Airflow, dbt, Docker). Dix ans de contrôle de gestion m'ont appris l'exigence de données fiables et le dialogue avec les métiers financiers. Je recherche un premier poste ou une alternance dans une équipe data. »
+      - id: meth-entretiens
+        title: Réussir les entretiens techniques
+        objectives:
+          - Connaître les étapes d'un recrutement technique
+          - Se préparer aux questions classiques data et cloud
+          - Réussir un live coding et répondre avec la méthode STAR
+        quiz:
+          - type: qcm
+            q: Pendant un live coding, que faut-il faire en priorité ?
+            choices: ["Coder en silence le plus vite possible", "Reformuler, poser des questions et penser à voix haute", "Demander la solution", "Écrire directement la solution optimale"]
+            answer: 1
+            explain: Le recruteur évalue votre raisonnement autant que le résultat.
+          - type: qcm
+            q: Dans la méthode STAR, le A signifie…
+            choices: ["Analyse", "Action (ce que VOUS avez fait)", "Attente", "Apprentissage"]
+            answer: 1
+            explain: "Situation, Tâche, Action, Résultat."
+        flashcards:
+          - { q: "Live coding en 5 temps", a: "Reformuler, penser à voix haute, solution simple, tester, améliorer." }
+          - { q: "STAR", a: "Situation, Tâche, Action, Résultat." }
+        exercises:
+          - id: ex-star
+            type: projet
+            title: Une histoire STAR
+            statement: |
+              Préparez votre réponse à : « Parlez-moi d'un problème difficile que vous avez résolu. »
+
+              Utilisez la méthode STAR. Vous pouvez puiser dans votre ancien métier ou dans un exercice de TechCampus qui vous a résisté.
+            rubric:
+              - Situation et tâche en deux phrases
+              - Actions personnelles détaillées (« je »)
+              - Démarche méthodique visible (hypothèses, tests)
+              - Résultat concret, chiffré si possible
+              - Ce que vous en avez appris
+            model: |
+              **S** : en préparant un projet, mon pipeline chargeait deux fois plus de lignes que prévu dans la base. **T** : trouver la cause avant de publier le tableau de bord. **A** : j'ai comparé les volumes à chaque étape, isolé l'étape fautive (la jointure), découvert des doublons dans la table des clients, ajouté un test d'unicité et dédoublonné en amont. **R** : volumes corrects, et le test détecte désormais automatiquement ce type de problème. J'en ai retenu de toujours vérifier les clés avant une jointure.
+      - id: meth-certifications
+        title: Choisir et réussir ses certifications
+        objectives:
+          - Comprendre ce qu'apporte une certification
+          - Choisir des certifications cohérentes avec son métier
+          - Préparer et passer un examen surveillé
+          - Connaître les possibilités de financement
+        docs:
+          - { title: "Mon compte formation (CPF)", url: "https://www.moncompteformation.gouv.fr/" }
+          - { title: "France Compétences — Répertoire spécifique", url: "https://www.francecompetences.fr/recherche_certificationprofessionnelle/" }
+        quiz:
+          - type: qcm
+            q: Quel est le meilleur document pour préparer une certification ?
+            choices: ["Un résumé trouvé sur un forum", "Le guide officiel de l'examen (exam guide)", "Des questions d'examen piratées", "Aucun, il faut improviser"]
+            answer: 1
+            explain: Le guide officiel liste les domaines évalués et leur poids. Les « dumps » piratés sont interdits et font perdre la certification.
+          - type: qcm
+            q: Quand planifier l'examen ?
+            choices: ["Quand on sait absolument tout", "Quand on dépasse environ 80 % aux examens blancs", "Dès le premier jour", "Jamais"]
+            answer: 1
+            explain: Au-delà de 80 % aux examens blancs, on est généralement prêt.
+          - type: vf
+            q: Collectionner un maximum de certifications est la meilleure stratégie.
+            answer: false
+            explain: Trois ou quatre certifications cohérentes avec le métier visé, plus des projets, convainquent davantage.
+        flashcards:
+          - { q: "Certification + projets", a: "La certification prouve la connaissance, les projets la capacité à faire." }
+          - { q: "Financer une certification", a: "CPF (formations au Répertoire spécifique), bons gratuits des éditeurs, -50 % AWS après une première réussite." }

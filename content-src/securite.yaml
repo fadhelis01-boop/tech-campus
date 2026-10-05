@@ -1,0 +1,410 @@
+id: securite
+version: 2026.10.1
+title: Cybersécurité pour la data et le cloud
+branch: Sécurité & IA
+icon: 🔐
+color: "#dc2626"
+order: 41
+updatedAt: 2026-10-05
+description: Principes de sécurité, cryptographie appliquée, failles applicatives (OWASP), secrets et identités dans le cloud, DevSecOps, RGPD et réglementation européenne.
+outlook: Les cyberattaques et la réglementation (RGPD, NIS2, DORA, Cyber Resilience Act) font de la sécurité une compétence attendue de tous les profils techniques, et un atout majeur sur un CV.
+glossary:
+  - { term: Triade CIA, en: CIA triad, def: "Confidentialité, intégrité, disponibilité : les trois propriétés à protéger." }
+  - { term: Hameçonnage, en: phishing, def: "Faux message destiné à voler des identifiants ou à faire exécuter une action." }
+  - { term: Rançongiciel, en: ransomware, def: "Logiciel malveillant qui chiffre les données et exige une rançon." }
+  - { term: Défense en profondeur, en: defense in depth, def: "Plusieurs couches de protection successives." }
+  - { term: Zéro confiance, en: zero trust, def: "Aucune confiance implicite : identité et contexte vérifiés à chaque accès." }
+  - { term: Hachage, en: hashing, def: "Calcul irréversible d'une empreinte de taille fixe." }
+  - { term: Sel, en: salt, def: "Valeur aléatoire ajoutée avant le hachage d'un mot de passe." }
+  - { term: KMS, en: Key Management Service, def: "Service de gestion des clés de chiffrement." }
+  - { term: OWASP Top 10, en: OWASP Top 10, def: "Liste de référence des risques de sécurité les plus critiques des applications web." }
+  - { term: Injection SQL, en: SQL injection, def: "Faille où une entrée utilisateur est interprétée comme du SQL ; parade : requêtes paramétrées." }
+  - { term: Gestionnaire de secrets, en: secrets manager, def: "Service qui stocke, distribue et fait tourner les secrets (Vault, Key Vault, Secrets Manager)." }
+  - { term: DevSecOps, en: DevSecOps, def: "Intégration de la sécurité automatisée à chaque étape de la chaîne de livraison." }
+  - { term: SAST, en: Static Application Security Testing, def: "Analyse de sécurité du code source." }
+  - { term: SCA, en: Software Composition Analysis, def: "Analyse des dépendances et de leurs vulnérabilités connues." }
+  - { term: Donnée personnelle, en: personal data, def: "Information sur une personne identifiée ou identifiable (RGPD)." }
+  - { term: Pseudonymisation, en: pseudonymisation, def: "Remplacement des identifiants, réversible avec une information supplémentaire ; la donnée reste personnelle." }
+  - { term: RSSI, en: CISO, def: "Responsable de la sécurité des systèmes d'information." }
+  - { term: DPO, en: Data Protection Officer, def: "Délégué à la protection des données, garant de la conformité RGPD." }
+modules:
+  - id: m1
+    title: Les bases de la sécurité
+    level: 2
+    summary: Principes, cryptographie appliquée, sécurité des applications.
+    lessons:
+      - id: secu-fondamentaux
+        title: Les fondamentaux de la sécurité
+        objectives:
+          - Expliquer la triade CIA
+          - Reconnaître les menaces principales
+          - Appliquer moindre privilège, défense en profondeur et zéro confiance
+        docs:
+          - { title: "ANSSI — Guide d'hygiène informatique", url: "https://cyber.gouv.fr/publications/guide-dhygiene-informatique" }
+          - { title: "Cybermalveillance.gouv.fr", url: "https://www.cybermalveillance.gouv.fr/" }
+        quiz:
+          - type: qcm
+            q: Un rançongiciel chiffre les serveurs. Quelle propriété est d'abord atteinte ?
+            choices: ["La confidentialité", "L'intégrité", "La disponibilité", "Aucune"]
+            answer: 2
+            explain: Les données deviennent inaccessibles ; souvent, elles sont aussi volées (confidentialité).
+          - type: qcm
+            q: Que signifie « zéro confiance » ?
+            choices: ["Ne jamais utiliser le cloud", "Vérifier identité et contexte à chaque accès, même depuis le réseau interne", "Interdire Internet", "Ne pas faire confiance à l'ANSSI"]
+            answer: 1
+            explain: Être sur le réseau interne ne suffit plus à être autorisé.
+          - type: vf
+            q: L'hameçonnage reste l'une des premières portes d'entrée des attaques.
+            answer: true
+            explain: D'où l'importance de la MFA résistante à l'hameçonnage et de la sensibilisation.
+        flashcards:
+          - { q: "Triade CIA", a: "Confidentialité, intégrité, disponibilité." }
+          - { q: "5 principes de défense", a: "Moindre privilège, défense en profondeur, sécurité par défaut, zéro confiance, surface d'attaque réduite." }
+        exercises:
+          - id: ex-menaces
+            type: ordre
+            title: Réagir à un courriel suspect
+            statement: Vous avez cliqué sur un lien d'un courriel qui imitait la page de connexion de votre entreprise, et saisi votre mot de passe. Remettez les bonnes réactions dans l'ordre.
+            items:
+              - Ne pas paniquer et ne pas cacher l'incident
+              - Changer immédiatement le mot de passe concerné (et partout où il était réutilisé)
+              - Prévenir l'équipe sécurité (RSSI ou support) en transférant le courriel
+              - Vérifier que la MFA est activée et révoquer les sessions ouvertes
+              - Surveiller les connexions et activités inhabituelles sur le compte
+            model: Signaler vite et sans honte est essentiel — c'est la rapidité qui limite les dégâts.
+      - id: secu-crypto
+        title: Cryptographie appliquée
+        objectives:
+          - Distinguer hachage, chiffrement symétrique et asymétrique, signature
+          - Stocker correctement des mots de passe
+          - Chiffrer au repos et en transit, gérer les clés
+        docs:
+          - { title: "Python — module hashlib", url: "https://docs.python.org/fr/3/library/hashlib.html" }
+          - { title: "OWASP — Password Storage Cheat Sheet", url: "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html" }
+        quiz:
+          - type: qcm
+            q: Comment stocker les mots de passe des utilisateurs ?
+            choices: ["En clair, dans une table protégée", "Chiffrés en AES", "Hachés avec une fonction lente et salée (Argon2, bcrypt)", "Hachés en SHA-256 sans sel"]
+            answer: 2
+            explain: Les fonctions lentes et salées rendent les attaques par force brute très coûteuses.
+          - type: qcm
+            q: À quoi sert le sel ?
+            choices: ["À accélérer le hachage", "À ce que deux mots de passe identiques aient des empreintes différentes", "À chiffrer la base", "À rien"]
+            answer: 1
+            explain: Il rend inutiles les tables précalculées.
+          - type: vf
+            q: Un hachage peut être « déchiffré » pour retrouver la donnée d'origine.
+            answer: false
+            explain: Le hachage est irréversible ; on ne peut que tester des candidats.
+        flashcards:
+          - { q: "Symétrique / asymétrique", a: "Une seule clé / paire clé publique-clé privée." }
+          - { q: "Algorithmes recommandés", a: "AES-256-GCM ; SHA-256+ ; Argon2/bcrypt pour les mots de passe." }
+        exercises:
+          - id: ex-mdp
+            type: code
+            lang: python
+            title: Stocker et vérifier un mot de passe
+            statement: |
+              Avec la bibliothèque `bcrypt` (chargée automatiquement), écrivez :
+              - `hacher(mdp)` qui renvoie l'empreinte bcrypt du mot de passe (texte), avec un sel généré par `bcrypt.gensalt()` ;
+              - `verifier(mdp, empreinte)` qui renvoie `True` si le mot de passe correspond (`bcrypt.checkpw`).
+
+              Rappel : bcrypt travaille sur des **octets** : `mdp.encode("utf-8")`.
+            starter: |
+              import bcrypt
+
+              def hacher(mdp):
+                  # à compléter
+                  return mdp.encode("utf-8")
+
+              def verifier(mdp, empreinte):
+                  return mdp.encode("utf-8") == empreinte
+            solution: |
+              import bcrypt
+
+              def hacher(mdp):
+                  return bcrypt.hashpw(mdp.encode("utf-8"), bcrypt.gensalt())
+
+              def verifier(mdp, empreinte):
+                  return bcrypt.checkpw(mdp.encode("utf-8"), empreinte)
+            tests:
+              - { label: "Le bon mot de passe est accepté", code: "e = hacher('Horse-Battery-42'); assert verifier('Horse-Battery-42', e)" }
+              - { label: "Un mauvais mot de passe est refusé", code: "e = hacher('Horse-Battery-42'); assert not verifier('horse-battery-42', e)" }
+              - { label: "Le mot de passe n'apparaît pas dans l'empreinte", code: "assert b'Horse-Battery-42' not in hacher('Horse-Battery-42')" }
+              - { label: "Deux hachages du même mot de passe diffèrent (sel aléatoire)", code: "assert hacher('abc') != hacher('abc')" }
+            hints:
+              - "bcrypt.hashpw(mdp.encode(\"utf-8\"), bcrypt.gensalt())"
+              - "bcrypt.checkpw(mdp.encode(\"utf-8\"), empreinte) relit le sel inclus dans l'empreinte."
+            model: "L'empreinte bcrypt (`$2b$12$…`) contient l'algorithme, le coût et le sel : on stocke une seule chaîne par utilisateur. Le coût (12 par défaut) règle la lenteur volontaire ; on l'augmente au fil des années quand les machines deviennent plus rapides. Argon2 (bibliothèque argon2-cffi) est l'autre choix recommandé."
+      - id: secu-applications
+        title: Sécurité des applications et OWASP Top 10
+        objectives:
+          - Connaître les grandes catégories de l'OWASP Top 10
+          - Comprendre et empêcher l'injection SQL
+          - Adopter les réflexes de développement sécurisé
+        docs:
+          - { title: "OWASP Top 10", url: "https://owasp.org/Top10/" }
+          - { title: "OWASP — SQL Injection Prevention Cheat Sheet", url: "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" }
+        quiz:
+          - type: qcm
+            q: Comment empêcher une injection SQL ?
+            choices: ["En filtrant les apostrophes à la main", "Avec des requêtes paramétrées", "En chiffrant la base", "En masquant les erreurs"]
+            answer: 1
+            explain: Les valeurs sont transmises séparément et jamais interprétées comme du SQL.
+          - type: qcm
+            q: Un utilisateur change /commandes/42 en /commandes/43 et voit la commande d'un autre. Quelle catégorie OWASP ?
+            choices: ["Injection", "Contrôle d'accès défaillant", "Cryptographie", "Journalisation"]
+            answer: 1
+            explain: Le serveur doit vérifier à chaque requête que l'utilisateur a le droit d'accéder à la ressource.
+        flashcards:
+          - { q: "Requête paramétrée", a: "cursor.execute(\"… WHERE nom = ?\", (nom,)) : la valeur n'est jamais interprétée comme du SQL." }
+          - { q: "Réflexes de développement sécurisé", a: "Valider les entrées, contrôler l'accès côté serveur, erreurs sobres, dépendances à jour, journaliser." }
+        exercises:
+          - id: ex-injection
+            type: code
+            lang: python
+            title: Corriger une injection SQL
+            statement: |
+              La fonction `chercher_client(cursor, nom)` construit sa requête en collant le nom saisi par l'utilisateur : elle est vulnérable à l'injection.
+
+              Corrigez-la pour qu'elle utilise une **requête paramétrée** : `cursor.execute(requete, parametres)` avec un `?` à la place de la valeur.
+
+              (Le `cursor` fourni est un faux curseur qui enregistre les appels, pour vérifier votre code sans base de données.)
+            setup: |
+              class FauxCurseur:
+                  def __init__(self):
+                      self.appels = []
+                  def execute(self, requete, parametres=()):
+                      self.appels.append((requete, tuple(parametres)))
+                      return self
+                  def fetchall(self):
+                      return []
+            starter: |
+              def chercher_client(cursor, nom):
+                  requete = f"SELECT id, nom FROM clients WHERE nom = '{nom}'"
+                  return cursor.execute(requete).fetchall()
+
+              c = FauxCurseur()
+              chercher_client(c, "Ada' OR '1'='1")
+              print(c.appels)
+            solution: |
+              def chercher_client(cursor, nom):
+                  requete = "SELECT id, nom FROM clients WHERE nom = ?"
+                  return cursor.execute(requete, (nom,)).fetchall()
+
+              c = FauxCurseur()
+              chercher_client(c, "Ada' OR '1'='1")
+              print(c.appels)
+            tests:
+              - { label: "La valeur est passée en paramètre", code: "c = FauxCurseur(); chercher_client(c, 'Ada'); assert c.appels[0][1] == ('Ada',), c.appels" }
+              - { label: "La requête ne contient jamais la saisie de l'utilisateur", code: "c = FauxCurseur(); chercher_client(c, \"Ada' OR '1'='1\"); assert 'OR' not in c.appels[0][0] and '?' in c.appels[0][0], c.appels" }
+            hints:
+              - "Remplacez '{nom}' par ? dans la requête (sans apostrophes autour)."
+              - "Passez (nom,) en second argument de execute — attention à la virgule qui fait un tuple."
+            model: "Avec la requête paramétrée, `Ada' OR '1'='1` est cherché **comme un nom** (qui n'existe pas), au lieu de modifier la logique de la requête. Le marqueur dépend du pilote : `?` pour sqlite3, `%s` pour psycopg (PostgreSQL)."
+  - id: m2
+    title: Sécurité dans le cloud et conformité
+    level: 3
+    summary: Secrets et identités, DevSecOps, RGPD et réglementation européenne.
+    lessons:
+      - id: secu-secrets-cloud
+        title: Secrets et identités dans le cloud
+        objectives:
+          - Stocker et distribuer les secrets correctement
+          - Réagir à la fuite d'un secret
+          - Sécuriser les identités humaines et applicatives
+        docs:
+          - { title: "OWASP — Secrets Management Cheat Sheet", url: "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html" }
+          - { title: "GitHub — Détection de secrets", url: "https://docs.github.com/fr/code-security/secret-scanning/introduction/about-secret-scanning" }
+        quiz:
+          - type: qcm
+            q: Une clé d'accès cloud a été commitée sur un dépôt public. Première action ?
+            choices: ["Supprimer le commit et ne rien dire", "Révoquer immédiatement la clé", "Rendre le dépôt privé et continuer", "Attendre de voir"]
+            answer: 1
+            explain: Elle doit être considérée comme compromise ; on la révoque, puis on enquête.
+          - type: qcm
+            q: Comment une pipeline GitHub Actions devrait-elle s'authentifier auprès du cloud ?
+            choices: ["Avec une clé permanente dans le YAML", "Via OIDC, avec des droits temporaires", "Avec le compte racine", "Avec le mot de passe d'un administrateur"]
+            answer: 1
+            explain: Aucun secret stocké, des droits limités et temporaires.
+        flashcards:
+          - { q: "Fuite de secret : 5 étapes", a: "Révoquer, remplacer, enquêter (journaux), nettoyer l'historique, prévenir (détection automatique)." }
+          - { q: "Gestionnaires de secrets", a: "AWS Secrets Manager, Azure Key Vault, Google Secret Manager, HashiCorp Vault." }
+        exercises:
+          - id: ex-secrets-terminal
+            type: terminal
+            title: Nettoyer un dépôt qui contient un secret
+            statement: |
+              Le dépôt `~/pipeline` contient un fichier `config.env` avec une clé d'API, **pas encore commité**. Vous devez commiter le code sans jamais y mettre le secret.
+
+              1. Vérifiez ce que Git s'apprête à suivre (`git status`).
+              2. Créez un `.gitignore` qui exclut `config.env`.
+              3. Créez un modèle `config.env.example` (avec une valeur factice `API_KEY=a-remplacer`) qui, lui, sera commité pour documenter la configuration.
+              4. Commitez.
+            prepare:
+              - git config --global user.name "Ada"
+              - git config --global user.email ada@example.com
+            files:
+              pipeline/main.py: "import os\nAPI_KEY = os.environ['API_KEY']\n"
+              pipeline/config.env: "API_KEY=sk-live-7f3a9c2b1e\n"
+            tasks:
+              - label: Le dépôt est initialisé et l'état vérifié
+                check: { type: ran, regex: "^git status" }
+                hint: "cd pipeline, git init, git status"
+              - label: config.env est ignoré par Git
+                check: { type: content, path: "pipeline/.gitignore", regex: "^config\\.env\\s*$" }
+              - label: Un modèle config.env.example existe, sans vrai secret
+                check: { type: content, path: "pipeline/config.env.example", regex: "^API_KEY=a-remplacer" }
+              - label: Code, .gitignore et modèle commités, sans le secret
+                check: { type: git, repo: pipeline, commits: 1, tracked: "config.env.example", notTracked: "config.env" }
+            commands:
+              - cd pipeline
+              - git init
+              - git status
+              - echo config.env > .gitignore
+              - echo API_KEY=a-remplacer > config.env.example
+              - git add .
+              - git status
+              - git commit -m "Ajoute le pipeline et un modèle de configuration"
+            model: |
+              ```bash
+              cd pipeline
+              git init
+              git status                               # config.env apparaît : danger
+              echo config.env > .gitignore
+              echo API_KEY=a-remplacer > config.env.example
+              git add .
+              git status                               # config.env n'apparaît plus
+              git commit -m "Ajoute le pipeline et un modèle de configuration"
+              ```
+              Le fichier `.example` documente les variables attendues sans en révéler les valeurs. En production, la vraie clé vient d'un gestionnaire de secrets.
+      - id: secu-devsecops
+        title: DevSecOps — la sécurité dans la chaîne
+        objectives:
+          - Placer les contrôles de sécurité à chaque étape
+          - Ajouter détection de secrets, audit des dépendances et scan d'images à une CI
+          - Gérer le bruit des scanners
+        docs:
+          - { title: "OWASP DevSecOps Guideline", url: "https://owasp.org/www-project-devsecops-guideline/" }
+          - { title: "pip-audit", url: "https://github.com/pypa/pip-audit" }
+        quiz:
+          - type: qcm
+            q: Que signifie « shift left » ?
+            choices: ["Déplacer les serveurs", "Détecter les problèmes de sécurité le plus tôt possible dans la chaîne", "Changer de fournisseur", "Réduire les tests"]
+            answer: 1
+            explain: Une faille trouvée en pull request coûte bien moins cher qu'en production.
+          - type: qcm
+            q: Quel outil analyse les dépendances Python vulnérables ?
+            choices: ["pip-audit", "pytest", "black", "uvicorn"]
+            answer: 0
+            explain: pip-audit compare les dépendances aux bases de vulnérabilités connues.
+        flashcards:
+          - { q: "Contrôles DevSecOps", a: "Secrets, SAST, SCA, scan d'images, SBOM, signature, IaC, admission, DAST." }
+        exercises:
+          - id: ex-devsecops-gha
+            type: config
+            title: Ajouter un job de sécurité à la CI
+            filename: .github/workflows/securite.yml
+            syntax: yaml
+            statement: |
+              Complétez ce workflow avec un job `securite` (sur `ubuntu-latest`) qui :
+              1. récupère le code avec tout l'historique (`actions/checkout` avec `fetch-depth: 0`) ;
+              2. détecte les secrets avec l'action `gitleaks/gitleaks-action` ;
+              3. audite les dépendances avec `pip-audit -r requirements.txt` ;
+              4. scanne l'image avec Trivy en **faisant échouer** la chaîne sur les vulnérabilités `CRITICAL` et `HIGH` (`--exit-code 1 --severity CRITICAL,HIGH`).
+            starter: |
+              name: Sécurité
+              on: [pull_request]
+              jobs:
+                securite:
+                  runs-on: ubuntu-latest
+                  steps:
+                    - uses: actions/checkout@v5
+            solution: |
+              name: Sécurité
+              on: [pull_request]
+              jobs:
+                securite:
+                  runs-on: ubuntu-latest
+                  steps:
+                    - uses: actions/checkout@v5
+                      with:
+                        fetch-depth: 0
+                    - name: Détection de secrets
+                      uses: gitleaks/gitleaks-action@v2
+                    - name: Dépendances Python vulnérables
+                      run: pip install pip-audit && pip-audit -r requirements.txt
+                    - name: Scan de l'image
+                      run: trivy image --exit-code 1 --severity CRITICAL,HIGH monregistre/api:latest
+            checks:
+              - { label: "Historique complet récupéré (fetch-depth 0)", path: "jobs.securite.steps[*].with.fetch-depth", equals: 0 }
+              - { label: "Détection de secrets avec gitleaks", path: "jobs.securite.steps[*].uses", contains: "gitleaks/gitleaks-action@" }
+              - { label: "Audit des dépendances avec pip-audit", path: "jobs.securite.steps[*].run", contains: "pip-audit -r requirements.txt" }
+              - { label: "Scan Trivy bloquant sur CRITICAL et HIGH", regex: "trivy image[^\\n]*--exit-code 1[^\\n]*--severity CRITICAL,HIGH|trivy image[^\\n]*--severity CRITICAL,HIGH[^\\n]*--exit-code 1" }
+            hints:
+              - "with: s'indente sous l'étape checkout, au même niveau que uses."
+              - "Chaque contrôle est une étape : name, puis uses ou run."
+            model: "`fetch-depth: 0` permet à gitleaks d'analyser **tout l'historique**, pas seulement le dernier commit : un secret commité puis supprimé reste détecté. `--exit-code 1` transforme le scan en contrôle bloquant."
+      - id: secu-reglementation
+        title: RGPD et réglementation européenne
+        objectives:
+          - Appliquer les principes du RGPD dans un pipeline de données
+          - Distinguer pseudonymisation et anonymisation
+          - Connaître NIS2, DORA, AI Act, Cyber Resilience Act, SecNumCloud
+        docs:
+          - { title: "CNIL — Le RGPD en pratique", url: "https://www.cnil.fr/fr/rgpd-par-ou-commencer" }
+          - { title: "CNIL — Guide de la sécurité des données personnelles", url: "https://www.cnil.fr/fr/securite-des-donnees" }
+          - { title: "EUR-Lex — Règlement DORA", url: "https://eur-lex.europa.eu/eli/reg/2022/2554/oj" }
+        quiz:
+          - type: qcm
+            q: Une adresse IP est-elle une donnée personnelle ?
+            choices: ["Jamais", "Oui, elle peut permettre d'identifier indirectement une personne", "Seulement en IPv6", "Seulement aux États-Unis"]
+            answer: 1
+            explain: Une donnée qui rend une personne identifiable, même indirectement, est personnelle.
+          - type: qcm
+            q: Dans quel délai notifier la CNIL d'une violation de données à risque ?
+            choices: ["24 heures", "72 heures", "1 mois", "Jamais"]
+            answer: 1
+            explain: Le RGPD impose une notification dans les 72 heures après en avoir pris connaissance.
+          - type: vf
+            q: Une donnée pseudonymisée n'est plus une donnée personnelle.
+            answer: false
+            explain: La ré-identification reste possible avec une information supplémentaire ; le RGPD s'applique.
+        flashcards:
+          - { q: "Minimisation (RGPD)", a: "Ne collecter et ne copier que les données nécessaires." }
+          - { q: "DORA (règlement)", a: "Résilience opérationnelle numérique du secteur financier, applicable depuis janvier 2025." }
+        exercises:
+          - id: ex-pseudonymiser
+            type: code
+            lang: python
+            title: Pseudonymiser un export pour l'équipe d'analyse
+            statement: |
+              L'équipe d'analyse a besoin des commandes, mais pas de l'identité des clients. Écrivez `pseudonymiser(lignes, cle)` qui, pour chaque dictionnaire `{"email", "nom", "ville", "montant"}` :
+              - remplace `email` par un **pseudonyme** stable : les 16 premiers caractères hexadécimaux du HMAC-SHA256 de l'e-mail **en minuscules**, avec la clé secrète `cle` (`hmac.new(cle, email.encode(), hashlib.sha256).hexdigest()[:16]`), dans une clé `client` ;
+              - **supprime** le nom (minimisation) ;
+              - conserve `ville` et `montant`.
+            starter: |
+              import hmac, hashlib
+
+              def pseudonymiser(lignes, cle):
+                  resultat = []
+                  for l in lignes:
+                      resultat.append(l)
+                  return resultat
+            solution: |
+              import hmac, hashlib
+
+              def pseudonymiser(lignes, cle):
+                  resultat = []
+                  for l in lignes:
+                      pseudo = hmac.new(cle, l["email"].lower().encode("utf-8"), hashlib.sha256).hexdigest()[:16]
+                      resultat.append({"client": pseudo, "ville": l["ville"], "montant": l["montant"]})
+                  return resultat
+            tests:
+              - { label: "Plus de nom ni d'e-mail", code: "r = pseudonymiser([{'email': 'ada@ex.com', 'nom': 'Ada', 'ville': 'Lyon', 'montant': 10}], b'cle-secrete'); assert set(r[0]) == {'client', 'ville', 'montant'}, r" }
+              - { label: "Pseudonyme stable (même client → même pseudonyme, casse ignorée)", code: "r = pseudonymiser([{'email': 'Ada@Ex.com', 'nom': 'A', 'ville': 'L', 'montant': 1}, {'email': 'ada@ex.com', 'nom': 'A', 'ville': 'L', 'montant': 2}], b'k'); assert r[0]['client'] == r[1]['client'] and len(r[0]['client']) == 16" }
+              - { label: "Dépend de la clé secrète", code: "a = pseudonymiser([{'email': 'x@y.z', 'nom': '', 'ville': '', 'montant': 0}], b'k1')[0]['client']; b = pseudonymiser([{'email': 'x@y.z', 'nom': '', 'ville': '', 'montant': 0}], b'k2')[0]['client']; assert a != b" }
+            hints:
+              - "hmac.new(cle, texte.encode(\"utf-8\"), hashlib.sha256).hexdigest()[:16]"
+              - "Construisez un nouveau dictionnaire avec seulement client, ville et montant."
+            model: "Le HMAC avec une clé secrète empêche de retrouver un client en hachant simplement des adresses connues (ce qu'un SHA-256 sans clé permettrait). Le pseudonyme stable permet encore de compter les commandes par client. Ce reste une donnée personnelle au sens du RGPD : accès limité, durée de conservation, et clé conservée à part."

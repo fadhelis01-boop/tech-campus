@@ -1,0 +1,464 @@
+id: cloud
+version: 2026.10.1
+title: Cloud computing
+branch: Cloud & DevOps
+icon: ☁️
+color: "#ff9900"
+order: 30
+updatedAt: 2026-10-05
+description: Modèles de service, fournisseurs, régions et haute disponibilité, calcul, stockage, identités, bases managées, architecture, coûts et certifications.
+outlook: Le cloud est devenu l'infrastructure par défaut des entreprises ; architecture, sécurité des accès et maîtrise des coûts (FinOps) sont parmi les compétences les plus recherchées.
+glossary:
+  - { term: IaaS, en: Infrastructure as a Service, def: "Location de machines virtuelles, réseau et stockage ; le client gère le système et les logiciels." }
+  - { term: PaaS, en: Platform as a Service, def: "Plateforme prête à exécuter du code ou à stocker des données ; le client gère son code et ses données." }
+  - { term: SaaS, en: Software as a Service, def: "Logiciel complet utilisé via Internet." }
+  - { term: Serverless, en: serverless, def: "Exécution de code ou de conteneurs sans gérer de serveur, facturée à l'usage." }
+  - { term: Responsabilité partagée, en: shared responsibility model, def: "Le fournisseur sécurise le cloud ; le client sécurise ce qu'il y met (données, accès, configuration)." }
+  - { term: Région, en: region, def: "Zone géographique d'un fournisseur cloud, composée de plusieurs zones de disponibilité." }
+  - { term: SLA, en: Service Level Agreement, def: "Engagement contractuel de disponibilité d'un service." }
+  - { term: RPO, en: Recovery Point Objective, def: "Quantité maximale de données que l'on accepte de perdre en cas d'incident." }
+  - { term: RTO, en: Recovery Time Objective, def: "Durée maximale acceptable d'interruption de service." }
+  - { term: Instance spot, en: spot instance, def: "Capacité excédentaire à prix réduit, reprise par le fournisseur avec un court préavis." }
+  - { term: Stockage objet, en: object storage, def: "Stockage de fichiers identifiés par une clé dans des compartiments, accessibles par API (S3, Blob, Cloud Storage)." }
+  - { term: Compartiment, en: bucket, def: "Conteneur de premier niveau du stockage objet." }
+  - { term: IAM, en: Identity and Access Management, def: "Gestion des identités et des droits d'accès." }
+  - { term: Rôle, en: role, def: "Identité sans mot de passe, endossée temporairement par une personne ou un service." }
+  - { term: MFA, en: multi-factor authentication, def: "Authentification à plusieurs facteurs (mot de passe + code, clé physique…)." }
+  - { term: FinOps, en: FinOps, def: "Pratique de pilotage des coûts du cloud associant finance, technique et métiers." }
+  - { term: Étiquette, en: tag, def: "Métadonnée clé-valeur attachée à une ressource (projet, équipe), indispensable au suivi des coûts." }
+modules:
+  - id: m1
+    title: Comprendre le cloud
+    level: 1
+    summary: Modèles de service, responsabilité partagée, fournisseurs, régions et disponibilité.
+    lessons:
+      - id: cloud-modeles
+        title: IaaS, PaaS, SaaS et responsabilité partagée
+        objectives:
+          - Distinguer IaaS, PaaS, SaaS et serverless
+          - Appliquer le modèle de responsabilité partagée
+          - Connaître cloud public, privé, hybride et multicloud
+        docs:
+          - { title: "AWS — Modèle de responsabilité partagée", url: "https://aws.amazon.com/fr/compliance/shared-responsibility-model/" }
+          - { title: "Microsoft — Responsabilité partagée dans le cloud", url: "https://learn.microsoft.com/fr-fr/azure/security/fundamentals/shared-responsibility" }
+        quiz:
+          - type: qcm
+            q: Dans quel modèle le client gère-t-il le système d'exploitation ?
+            choices: ["SaaS", "PaaS", "IaaS", "Aucun"]
+            answer: 2
+            explain: En IaaS, le fournisseur gère le matériel et la virtualisation ; le système est à la charge du client.
+          - type: qcm
+            q: Un compartiment de stockage laissé public expose des données. Qui est responsable ?
+            choices: ["Le fournisseur cloud", "Le client", "Personne", "L'ANSSI"]
+            answer: 1
+            explain: La configuration et les accès relèvent toujours du client.
+          - type: qcm
+            q: Que désigne le passage « CAPEX → OPEX » ?
+            choices: ["Une baisse de sécurité", "Passer d'investissements initiaux à des dépenses d'usage", "Un changement de fournisseur", "Une norme"]
+            answer: 1
+            explain: On n'achète plus de serveurs ; on paie à l'usage.
+        flashcards:
+          - { q: "IaaS / PaaS / SaaS", a: "Machines / plateforme prête / logiciel complet." }
+          - { q: "Responsabilité partagée", a: "Fournisseur : sécurité DU cloud. Client : sécurité DANS le cloud (données, accès, configuration)." }
+        exercises:
+          - id: ex-responsabilite
+            type: ordre
+            title: Du plus géré par vous au plus géré par le fournisseur
+            statement: Classez ces solutions de la plus exigeante à administrer pour le client à la moins exigeante.
+            items:
+              - Serveurs physiques dans les locaux de l'entreprise
+              - Machines virtuelles dans le cloud (IaaS)
+              - Cluster Kubernetes managé
+              - Conteneur serverless (Cloud Run, Fargate)
+              - Logiciel SaaS (messagerie en ligne)
+            model: Plus on avance, plus le fournisseur prend en charge — mais les données et les accès restent toujours sous la responsabilité du client.
+      - id: cloud-fournisseurs
+        title: Les fournisseurs et la souveraineté
+        objectives:
+          - Faire la correspondance entre les services AWS, Azure et Google Cloud
+          - Connaître les acteurs européens et la qualification SecNumCloud
+          - Pratiquer sans risque financier
+        docs:
+          - { title: "Google Cloud — Comparaison des services AWS et Azure", url: "https://cloud.google.com/docs/get-started/aws-azure-gcp-service-comparison" }
+          - { title: "ANSSI — Liste des offres qualifiées SecNumCloud", url: "https://cyber.gouv.fr/produits-services-qualifies" }
+        quiz:
+          - type: qcm
+            q: Quel est l'équivalent Azure d'Amazon S3 ?
+            choices: ["Azure Functions", "Blob Storage", "Cosmos DB", "AKS"]
+            answer: 1
+            explain: Blob Storage est le stockage objet d'Azure.
+          - type: qcm
+            q: Quel service Google Cloud est un entrepôt de données ?
+            choices: ["BigQuery", "Cloud Run", "GKE", "Firestore"]
+            answer: 0
+            explain: BigQuery est l'entrepôt de données serverless de Google Cloud.
+          - type: vf
+            q: Avant d'expérimenter sur un compte cloud personnel, il est recommandé de configurer une alerte de budget.
+            answer: true
+            explain: Une ressource oubliée peut coûter cher ; l'alerte prévient dès le premier dépassement.
+        flashcards:
+          - { q: "EC2 / VM / Compute Engine", a: "Machines virtuelles chez AWS / Azure / Google Cloud." }
+          - { q: "SecNumCloud", a: "Qualification de l'ANSSI pour les offres cloud de confiance." }
+      - id: cloud-regions
+        title: Régions, zones et haute disponibilité
+        objectives:
+          - Choisir une région
+          - Concevoir pour plusieurs zones de disponibilité
+          - Calculer une disponibilité et définir RPO/RTO
+        docs:
+          - { title: "AWS — Régions et zones de disponibilité", url: "https://aws.amazon.com/fr/about-aws/global-infrastructure/regions_az/" }
+        quiz:
+          - type: qcm
+            q: Combien de temps d'arrêt par an autorise une disponibilité de 99,9 % ?
+            choices: ["≈ 5 minutes", "≈ 53 minutes", "≈ 8,8 heures", "≈ 3,65 jours"]
+            answer: 2
+            explain: "0,1 % de 8 760 h ≈ 8,76 h."
+          - type: qcm
+            q: Le RPO mesure…
+            choices: ["le temps de redémarrage", "la quantité de données que l'on accepte de perdre", "le prix de la sauvegarde", "la latence"]
+            answer: 1
+            explain: Le RTO mesure la durée d'interruption acceptable.
+          - type: vf
+            q: Une application déployée dans une seule zone de disponibilité est hautement disponible.
+            answer: false
+            explain: La haute disponibilité suppose au moins deux zones.
+        flashcards:
+          - { q: "Disponibilités en série", a: "Elles se multiplient : 99,9 % × 99,9 % ≈ 99,8 %." }
+          - { q: "RPO / RTO", a: "Données perdues acceptables / durée d'arrêt acceptable." }
+        exercises:
+          - id: ex-dispo
+            type: calcul
+            title: Calculs de disponibilité
+            statement: Répondez par un nombre (arrondis indiqués).
+            questions:
+              - { q: "Heures d'indisponibilité maximales par an pour 99,5 % (année de 8 760 h) ?", answer: 43.8, tolerance: 0.05, unit: h, explain: "0,5 % × 8 760 = 43,8 h." }
+              - { q: "Disponibilité (en %) de 3 composants en série à 99,9 % chacun ? (2 décimales)", answer: 99.7, tolerance: 0.01, unit: "%", explain: "0,999³ = 0,997 → 99,70 %." }
+              - { q: "Disponibilité (en %) de 2 serveurs redondants à 99 % chacun (il suffit qu'un des deux fonctionne) ?", answer: 99.99, tolerance: 0.001, unit: "%", explain: "1 − 0,01 × 0,01 = 0,9999." }
+              - { q: "Sauvegarde toutes les 4 heures : quel est le RPO, en heures ?", answer: 4, unit: h, explain: "Au pire, on perd les données des 4 dernières heures." }
+  - id: m2
+    title: Les services essentiels
+    level: 2
+    summary: Calcul, stockage, identités et droits, bases de données managées.
+    lessons:
+      - id: cloud-calcul
+        title: Machines virtuelles, conteneurs et serverless
+        objectives:
+          - Choisir entre VM, conteneurs managés, conteneurs serverless et fonctions
+          - Connaître les modes d'achat (à la demande, engagement, spot)
+          - Concevoir une mise à l'échelle horizontale avec des serveurs sans état
+        docs:
+          - { title: "AWS Lambda — Guide du développeur", url: "https://docs.aws.amazon.com/fr_fr/lambda/latest/dg/welcome.html" }
+          - { title: "Google Cloud Run — Présentation", url: "https://cloud.google.com/run/docs/overview/what-is-cloud-run" }
+        quiz:
+          - type: qcm
+            q: Quel mode d'achat convient à un calcul par lots interruptible, au meilleur prix ?
+            choices: ["À la demande", "Spot", "Réservé 3 ans", "Dédié"]
+            answer: 1
+            explain: Les instances spot sont très bon marché mais peuvent être reprises.
+          - type: qcm
+            q: Pourquoi les serveurs doivent-ils être « sans état » pour la mise à l'échelle horizontale ?
+            choices: ["Pour aller plus vite", "Pour pouvoir en ajouter ou en supprimer sans perdre de données", "Pour réduire la sécurité", "C'est une obligation légale"]
+            answer: 1
+            explain: Les données importantes vivent dans une base ou un stockage partagé.
+          - type: vf
+            q: Une fonction serverless peut s'exécuter pendant plusieurs jours d'affilée.
+            answer: false
+            explain: Les fonctions ont une durée maximale d'exécution (de l'ordre de la quinzaine de minutes chez AWS Lambda).
+        flashcards:
+          - { q: "Scale up vs scale out", a: "Vertical : plus grosse machine. Horizontal : plus de machines." }
+          - { q: "Cold start", a: "Délai du premier appel d'une fonction serverless, le temps de démarrer son environnement." }
+        exercises:
+          - id: ex-evenement
+            type: code
+            lang: python
+            title: Une fonction déclenchée par l'arrivée de fichiers
+            statement: |
+              Une fonction serverless est appelée à chaque dépôt de fichier dans un compartiment. L'événement (simplifié) ressemble à :
+
+              ```text
+              {"fichiers": [{"cle": "ventes/2026-10-05.csv", "taille": 2048}, …]}
+              ```
+
+              Écrivez `traiter(evenement, contexte)` qui renvoie un dictionnaire :
+              - `"a_charger"` : les clés des fichiers **.csv** placés sous `ventes/` et **non vides** ;
+              - `"ignores"` : le nombre des autres fichiers.
+            starter: |
+              def traiter(evenement, contexte):
+                  a_charger = []
+                  ignores = 0
+                  # parcourir evenement["fichiers"]
+                  return {"a_charger": a_charger, "ignores": ignores}
+
+              print(traiter({"fichiers": [{"cle": "ventes/a.csv", "taille": 10}]}, None))
+            solution: |
+              def traiter(evenement, contexte):
+                  a_charger = []
+                  ignores = 0
+                  for f in evenement.get("fichiers", []):
+                      if f["cle"].startswith("ventes/") and f["cle"].endswith(".csv") and f["taille"] > 0:
+                          a_charger.append(f["cle"])
+                      else:
+                          ignores += 1
+                  return {"a_charger": a_charger, "ignores": ignores}
+
+              print(traiter({"fichiers": [{"cle": "ventes/a.csv", "taille": 10}]}, None))
+            tests:
+              - { label: "Tri des fichiers", code: "e = {'fichiers': [{'cle': 'ventes/2026-10-05.csv', 'taille': 2048}, {'cle': 'ventes/vide.csv', 'taille': 0}, {'cle': 'ventes/notes.txt', 'taille': 10}, {'cle': 'rh/salaires.csv', 'taille': 99}]}\nassert traiter(e, None) == {'a_charger': ['ventes/2026-10-05.csv'], 'ignores': 3}" }
+              - { label: "Événement sans fichiers", code: "assert traiter({}, None) == {'a_charger': [], 'ignores': 0}" }
+            hints:
+              - "evenement.get(\"fichiers\", []) gère l'événement vide."
+              - "Trois conditions : préfixe ventes/, suffixe .csv, taille > 0."
+            model: "Une fonction événementielle doit être robuste aux événements inattendus (vides, fichiers parasites) et rapide. En production, elle journalise ce qu'elle ignore, et confie le chargement lourd à un autre service."
+      - id: cloud-stockage
+        title: Le stockage — objet, bloc, fichier
+        objectives:
+          - Choisir le bon type de stockage
+          - Utiliser les classes de stockage et les règles de cycle de vie
+          - Protéger un compartiment (accès public, versionnage, chiffrement)
+        docs:
+          - { title: "Amazon S3 — Classes de stockage", url: "https://aws.amazon.com/fr/s3/storage-classes/" }
+          - { title: "Azure Blob Storage — Niveaux d'accès", url: "https://learn.microsoft.com/fr-fr/azure/storage/blobs/access-tiers-overview" }
+        quiz:
+          - type: qcm
+            q: Sur quel type de stockage repose un data lake ?
+            choices: ["Bloc", "Objet", "Fichier", "Mémoire"]
+            answer: 1
+            explain: Le stockage objet offre une capacité illimitée à faible coût.
+          - type: qcm
+            q: Que fait une règle de cycle de vie ?
+            choices: ["Chiffre les données", "Déplace ou supprime automatiquement les objets selon leur âge", "Sauvegarde la base", "Rend le bucket public"]
+            answer: 1
+            explain: Par exemple, archiver après 90 jours et supprimer après 7 ans.
+          - type: vf
+            q: Il existe de vrais dossiers dans un compartiment de stockage objet.
+            answer: false
+            explain: Les « / » font partie de la clé ; les consoles les affichent comme des dossiers.
+        flashcards:
+          - { q: "Objet / bloc / fichier", a: "Data lake et sauvegardes / disque de VM / partage entre serveurs." }
+          - { q: "URL présignée", a: "Lien temporaire pour télécharger ou déposer un objet sans identifiants." }
+        exercises:
+          - id: ex-cout-stockage
+            type: calcul
+            title: Le coût du stockage
+            statement: |
+              Tarifs **fictifs** pour l'exercice : classe standard 0,023 €/Go/mois ; classe archive 0,004 €/Go/mois. Un data lake contient 10 To (10 000 Go). Répondez en euros.
+            questions:
+              - { q: "Coût mensuel si tout est en classe standard ?", answer: 230, unit: €, explain: "10 000 × 0,023 = 230 €." }
+              - { q: "Coût mensuel si 80 % des données (anciennes) passent en archive ?", answer: 78, unit: €, explain: "2 000 × 0,023 + 8 000 × 0,004 = 46 + 32 = 78 €." }
+              - { q: "Économie annuelle réalisée par la règle de cycle de vie ?", answer: 1824, unit: €, explain: "(230 − 78) × 12 = 1 824 €." }
+      - id: cloud-reseau-iam
+        title: Identités et droits — IAM et moindre privilège
+        objectives:
+          - Distinguer utilisateurs, groupes, rôles et politiques
+          - Lire et écrire une politique IAM
+          - Appliquer le moindre privilège et les bonnes pratiques de compte
+        docs:
+          - { title: "AWS IAM — Bonnes pratiques de sécurité", url: "https://docs.aws.amazon.com/fr_fr/IAM/latest/UserGuide/best-practices.html" }
+          - { title: "AWS IAM — Logique d'évaluation des politiques", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html" }
+        quiz:
+          - type: qcm
+            q: Une politique autorise s3:GetObject, une autre le refuse explicitement. Résultat ?
+            choices: ["Autorisé", "Refusé", "Ça dépend de l'ordre", "Erreur"]
+            answer: 1
+            explain: Un Deny explicite l'emporte toujours.
+          - type: qcm
+            q: Comment une application dans le cloud doit-elle obtenir ses droits ?
+            choices: ["Avec une clé d'accès écrite dans le code", "En endossant un rôle", "Avec le compte racine", "Avec le mot de passe d'un administrateur"]
+            answer: 1
+            explain: Les rôles donnent des identifiants temporaires, sans secret dans le code.
+          - type: vf
+            q: Le compte racine doit être utilisé pour l'administration quotidienne.
+            answer: false
+            explain: Il est protégé par MFA et réservé à de rares tâches.
+        flashcards:
+          - { q: "Politique IAM", a: "Effect (Allow/Deny), Action, Resource." }
+          - { q: "Évaluation", a: "Refus par défaut ; Allow ouvre ; Deny explicite l'emporte." }
+        exercises:
+          - id: ex-iam-policy
+            type: config
+            title: Une politique au moindre privilège
+            filename: politique-pipeline.json
+            syntax: json
+            statement: |
+              Un pipeline de données doit **lire** les fichiers du compartiment `ventes-brutes` et **écrire** dans le compartiment `ventes-propres`. Rien d'autre.
+
+              Le fichier de départ, écrit trop vite, donne tous les droits sur tout. Corrigez-le :
+              - une déclaration qui autorise `s3:GetObject` et `s3:ListBucket` sur `ventes-brutes` (le compartiment **et** ses objets) ;
+              - une déclaration qui autorise `s3:PutObject` sur les objets de `ventes-propres` ;
+              - **aucune** action ni ressource avec un joker `*` seul (`"s3:*"`, `"*"`).
+            starter: |
+              {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": "s3:*",
+                    "Resource": "*"
+                  }
+                ]
+              }
+            solution: |
+              {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["s3:GetObject", "s3:ListBucket"],
+                    "Resource": [
+                      "arn:aws:s3:::ventes-brutes",
+                      "arn:aws:s3:::ventes-brutes/*"
+                    ]
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": ["s3:PutObject"],
+                    "Resource": ["arn:aws:s3:::ventes-propres/*"]
+                  }
+                ]
+              }
+            checks:
+              - { label: "Lecture autorisée (s3:GetObject)", path: "Statement[*].Action", contains: "s3:GetObject" }
+              - { label: "Listage autorisé (s3:ListBucket)", path: "Statement[*].Action", contains: "s3:ListBucket" }
+              - { label: "Écriture autorisée (s3:PutObject)", path: "Statement[*].Action", contains: "s3:PutObject" }
+              - { label: "Ressource ventes-brutes (compartiment et objets)", regex: "arn:aws:s3:::ventes-brutes\"[\\s\\S]*arn:aws:s3:::ventes-brutes/\\*|arn:aws:s3:::ventes-brutes/\\*\"[\\s\\S]*arn:aws:s3:::ventes-brutes\"", hint: "Il faut l'ARN du compartiment (pour ListBucket) et celui de ses objets avec /* (pour GetObject)." }
+              - { label: "Ressource ventes-propres/*", regex: "arn:aws:s3:::ventes-propres/\\*" }
+              - { label: "Aucune action « s3:* » ni « * »", regex: "\"(s3:)?\\*\"", not: true }
+              - { label: "Aucune ressource « * » seule", regex: "\"Resource\"\\s*:\\s*\\[?\\s*\"\\*\"", not: true }
+            hints:
+              - "Action peut être une liste : [\"s3:GetObject\", \"s3:ListBucket\"]."
+              - "ListBucket s'applique au compartiment (arn:aws:s3:::ventes-brutes), GetObject aux objets (arn:aws:s3:::ventes-brutes/*)."
+            model: "Deux déclarations précises remplacent le « tout sur tout ». Si les identifiants du pipeline fuitent, l'attaquant ne pourra que lire les ventes brutes et écrire des ventes propres — pas supprimer des sauvegardes ni créer des machines."
+      - id: cloud-bdd
+        title: Les bases de données managées
+        objectives:
+          - Connaître les services d'une base managée
+          - Choisir le type de base selon l'usage
+          - Sécuriser une base dans le cloud
+        docs:
+          - { title: "Amazon RDS — Déploiements Multi-AZ", url: "https://docs.aws.amazon.com/fr_fr/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html" }
+        quiz:
+          - type: qcm
+            q: Quel est l'intérêt d'une copie de secours dans une autre zone (multi-AZ) ?
+            choices: ["Répartir les lectures", "Basculer automatiquement en cas de panne de la zone principale", "Réduire les coûts", "Chiffrer les données"]
+            answer: 1
+            explain: Les réplicas en lecture répartissent les lectures ; la copie de secours assure la reprise.
+          - type: qcm
+            q: Où placer une base de données de production ?
+            choices: ["Dans un sous-réseau public", "Dans un sous-réseau privé", "Sur le poste d'un administrateur", "Dans un bucket"]
+            answer: 1
+            explain: Jamais exposée à Internet ; accessible seulement depuis les serveurs d'application.
+          - type: vf
+            q: Il est conseillé de faire les analyses lourdes directement sur la base transactionnelle de production.
+            answer: false
+            explain: On copie les données vers un entrepôt dédié pour ne pas ralentir l'application.
+        flashcards:
+          - { q: "Point-in-time recovery", a: "Restaurer une base à un instant précis grâce aux sauvegardes continues." }
+          - { q: "Base transactionnelle vs entrepôt", a: "OLTP pour l'application ; entrepôt (OLAP) pour l'analyse." }
+  - id: m3
+    title: Concevoir et piloter
+    level: 3
+    summary: Architecture de référence, maîtrise des coûts, préparation aux certifications.
+    lessons:
+      - id: cloud-architecture
+        title: Concevoir une architecture « bien architecturée »
+        objectives:
+          - Connaître les six piliers du Well-Architected Framework
+          - Appliquer les principes de conception cloud
+          - Documenter ses décisions d'architecture
+        docs:
+          - { title: "AWS Well-Architected Framework", url: "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" }
+          - { title: "Azure Well-Architected Framework", url: "https://learn.microsoft.com/fr-fr/azure/well-architected/" }
+        quiz:
+          - type: qcm
+            q: Quel pilier traite de la reprise après une panne ?
+            choices: ["Optimisation des coûts", "Fiabilité", "Durabilité", "Performance"]
+            answer: 1
+            explain: La fiabilité couvre la résistance aux pannes et la reprise.
+          - type: qcm
+            q: Pourquoi placer une file de messages entre deux composants ?
+            choices: ["Pour les coupler fortement", "Pour les découpler : l'un peut ralentir ou tomber sans bloquer l'autre", "Pour chiffrer", "Pour réduire le stockage"]
+            answer: 1
+            explain: Le découplage améliore la résilience et la mise à l'échelle.
+        flashcards:
+          - { q: "6 piliers Well-Architected", a: "Excellence opérationnelle, sécurité, fiabilité, performance, coûts, durabilité." }
+          - { q: "ADR", a: "Architecture Decision Record : contexte, options, décision, conséquences." }
+        exercises:
+          - id: ex-archi
+            type: projet
+            title: Concevoir l'architecture d'une application de réservation
+            statement: |
+              Une PME lance une application web de réservation de salles : quelques milliers d'utilisateurs, avec des pics le lundi matin. Les réservations ne doivent jamais être perdues. Les données doivent rester en Europe. Budget serré.
+
+              Proposez une architecture cloud (fournisseur au choix) : composants, réseau, données, haute disponibilité, sécurité, et deux mesures pour maîtriser les coûts. Justifiez chaque choix en une phrase.
+            rubric:
+              - Région européenne justifiée
+              - Front (CDN/équilibreur) et calcul sans état avec mise à l'échelle automatique (conteneurs serverless ou équivalent)
+              - Base relationnelle managée multi-zones avec sauvegardes (RPO faible)
+              - Réseau : base en sous-réseau privé, accès restreint
+              - Sécurité : IAM moindre privilège, secrets gérés, HTTPS, MFA
+              - Coûts : serverless/autoscaling, environnements de test éteints, budget et alertes
+            model: |
+              - **Région** : Paris ou Francfort (données en Europe, latence faible).
+              - **Front** : CDN + équilibreur de charge HTTPS (certificat géré).
+              - **Calcul** : conteneurs serverless (Cloud Run / Fargate / Container Apps) avec mise à l'échelle automatique : absorbe le pic du lundi, coûte peu le reste du temps.
+              - **Données** : PostgreSQL managé multi-zones, sauvegardes continues (point-in-time recovery, RPO de quelques minutes), en sous-réseau privé.
+              - **Sécurité** : rôles IAM au moindre privilège pour l'application, mot de passe de la base dans un gestionnaire de secrets, MFA pour les administrateurs, journalisation des actions.
+              - **Coûts** : serverless (pas de serveurs allumés pour rien), environnement de test éteint la nuit, budget mensuel avec alertes, étiquettes par environnement.
+      - id: cloud-finops
+        title: Maîtriser les coûts — FinOps
+        objectives:
+          - Rendre les coûts visibles (étiquettes, budgets, alertes)
+          - Appliquer les principaux leviers d'optimisation
+          - Estimer le coût d'une architecture
+        docs:
+          - { title: "FinOps Foundation — Framework", url: "https://www.finops.org/framework/" }
+          - { title: "AWS Pricing Calculator", url: "https://calculator.aws/" }
+          - { title: "Calculatrice de prix Azure", url: "https://azure.microsoft.com/fr-fr/pricing/calculator/" }
+        quiz:
+          - type: qcm
+            q: Quel est le premier pas d'une démarche FinOps ?
+            choices: ["Changer de fournisseur", "Rendre les coûts visibles (étiquettes, tableaux de bord)", "Tout passer en spot", "Supprimer la supervision"]
+            answer: 1
+            explain: On ne peut pas optimiser ce qu'on ne voit pas.
+          - type: qcm
+            q: Quel coût est souvent oublié dans les estimations ?
+            choices: ["Le stockage", "Les transferts de données sortants", "Le DNS", "Les étiquettes"]
+            answer: 1
+            explain: Les données sortantes et entre régions sont facturées.
+        flashcards:
+          - { q: "Leviers FinOps", a: "Supprimer, éteindre, redimensionner, s'engager, spot, archiver, limiter les transferts." }
+        exercises:
+          - id: ex-finops
+            type: calcul
+            title: Optimiser une facture
+            statement: |
+              Un environnement de développement compte 6 machines à 0,20 €/h (tarif fictif), allumées en permanence (730 h par mois). Répondez en euros, arrondi à l'unité.
+            questions:
+              - { q: "Coût mensuel actuel ?", answer: 876, tolerance: 1, unit: €, explain: "6 × 0,20 × 730 = 876 €." }
+              - { q: "Coût si on les éteint en dehors de 8 h-20 h en semaine (12 h × 22 jours = 264 h) ?", answer: 317, tolerance: 1, unit: €, explain: "6 × 0,20 × 264 = 316,8 € ≈ 317 €." }
+              - { q: "Si en plus on réduit à 4 machines (deux sont inutilisées), nouveau coût mensuel ?", answer: 211, tolerance: 1, unit: €, explain: "4 × 0,20 × 264 = 211,2 € ≈ 211 €." }
+              - { q: "Économie annuelle totale par rapport à la situation initiale ?", answer: 7978, tolerance: 15, unit: €, explain: "(876 − 211,2) × 12 ≈ 7 978 €." }
+      - id: cloud-certif
+        title: Préparer une certification cloud
+        objectives:
+          - Connaître les parcours de certification AWS, Azure, Google Cloud
+          - Organiser une préparation efficace
+          - Déjouer les pièges des questions
+        docs:
+          - { title: "AWS Certification", url: "https://aws.amazon.com/fr/certification/" }
+          - { title: "Microsoft Learn — Certifications Azure", url: "https://learn.microsoft.com/fr-fr/credentials/" }
+          - { title: "Google Cloud — Certifications", url: "https://cloud.google.com/learn/certification" }
+        quiz:
+          - type: qcm
+            q: Quelle certification Microsoft a remplacé l'ancienne DP-203 (Azure Data Engineer) ?
+            choices: ["AZ-900", "DP-700 (Fabric Data Engineer)", "AZ-104", "AZ-400"]
+            answer: 1
+            explain: DP-203 a été retirée en mars 2025 ; DP-700 porte sur Microsoft Fabric.
+          - type: qcm
+            q: Une question demande la solution « avec le moins d'effort opérationnel ». Que privilégier ?
+            choices: ["Des machines virtuelles gérées à la main", "Un service managé ou serverless", "Un serveur physique", "Un script cron sur un poste"]
+            answer: 1
+            explain: Les services managés réduisent l'administration.
+        flashcards:
+          - { q: "Parcours AWS data", a: "Cloud Practitioner → Data Engineer Associate (DEA-C01)." }
+          - { q: "Parcours Azure cloud", a: "AZ-900 → AZ-104 → AZ-305 / AZ-400." }
