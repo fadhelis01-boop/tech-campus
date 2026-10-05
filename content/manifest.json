@@ -1,0 +1,1669 @@
+{
+ "version": "2026.10.1",
+ "updatedAt": "2026-10-05",
+ "packs": [
+  {
+   "id": "algo",
+   "file": "packs/algo/pack.json",
+   "version": "2026.10.1",
+   "title": "Algorithmique et structures de données"
+  },
+  {
+   "id": "cloud",
+   "file": "packs/cloud/pack.json",
+   "version": "2026.10.1",
+   "title": "Cloud computing"
+  },
+  {
+   "id": "conteneurs",
+   "file": "packs/conteneurs/pack.json",
+   "version": "2026.10.1",
+   "title": "Docker et Kubernetes"
+  },
+  {
+   "id": "data-eng",
+   "file": "packs/data-eng/pack.json",
+   "version": "2026.10.1",
+   "title": "Data engineering"
+  },
+  {
+   "id": "devops",
+   "file": "packs/devops/pack.json",
+   "version": "2026.10.1",
+   "title": "DevOps, CI/CD et fiabilité"
+  },
+  {
+   "id": "fondamentaux",
+   "file": "packs/fondamentaux/pack.json",
+   "version": "2026.10.1",
+   "title": "Comprendre l'ordinateur et Internet"
+  },
+  {
+   "id": "git",
+   "file": "packs/git/pack.json",
+   "version": "2026.10.1",
+   "title": "Git & GitHub"
+  },
+  {
+   "id": "ia-data",
+   "file": "packs/ia-data/pack.json",
+   "version": "2026.10.1",
+   "title": "IA et données"
+  },
+  {
+   "id": "iac",
+   "file": "packs/iac/pack.json",
+   "version": "2026.10.1",
+   "title": "Infrastructure as Code"
+  },
+  {
+   "id": "linux",
+   "file": "packs/linux/pack.json",
+   "version": "2026.10.1",
+   "title": "Linux et ligne de commande"
+  },
+  {
+   "id": "methode",
+   "file": "packs/methode/pack.json",
+   "version": "2026.10.1",
+   "title": "Méthode & astuces"
+  },
+  {
+   "id": "metiers",
+   "file": "packs/metiers/pack.json",
+   "version": "2026.10.1",
+   "title": "Métiers de demain"
+  },
+  {
+   "id": "python",
+   "file": "packs/python/pack.json",
+   "version": "2026.10.1",
+   "title": "Programmer en Python"
+  },
+  {
+   "id": "reseaux",
+   "file": "packs/reseaux/pack.json",
+   "version": "2026.10.1",
+   "title": "Réseaux et Internet"
+  },
+  {
+   "id": "securite",
+   "file": "packs/securite/pack.json",
+   "version": "2026.10.1",
+   "title": "Cybersécurité pour la data et le cloud"
+  },
+  {
+   "id": "sql",
+   "file": "packs/sql/pack.json",
+   "version": "2026.10.1",
+   "title": "SQL et bases de données"
+  }
+ ],
+ "tracks": [
+  {
+   "id": "data-engineer",
+   "title": "Data engineer",
+   "icon": "🛢️",
+   "color": "#0d9488",
+   "pitch": "Construire les « tuyaux » qui collectent, nettoient et mettent à disposition les données de l'entreprise — le socle de l'analyse et de l'IA.",
+   "jobs": [
+    "Data engineer",
+    "Analytics engineer",
+    "Ingénieur big data",
+    "Ingénieur plateforme data",
+    "Data ops"
+   ],
+   "steps": [
+    {
+     "title": "Bien démarrer",
+     "packs": [
+      "methode",
+      "metiers",
+      "fondamentaux"
+     ],
+     "months": 1,
+     "note": "Apprendre à apprendre, comprendre le métier visé et les bases de l'ordinateur et d'Internet."
+    },
+    {
+     "title": "Le socle technique",
+     "packs": [
+      "linux",
+      "git"
+     ],
+     "months": 2,
+     "note": "Le terminal et Git sont utilisés tous les jours. Premier jalon peu coûteux et très parlant pour un débutant.",
+     "milestones": [
+      "linux-essentials",
+      "github-foundations"
+     ]
+    },
+    {
+     "title": "Programmer en Python",
+     "packs": [
+      "python",
+      "algo"
+     ],
+     "months": 3,
+     "note": "Python est le langage n° 1 de la data. L'algorithmique prépare aussi aux entretiens techniques.",
+     "milestones": [
+      "pcep"
+     ]
+    },
+    {
+     "title": "Maîtriser les données avec SQL",
+     "packs": [
+      "sql"
+     ],
+     "months": 2,
+     "note": "SQL est la compétence la plus demandée dans les offres data. Elle est validée par les certifications data qui suivent."
+    },
+    {
+     "title": "Découvrir le cloud",
+     "packs": [
+      "cloud",
+      "reseaux"
+     ],
+     "months": 1,
+     "note": "Les plateformes data modernes vivent dans le cloud. Une certification de base rassure tout recruteur.",
+     "milestones": [
+      "aws-ccp"
+     ]
+    },
+    {
+     "title": "Data engineering",
+     "packs": [
+      "data-eng"
+     ],
+     "months": 4,
+     "note": "Pipelines, formats, entrepôts, dbt, Airflow, qualité, Spark, streaming. C'est le cœur du métier.",
+     "milestones": [
+      "airflow-fundamentals",
+      "dbt-ae"
+     ]
+    },
+    {
+     "title": "Industrialiser",
+     "packs": [
+      "conteneurs",
+      "devops",
+      "securite"
+     ],
+     "months": 2,
+     "note": "Conteneuriser, automatiser, sécuriser : ce qui distingue un junior « prêt pour la production »."
+    },
+    {
+     "title": "Décrocher le poste",
+     "packs": [
+      "ia-data"
+     ],
+     "months": 2,
+     "note": "La certification data d'un grand fournisseur cloud, plus vos projets de portfolio, font la différence en entretien.",
+     "milestones": [
+      "aws-dea"
+     ]
+    }
+   ],
+   "certifications": [
+    "databricks-dea",
+    "snowpro-core",
+    "dp-700",
+    "gcp-pde",
+    "ccdak",
+    "pcap"
+   ],
+   "projects": [
+    "Pipeline ETL en Python : télécharger un jeu de données ouvert (data.gouv.fr), le nettoyer, le charger dans PostgreSQL, avec tests",
+    "Entrepôt de données en étoile + transformations dbt + tests de qualité, documenté sur GitHub",
+    "Orchestration avec Airflow (DAG quotidien, reprise sur erreur, alertes)",
+    "Pipeline cloud de bout en bout : stockage objet, traitement, tableau de bord, le tout décrit en Terraform",
+    "Bonus temps réel : flux d'événements avec Kafka et agrégations par fenêtre"
+   ]
+  },
+  {
+   "id": "cloud-devops",
+   "title": "Ingénieur cloud / DevOps",
+   "icon": "☁️",
+   "color": "#4f46e5",
+   "pitch": "Concevoir, automatiser et faire tourner les infrastructures cloud sur lesquelles reposent les applications — fiables, sécurisées, économes.",
+   "jobs": [
+    "Ingénieur cloud",
+    "Ingénieur DevOps",
+    "SRE",
+    "Platform engineer",
+    "Administrateur systèmes et réseaux cloud",
+    "Architecte cloud (à terme)"
+   ],
+   "steps": [
+    {
+     "title": "Bien démarrer",
+     "packs": [
+      "methode",
+      "metiers",
+      "fondamentaux"
+     ],
+     "months": 1,
+     "note": "Apprendre à apprendre, comprendre le métier visé et les bases de l'ordinateur et d'Internet."
+    },
+    {
+     "title": "Linux et réseaux",
+     "packs": [
+      "linux",
+      "reseaux"
+     ],
+     "months": 3,
+     "note": "Le cloud, ce sont des serveurs Linux reliés par des réseaux. C'est le socle de tout le reste.",
+     "milestones": [
+      "linux-essentials"
+     ]
+    },
+    {
+     "title": "Git et automatisation",
+     "packs": [
+      "git",
+      "python"
+     ],
+     "months": 2,
+     "note": "Tout se versionne et tout s'automatise. Python sert aux scripts et outils d'exploitation.",
+     "milestones": [
+      "github-foundations"
+     ]
+    },
+    {
+     "title": "Le cloud",
+     "packs": [
+      "cloud",
+      "securite"
+     ],
+     "months": 3,
+     "note": "Comprendre les services, l'identité, le réseau cloud et les coûts ; puis une certification associée très demandée.",
+     "milestones": [
+      "aws-ccp",
+      "aws-saa"
+     ]
+    },
+    {
+     "title": "Conteneurs et Kubernetes",
+     "packs": [
+      "conteneurs"
+     ],
+     "months": 3,
+     "note": "Docker puis Kubernetes, l'outil d'orchestration standard.",
+     "milestones": [
+      "kcna"
+     ]
+    },
+    {
+     "title": "Infrastructure as code",
+     "packs": [
+      "iac"
+     ],
+     "months": 2,
+     "note": "Décrire l'infrastructure en code avec Terraform. Certification au rapport coût/valeur excellent.",
+     "milestones": [
+      "terraform-associate"
+     ]
+    },
+    {
+     "title": "DevOps et fiabilité",
+     "packs": [
+      "devops",
+      "sql"
+     ],
+     "months": 2,
+     "note": "Intégration et déploiement continus, observabilité, gestion des incidents.",
+     "milestones": [
+      "github-actions"
+     ]
+    },
+    {
+     "title": "Décrocher le poste",
+     "packs": [
+      "algo",
+      "data-eng"
+     ],
+     "months": 2,
+     "note": "La certification Kubernetes pratique est l'un des meilleurs signaux pour un poste DevOps/SRE.",
+     "milestones": [
+      "cka"
+     ]
+    }
+   ],
+   "certifications": [
+    "az-900",
+    "az-104",
+    "az-400",
+    "gcp-ace",
+    "lfcs",
+    "isc2-cc",
+    "security-plus"
+   ],
+   "projects": [
+    "Site web statique déployé automatiquement dans le cloud par GitHub Actions, avec nom de domaine et HTTPS",
+    "Application conteneurisée (Docker Compose : API + base de données) avec tests dans la CI",
+    "Infrastructure complète décrite en Terraform (réseau, machines, base, stockage), avec état distant",
+    "Déploiement sur Kubernetes : Deployment, Service, Ingress, mise à l'échelle, déploiement progressif",
+    "Observabilité : métriques Prometheus, tableau de bord Grafana, alertes et un post-mortem rédigé"
+   ]
+  }
+ ],
+ "changelog": [
+  {
+   "date": "2026-10-05",
+   "text": "Test d'orientation : dix métiers comparés à vos goûts et à votre situation, métier d'entrée conseillé, avis sur le marché et l'avenir à 20 ans, plan d'employabilité."
+  },
+  {
+   "date": "2026-10-05",
+   "text": "Première version : 16 domaines, 128 leçons écrites et audio, 373 questions, 147 exercices pratiques vérifiés automatiquement (Python, SQL, terminal Linux/Git/Docker/Kubernetes/Terraform, fichiers de configuration), deux parcours métiers jalonnés de 25 certifications professionnelles."
+  }
+ ],
+ "datasets": {
+  "boutique": {
+   "title": "Boutique en ligne",
+   "description": "Clients, produits, commandes et lignes de commande d'un petit site marchand.",
+   "sql": "CREATE TABLE clients (\n  id INTEGER PRIMARY KEY,\n  nom TEXT NOT NULL,\n  ville TEXT,\n  inscription DATE\n);\nCREATE TABLE produits (\n  id INTEGER PRIMARY KEY,\n  nom TEXT NOT NULL,\n  categorie TEXT,\n  prix REAL\n);\nCREATE TABLE commandes (\n  id INTEGER PRIMARY KEY,\n  client_id INTEGER REFERENCES clients(id),\n  date_commande DATE,\n  statut TEXT\n);\nCREATE TABLE lignes (\n  commande_id INTEGER REFERENCES commandes(id),\n  produit_id INTEGER REFERENCES produits(id),\n  quantite INTEGER\n);\nINSERT INTO clients VALUES\n  (1, 'Ada Lovelace', 'Londres', '2025-01-15'),\n  (2, 'Alan Turing', 'Manchester', '2025-02-03'),\n  (3, 'Grace Hopper', 'New York', '2025-02-20'),\n  (4, 'Linus Torvalds', 'Helsinki', '2025-03-11'),\n  (5, 'Margaret Hamilton', 'Boston', '2025-04-02'),\n  (6, 'Dennis Ritchie', 'New York', '2025-05-19'),\n  (7, 'Barbara Liskov', 'Boston', '2025-06-07'),\n  (8, 'Katherine Johnson', NULL, '2025-07-22');\nINSERT INTO produits VALUES\n  (1, 'Clavier mécanique', 'Informatique', 89.90),\n  (2, 'Souris sans fil', 'Informatique', 29.90),\n  (3, 'Écran 27 pouces', 'Informatique', 249.00),\n  (4, 'Casque audio', 'Audio', 79.00),\n  (5, 'Enceinte connectée', 'Audio', 59.00),\n  (6, 'Livre « Apprendre SQL »', 'Livres', 35.00),\n  (7, 'Livre « Python pour la data »', 'Livres', 42.00),\n  (8, 'Tapis de souris', 'Informatique', 12.50);\nINSERT INTO commandes VALUES\n  (101, 1, '2026-01-05', 'livrée'),\n  (102, 2, '2026-01-12', 'livrée'),\n  (103, 1, '2026-02-02', 'livrée'),\n  (104, 3, '2026-02-14', 'annulée'),\n  (105, 4, '2026-03-01', 'livrée'),\n  (106, 5, '2026-03-08', 'en cours'),\n  (107, 3, '2026-03-21', 'livrée'),\n  (108, 6, '2026-04-02', 'livrée'),\n  (109, 1, '2026-04-18', 'en cours'),\n  (110, 7, '2026-05-05', 'livrée');\nINSERT INTO lignes VALUES\n  (101, 1, 1), (101, 2, 1),\n  (102, 6, 2),\n  (103, 3, 1), (103, 8, 2),\n  (104, 4, 1),\n  (105, 1, 1), (105, 7, 1),\n  (106, 5, 2),\n  (107, 2, 3), (107, 6, 1),\n  (108, 3, 2),\n  (109, 7, 1), (109, 4, 1),\n  (110, 8, 4);\n"
+  },
+  "rh": {
+   "title": "Ressources humaines",
+   "description": "Employés, services et salaires d'une entreprise de services numériques.",
+   "sql": "CREATE TABLE services (\n  id INTEGER PRIMARY KEY,\n  nom TEXT NOT NULL,\n  site TEXT\n);\nCREATE TABLE employes (\n  id INTEGER PRIMARY KEY,\n  nom TEXT NOT NULL,\n  poste TEXT,\n  service_id INTEGER REFERENCES services(id),\n  salaire INTEGER,\n  embauche DATE,\n  manager_id INTEGER REFERENCES employes(id)\n);\nINSERT INTO services VALUES\n  (1, 'Data', 'Lyon'),\n  (2, 'Cloud', 'Paris'),\n  (3, 'Sécurité', 'Paris'),\n  (4, 'Produit', 'Nantes');\nINSERT INTO employes VALUES\n  (1, 'Camille', 'Directrice technique', NULL, 98000, '2018-03-01', NULL),\n  (2, 'Yanis', 'Lead data', 1, 72000, '2019-09-15', 1),\n  (3, 'Inès', 'Data engineer', 1, 54000, '2022-01-10', 2),\n  (4, 'Hugo', 'Data engineer', 1, 48000, '2024-02-01', 2),\n  (5, 'Léa', 'Data analyst', 1, 45000, '2023-06-12', 2),\n  (6, 'Sofiane', 'Lead cloud', 2, 75000, '2019-04-01', 1),\n  (7, 'Chloé', 'Ingénieure DevOps', 2, 58000, '2021-11-02', 6),\n  (8, 'Mathis', 'Ingénieur cloud', 2, 52000, '2023-03-20', 6),\n  (9, 'Nora', 'SRE', 2, 61000, '2020-07-07', 6),\n  (10, 'Paul', 'Analyste sécurité', 3, 55000, '2022-09-01', 1),\n  (11, 'Zoé', 'Product owner', 4, 57000, '2021-05-17', 1),\n  (12, 'Lucas', 'Data engineer', 1, 51000, '2025-01-06', 2);\n"
+  },
+  "entrepot": {
+   "title": "Entrepôt de données (schéma en étoile)",
+   "description": "Une table de faits des ventes et trois dimensions (date, produit, magasin).",
+   "sql": "CREATE TABLE dim_date (\n  date_id INTEGER PRIMARY KEY,\n  jour DATE,\n  mois INTEGER,\n  trimestre INTEGER,\n  annee INTEGER,\n  jour_semaine TEXT\n);\nCREATE TABLE dim_produit (\n  produit_id INTEGER PRIMARY KEY,\n  nom TEXT,\n  categorie TEXT,\n  marque TEXT\n);\nCREATE TABLE dim_magasin (\n  magasin_id INTEGER PRIMARY KEY,\n  ville TEXT,\n  region TEXT,\n  surface_m2 INTEGER\n);\nCREATE TABLE fait_ventes (\n  vente_id INTEGER PRIMARY KEY,\n  date_id INTEGER REFERENCES dim_date(date_id),\n  produit_id INTEGER REFERENCES dim_produit(produit_id),\n  magasin_id INTEGER REFERENCES dim_magasin(magasin_id),\n  quantite INTEGER,\n  montant REAL\n);\nINSERT INTO dim_date VALUES\n  (20260105, '2026-01-05', 1, 1, 2026, 'lundi'),\n  (20260117, '2026-01-17', 1, 1, 2026, 'samedi'),\n  (20260214, '2026-02-14', 2, 1, 2026, 'samedi'),\n  (20260402, '2026-04-02', 4, 2, 2026, 'jeudi'),\n  (20260613, '2026-06-13', 6, 2, 2026, 'samedi'),\n  (20260901, '2026-09-01', 9, 3, 2026, 'mardi');\nINSERT INTO dim_produit VALUES\n  (1, 'Vélo urbain', 'Vélo', 'Rouleo'),\n  (2, 'Casque vélo', 'Accessoire', 'Rouleo'),\n  (3, 'Trottinette', 'Mobilité', 'Glisso'),\n  (4, 'Antivol', 'Accessoire', 'Fermo');\nINSERT INTO dim_magasin VALUES\n  (1, 'Lyon', 'Auvergne-Rhône-Alpes', 400),\n  (2, 'Grenoble', 'Auvergne-Rhône-Alpes', 250),\n  (3, 'Nantes', 'Pays de la Loire', 300);\nINSERT INTO fait_ventes VALUES\n  (1, 20260105, 1, 1, 2, 1198.0),\n  (2, 20260105, 2, 1, 3, 147.0),\n  (3, 20260117, 3, 2, 1, 349.0),\n  (4, 20260117, 4, 1, 5, 125.0),\n  (5, 20260214, 1, 3, 1, 599.0),\n  (6, 20260214, 2, 3, 2, 98.0),\n  (7, 20260402, 3, 1, 2, 698.0),\n  (8, 20260402, 1, 2, 1, 599.0),\n  (9, 20260613, 1, 1, 3, 1797.0),\n  (10, 20260613, 4, 3, 4, 100.0),\n  (11, 20260901, 2, 2, 6, 294.0),\n  (12, 20260901, 3, 3, 1, 349.0);\n"
+  }
+ },
+ "certifications": [
+  {
+   "id": "linux-essentials",
+   "name": "LPI Linux Essentials",
+   "vendor": "Linux Professional Institute (LPI)",
+   "level": "Débutant",
+   "url": "https://www.lpi.org/our-certifications/linux-essentials-overview/",
+   "price": "≈ 110 € (tarif réduit lors d'événements communautaires)",
+   "format": "QCM surveillé en ligne ou en centre, 60 minutes",
+   "validity": "À vie",
+   "validates": [
+    "linux",
+    "fondamentaux"
+   ],
+   "why": "Prouve que vous savez utiliser Linux et la ligne de commande. Premier badge idéal pour un débutant, reconnu dans le monde du logiciel libre. Une nouvelle version 2.0 arrive fin 2026.",
+   "cv": "Certification LPI Linux Essentials — utilisation de Linux et de la ligne de commande"
+  },
+  {
+   "id": "lfcs",
+   "name": "LFCS — Linux Foundation Certified System Administrator",
+   "vendor": "The Linux Foundation",
+   "level": "Intermédiaire",
+   "url": "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/",
+   "price": "445 $ (promotions fréquentes, souvent -30 à -40 %)",
+   "format": "Examen pratique en ligne sur une vraie machine, 2 heures",
+   "validity": "2 ans",
+   "validates": [
+    "linux",
+    "reseaux"
+   ],
+   "why": "Examen 100 % pratique — on administre de vraies machines. Très apprécié pour les postes d'administration, DevOps et SRE.",
+   "cv": "LFCS (The Linux Foundation) — administration système Linux, examen pratique"
+  },
+  {
+   "id": "pcep",
+   "name": "PCEP — Certified Entry-Level Python Programmer",
+   "vendor": "Python Institute",
+   "level": "Débutant",
+   "url": "https://pythoninstitute.org/pcep",
+   "price": "59 $",
+   "format": "QCM en ligne surveillé, 45 minutes",
+   "validity": "À vie",
+   "validates": [
+    "python"
+   ],
+   "why": "Le premier jalon officiel en Python, peu coûteux, qui valide les bases (variables, boucles, fonctions, listes).",
+   "cv": "PCEP (Python Institute) — programmation Python, niveau fondamental"
+  },
+  {
+   "id": "pcap",
+   "name": "PCAP — Certified Associate in Python Programming",
+   "vendor": "Python Institute",
+   "level": "Intermédiaire",
+   "url": "https://pythoninstitute.org/pcap",
+   "price": "295 $ (formule avec seconde chance : 345 $)",
+   "format": "QCM en ligne surveillé, 65 minutes",
+   "validity": "À vie",
+   "validates": [
+    "python",
+    "algo"
+   ],
+   "why": "Valide un niveau solide (modules, exceptions, programmation orientée objet). Pertinent si vous n'avez pas de diplôme en informatique.",
+   "cv": "PCAP (Python Institute) — programmation Python, niveau associé"
+  },
+  {
+   "id": "github-foundations",
+   "name": "GitHub Foundations (GH-900)",
+   "vendor": "GitHub (Microsoft)",
+   "level": "Débutant",
+   "url": "https://resources.github.com/learn/certifications/",
+   "price": "99 $",
+   "format": "QCM en ligne surveillé, 120 minutes",
+   "validity": "Voir la page officielle",
+   "validates": [
+    "git"
+   ],
+   "why": "Valide Git, GitHub, la collaboration (pull requests, revues) : des compétences demandées dans 100 % des postes techniques.",
+   "cv": "GitHub Foundations — gestion de versions et collaboration avec Git/GitHub"
+  },
+  {
+   "id": "github-actions",
+   "name": "GitHub Actions (GH-200)",
+   "vendor": "GitHub (Microsoft)",
+   "level": "Intermédiaire",
+   "url": "https://resources.github.com/learn/certifications/",
+   "price": "≈ 250 $ (vérifier : le tarif a varié)",
+   "format": "QCM en ligne surveillé, 100 à 120 minutes",
+   "validity": "2 ans",
+   "validates": [
+    "devops",
+    "git"
+   ],
+   "why": "Valide l'intégration et le déploiement continus avec GitHub Actions, l'outil de CI/CD le plus répandu chez les jeunes équipes.",
+   "cv": "GitHub Actions — intégration et déploiement continus (CI/CD)"
+  },
+  {
+   "id": "aws-ccp",
+   "name": "AWS Certified Cloud Practitioner (CLF-C02)",
+   "vendor": "Amazon Web Services",
+   "level": "Débutant",
+   "url": "https://aws.amazon.com/certification/certified-cloud-practitioner/",
+   "price": "100 $ (réussir un examen AWS donne -50 % sur le suivant)",
+   "format": "QCM en ligne ou en centre, 90 minutes, disponible en français",
+   "validity": "3 ans",
+   "validates": [
+    "cloud",
+    "fondamentaux"
+   ],
+   "why": "La porte d'entrée du premier fournisseur cloud mondial. Montre que vous parlez le langage du cloud (services, sécurité, coûts).",
+   "cv": "AWS Certified Cloud Practitioner — fondamentaux du cloud AWS"
+  },
+  {
+   "id": "az-900",
+   "name": "Microsoft Azure Fundamentals (AZ-900)",
+   "vendor": "Microsoft",
+   "level": "Débutant",
+   "url": "https://learn.microsoft.com/credentials/certifications/azure-fundamentals/",
+   "price": "Tarif selon le pays (≈ 99 $ aux États-Unis) ; examen souvent offert lors des Microsoft Virtual Training Days",
+   "format": "QCM en ligne ou en centre, 45 minutes, disponible en français",
+   "validity": "À vie",
+   "validates": [
+    "cloud",
+    "fondamentaux"
+   ],
+   "why": "Équivalent Microsoft de la certification AWS de base. Azure est très présent dans les grandes entreprises françaises.",
+   "cv": "Microsoft Certified Azure Fundamentals (AZ-900)"
+  },
+  {
+   "id": "aws-dea",
+   "name": "AWS Certified Data Engineer – Associate (DEA-C01)",
+   "vendor": "Amazon Web Services",
+   "level": "Intermédiaire",
+   "url": "https://aws.amazon.com/certification/certified-data-engineer-associate/",
+   "price": "150 $ (75 $ avec le bon de réduction d'une certification AWS précédente)",
+   "format": "QCM en ligne ou en centre, 130 minutes",
+   "validity": "3 ans",
+   "validates": [
+    "data-eng",
+    "sql",
+    "cloud"
+   ],
+   "why": "La référence pour un data engineer sur AWS (ingestion, Glue, Redshift, S3, orchestration, qualité). Un vrai différenciant sur un CV junior.",
+   "cv": "AWS Certified Data Engineer – Associate — pipelines de données sur AWS"
+  },
+  {
+   "id": "dp-700",
+   "name": "Microsoft Fabric Data Engineer Associate (DP-700)",
+   "vendor": "Microsoft",
+   "level": "Intermédiaire",
+   "url": "https://learn.microsoft.com/credentials/certifications/fabric-data-engineer-associate/",
+   "price": "Tarif selon le pays (≈ 165 $ aux États-Unis)",
+   "format": "QCM et études de cas, 100 minutes, renouvellement annuel gratuit en ligne",
+   "validity": "1 an, renouvelable gratuitement",
+   "validates": [
+    "data-eng",
+    "sql"
+   ],
+   "why": "A remplacé l'ancienne certification Azure Data Engineer (DP-203, retirée en mars 2025). Pertinente dans l'écosystème Microsoft, très présent en France.",
+   "cv": "Microsoft Certified Fabric Data Engineer Associate (DP-700)"
+  },
+  {
+   "id": "gcp-pde",
+   "name": "Google Cloud Professional Data Engineer",
+   "vendor": "Google Cloud",
+   "level": "Avancé",
+   "url": "https://cloud.google.com/learn/certification/data-engineer",
+   "price": "200 $",
+   "format": "QCM en ligne ou en centre, 120 minutes",
+   "validity": "2 ans",
+   "validates": [
+    "data-eng",
+    "cloud",
+    "ia-data"
+   ],
+   "why": "L'une des certifications data les mieux reconnues (BigQuery, Dataflow, Pub/Sub, ML). À viser après un premier poste ou un projet solide.",
+   "cv": "Google Cloud Professional Data Engineer"
+  },
+  {
+   "id": "databricks-dea",
+   "name": "Databricks Certified Data Engineer Associate",
+   "vendor": "Databricks",
+   "level": "Intermédiaire",
+   "url": "https://www.databricks.com/learn/certification/data-engineer-associate",
+   "price": "200 $",
+   "format": "QCM en ligne surveillé, 90 minutes",
+   "validity": "2 ans",
+   "validates": [
+    "data-eng",
+    "sql",
+    "python"
+   ],
+   "why": "Spark, Delta Lake, lakehouse : Databricks est l'une des plateformes data les plus demandées dans les offres d'emploi.",
+   "cv": "Databricks Certified Data Engineer Associate — Spark, Delta Lake, lakehouse"
+  },
+  {
+   "id": "dbt-ae",
+   "name": "dbt Analytics Engineering Certification",
+   "vendor": "dbt Labs",
+   "level": "Intermédiaire",
+   "url": "https://www.getdbt.com/certifications",
+   "price": "200 $",
+   "format": "QCM en ligne surveillé, 2 heures",
+   "validity": "2 ans",
+   "validates": [
+    "data-eng",
+    "sql"
+   ],
+   "why": "dbt est devenu le standard de la transformation de données en SQL (ELT). Idéal pour les profils data engineer / analytics engineer.",
+   "cv": "dbt Analytics Engineering Certification — modélisation et tests de données en SQL"
+  },
+  {
+   "id": "snowpro-core",
+   "name": "SnowPro Core (COF-C03)",
+   "vendor": "Snowflake",
+   "level": "Intermédiaire",
+   "url": "https://learn.snowflake.com/en/certifications/snowpro-core/",
+   "price": "175 $",
+   "format": "QCM en ligne ou en centre, 115 minutes",
+   "validity": "2 ans",
+   "validates": [
+    "data-eng",
+    "sql"
+   ],
+   "why": "Snowflake est un entrepôt de données cloud très répandu. La version COF-C03 remplace COF-C02 depuis février 2026.",
+   "cv": "Snowflake SnowPro Core Certification"
+  },
+  {
+   "id": "airflow-fundamentals",
+   "name": "Astronomer Certification — Apache Airflow 3 Fundamentals",
+   "vendor": "Astronomer",
+   "level": "Intermédiaire",
+   "url": "https://academy.astronomer.io/",
+   "price": "150 $ (souvent gratuit via les ateliers de certification en ligne d'Astronomer)",
+   "format": "QCM en ligne",
+   "validity": "2 ans",
+   "validates": [
+    "data-eng"
+   ],
+   "why": "Airflow est l'orchestrateur de pipelines le plus utilisé. Certification peu coûteuse, voire gratuite, et parlante pour un recruteur data.",
+   "cv": "Astronomer Certified — Apache Airflow 3 Fundamentals (orchestration de pipelines)"
+  },
+  {
+   "id": "ccdak",
+   "name": "Confluent Certified Developer for Apache Kafka (CCDAK)",
+   "vendor": "Confluent",
+   "level": "Avancé",
+   "url": "https://www.confluent.io/certification/",
+   "price": "150 $",
+   "format": "QCM en ligne surveillé, 90 minutes",
+   "validity": "2 ans",
+   "validates": [
+    "data-eng"
+   ],
+   "why": "Valide la maîtrise du streaming avec Kafka. À viser si vous vous orientez vers le temps réel.",
+   "cv": "Confluent Certified Developer for Apache Kafka (CCDAK)"
+  },
+  {
+   "id": "kcna",
+   "name": "KCNA — Kubernetes and Cloud Native Associate",
+   "vendor": "CNCF / The Linux Foundation",
+   "level": "Débutant",
+   "url": "https://training.linuxfoundation.org/certification/kubernetes-cloud-native-associate/",
+   "price": "250 $ (promotions fréquentes)",
+   "format": "QCM en ligne surveillé, 90 minutes",
+   "validity": "2 ans",
+   "validates": [
+    "conteneurs"
+   ],
+   "why": "Première marche Kubernetes et « cloud native » : conteneurs, orchestration, observabilité.",
+   "cv": "KCNA (CNCF) — fondamentaux de Kubernetes et du cloud native"
+  },
+  {
+   "id": "cka",
+   "name": "CKA — Certified Kubernetes Administrator",
+   "vendor": "CNCF / The Linux Foundation",
+   "level": "Avancé",
+   "url": "https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/",
+   "price": "445 $ (une seconde tentative incluse ; promotions fréquentes)",
+   "format": "Examen pratique en ligne sur de vrais clusters, 2 heures",
+   "validity": "2 ans",
+   "validates": [
+    "conteneurs",
+    "linux",
+    "reseaux"
+   ],
+   "why": "LA certification Kubernetes, entièrement pratique. Très valorisée pour les postes DevOps, SRE et platform engineer.",
+   "cv": "CKA (CNCF) — administration de clusters Kubernetes, examen pratique"
+  },
+  {
+   "id": "terraform-associate",
+   "name": "HashiCorp Certified Terraform Associate (004)",
+   "vendor": "HashiCorp (IBM)",
+   "level": "Intermédiaire",
+   "url": "https://developer.hashicorp.com/certifications/infrastructure-automation",
+   "price": "≈ 70 $",
+   "format": "QCM en ligne surveillé, 60 minutes",
+   "validity": "2 ans",
+   "validates": [
+    "iac"
+   ],
+   "why": "Terraform est l'outil d'infrastructure as code le plus demandé. Rapport coût/valeur excellent.",
+   "cv": "HashiCorp Certified Terraform Associate — infrastructure as code"
+  },
+  {
+   "id": "az-104",
+   "name": "Microsoft Azure Administrator (AZ-104)",
+   "vendor": "Microsoft",
+   "level": "Intermédiaire",
+   "url": "https://learn.microsoft.com/credentials/certifications/azure-administrator/",
+   "price": "Tarif selon le pays (≈ 165 $ aux États-Unis)",
+   "format": "QCM, études de cas et exercices, 100 minutes",
+   "validity": "1 an, renouvelable gratuitement",
+   "validates": [
+    "cloud",
+    "reseaux",
+    "securite"
+   ],
+   "why": "La certification la plus demandée pour les postes d'ingénieur cloud Azure, et le prérequis de l'expert DevOps AZ-400.",
+   "cv": "Microsoft Certified Azure Administrator Associate (AZ-104)"
+  },
+  {
+   "id": "aws-saa",
+   "name": "AWS Certified Solutions Architect – Associate (SAA-C03)",
+   "vendor": "Amazon Web Services",
+   "level": "Intermédiaire",
+   "url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/",
+   "price": "150 $ (75 $ avec le bon de réduction)",
+   "format": "QCM en ligne ou en centre, 130 minutes, disponible en français",
+   "validity": "3 ans",
+   "validates": [
+    "cloud",
+    "reseaux",
+    "securite"
+   ],
+   "why": "Probablement la certification cloud la plus citée dans les offres d'emploi : concevoir des architectures fiables, sécurisées et économes sur AWS.",
+   "cv": "AWS Certified Solutions Architect – Associate"
+  },
+  {
+   "id": "gcp-ace",
+   "name": "Google Cloud Associate Cloud Engineer",
+   "vendor": "Google Cloud",
+   "level": "Intermédiaire",
+   "url": "https://cloud.google.com/learn/certification/cloud-engineer",
+   "price": "125 $",
+   "format": "QCM en ligne ou en centre, 120 minutes",
+   "validity": "3 ans",
+   "validates": [
+    "cloud"
+   ],
+   "why": "L'équivalent Google de l'AZ-104 : déployer et exploiter des ressources sur Google Cloud.",
+   "cv": "Google Cloud Associate Cloud Engineer"
+  },
+  {
+   "id": "az-400",
+   "name": "Microsoft DevOps Engineer Expert (AZ-400)",
+   "vendor": "Microsoft",
+   "level": "Avancé",
+   "url": "https://learn.microsoft.com/credentials/certifications/devops-engineer/",
+   "price": "Tarif selon le pays (≈ 165 $ aux États-Unis) ; prérequis : AZ-104",
+   "format": "QCM et études de cas, 100 minutes",
+   "validity": "1 an, renouvelable gratuitement",
+   "validates": [
+    "devops",
+    "git",
+    "securite"
+   ],
+   "why": "Certification de niveau expert sur la chaîne DevOps complète (CI/CD, sécurité, supervision).",
+   "cv": "Microsoft Certified DevOps Engineer Expert (AZ-400)"
+  },
+  {
+   "id": "isc2-cc",
+   "name": "ISC2 Certified in Cybersecurity (CC)",
+   "vendor": "ISC2",
+   "level": "Débutant",
+   "url": "https://www.isc2.org/certifications/cc",
+   "price": "199 $ + 50 $/an d'entretien (la gratuité a pris fin le 20 mai 2026)",
+   "format": "QCM en centre d'examen, 2 heures",
+   "validity": "3 ans (entretien annuel)",
+   "validates": [
+    "securite"
+   ],
+   "why": "Socle de cybersécurité reconnu, émis par l'organisme du célèbre CISSP. Rassure un employeur sur vos réflexes sécurité.",
+   "cv": "ISC2 Certified in Cybersecurity (CC)"
+  },
+  {
+   "id": "security-plus",
+   "name": "CompTIA Security+ (SY0-701)",
+   "vendor": "CompTIA",
+   "level": "Intermédiaire",
+   "url": "https://www.comptia.org/certifications/security",
+   "price": "425 $",
+   "format": "QCM et questions pratiques, 90 minutes",
+   "validity": "3 ans",
+   "validates": [
+    "securite",
+    "reseaux"
+   ],
+   "why": "Certification de sécurité généraliste la plus répandue au monde, exigée par de nombreux employeurs pour les postes sensibles.",
+   "cv": "CompTIA Security+"
+  }
+ ],
+ "orientation": {
+  "profils": [
+   {
+    "id": "data-engineer",
+    "titre": "Data engineer",
+    "emoji": "🛢️",
+    "parcours": "data-engineer",
+    "resume": "Construit les pipelines qui collectent, nettoient et mettent à disposition les données de l'entreprise.",
+    "quotidien": "Python et SQL, pipelines planifiés, entrepôts et data lakes, tests de qualité, échanges avec les analystes et les métiers.",
+    "marche": "Demande soutenue et durable — chaque projet d'analyse ou d'IA commence par des données fiables. Le poste est souvent cité parmi les profils data les plus difficiles à recruter.",
+    "avenir": "Sur 20 ans : très porteur. Les volumes de données, le temps réel, l'IA et la réglementation (traçabilité, RGPD, AI Act) augmentent le besoin de plateformes de données fiables. Le métier va se déplacer vers l'architecture, la qualité, la gouvernance et l'automatisation : l'IA écrira une partie du code, l'ingénieur concevra et garantira le système.",
+    "risque_ia": "Modéré. Les tâches répétitives (requêtes simples, code standard) s'automatisent ; la conception, la fiabilité, la sécurité et la compréhension du métier restent humaines.",
+    "acces": "Accessible en reconversion avec un bon portfolio et une certification data d'un fournisseur cloud ; les premiers postes passent souvent par l'alternance ou une ESN.",
+    "optimiser": [
+     "Maîtriser à fond SQL et Python : c'est ce qui sera testé en entretien, quelles que soient les modes d'outils.",
+     "Viser une certification data d'un grand fournisseur cloud (AWS Data Engineer Associate, DP-700 ou Google Professional Data Engineer selon votre région).",
+     "Ajouter une compétence d'avenir : le streaming (Kafka), les formats de table ouverts (Iceberg/Delta) ou les pipelines pour l'IA (RAG, données pour les modèles).",
+     "Développer la qualité et la gouvernance des données (tests, contrats, lignage) — ce que l'automatisation ne remplace pas.",
+     "Se spécialiser dans un secteur (finance, santé, industrie, énergie) pour devenir difficile à remplacer."
+    ],
+    "specialisations": [
+     "Data platform engineer",
+     "Streaming / temps réel",
+     "DataOps",
+     "Ingénieur données pour l'IA (RAG",
+     "MLOps)",
+     "Architecte data"
+    ],
+    "certifications": [
+     "aws-dea",
+     "dp-700",
+     "databricks-dea",
+     "dbt-ae",
+     "airflow-fundamentals",
+     "gcp-pde"
+    ],
+    "evolutions": "Data engineer senior → lead data / architecte data → responsable plateforme data.",
+    "premier_poste": true
+   },
+   {
+    "id": "analytics-engineer",
+    "titre": "Analytics engineer",
+    "emoji": "📐",
+    "parcours": "data-engineer",
+    "resume": "Transforme les données brutes de l'entrepôt en modèles fiables, documentés et testés, prêts pour l'analyse.",
+    "quotidien": "SQL avancé, dbt, modélisation en étoile, tests de données, documentation, dialogue étroit avec les analystes et les métiers.",
+    "marche": "Métier plus récent, en forte croissance dans les entreprises qui ont adopté l'ELT et dbt ; souvent intégré aux équipes data modernes.",
+    "avenir": "Sur 20 ans : porteur, à condition de rester du côté de la modélisation et de la qualité. La définition des indicateurs, la cohérence et la confiance dans les chiffres resteront des besoins forts ; l'écriture de SQL standard sera de plus en plus assistée par l'IA.",
+    "risque_ia": "Modéré : le SQL de routine est très automatisable, la modélisation métier et la gouvernance des indicateurs beaucoup moins.",
+    "acces": "Très bonne porte d'entrée en reconversion, notamment pour les profils venant de la gestion, de la finance ou du contrôle de gestion, à l'aise avec les chiffres.",
+    "optimiser": [
+     "Devenir excellent en SQL (fonctions de fenêtre, CTE) et en modélisation dimensionnelle.",
+     "Obtenir la certification dbt Analytics Engineering, puis une certification de plateforme (Snowflake ou Databricks).",
+     "Apprendre assez de Python et d'orchestration pour évoluer vers le data engineering.",
+     "Maîtriser la couche sémantique (définitions partagées des indicateurs)."
+    ],
+    "specialisations": [
+     "Modélisation et couche sémantique",
+     "Qualité et gouvernance des indicateurs",
+     "Data engineering"
+    ],
+    "certifications": [
+     "dbt-ae",
+     "snowpro-core",
+     "databricks-dea",
+     "dp-700"
+    ],
+    "evolutions": "Analytics engineer → data engineer ou lead analytics → responsable data / BI.",
+    "premier_poste": true
+   },
+   {
+    "id": "data-analyst",
+    "titre": "Data analyst",
+    "emoji": "📊",
+    "parcours": "data-engineer",
+    "resume": "Répond aux questions métier avec des chiffres, des analyses et des tableaux de bord.",
+    "quotidien": "SQL, outils de visualisation (Power BI, Tableau), Excel, échanges constants avec les équipes métier.",
+    "marche": "Beaucoup d'offres, mais aussi beaucoup de candidats : la concurrence est plus forte à l'entrée que pour les profils d'ingénierie.",
+    "avenir": "Sur 20 ans : à faire évoluer. Les tableaux de bord et analyses simples sont parmi les tâches les plus exposées aux assistants d'IA. La valeur se déplacera vers la compréhension du métier, la formulation des bonnes questions et la fiabilité des données — d'où l'intérêt d'évoluer vers l'analytics engineering ou le data engineering.",
+    "risque_ia": "Élevé pour les analyses de routine ; faible pour le conseil métier et l'interprétation.",
+    "acces": "Le plus accessible des métiers data en reconversion, surtout avec une expertise sectorielle.",
+    "optimiser": [
+     "Ne pas s'arrêter aux tableaux de bord : apprendre la modélisation (dbt) pour évoluer vers analytics engineer.",
+     "Valoriser fortement votre expertise métier (finance, santé, commerce…) — c'est elle qui vous rendra irremplaçable.",
+     "Apprendre Python pour l'automatisation et l'analyse avancée.",
+     "Savoir utiliser l'IA comme accélérateur d'analyse, et en vérifier les résultats."
+    ],
+    "specialisations": [
+     "Analytics engineering",
+     "Analyste métier spécialisé (finance",
+     "santé",
+     "supply chain)",
+     "Product analytics"
+    ],
+    "certifications": [
+     "dbt-ae",
+     "snowpro-core",
+     "aws-ccp",
+     "az-900"
+    ],
+    "evolutions": "Data analyst → analytics engineer / data engineer, ou analyste senior spécialisé → responsable BI.",
+    "premier_poste": true
+   },
+   {
+    "id": "ml-engineer",
+    "titre": "ML engineer / MLOps",
+    "emoji": "🤖",
+    "parcours": "data-engineer",
+    "resume": "Met en production les modèles d'IA (y compris les LLM), les surveille et les maintient.",
+    "quotidien": "Python, pipelines de données et d'entraînement, conteneurs, cloud, évaluation et surveillance de modèles, RAG.",
+    "marche": "Forte demande portée par l'IA générative, mais des postes souvent exigeants (expérience, bases mathématiques) et concentrés dans les grandes entreprises et les éditeurs.",
+    "avenir": "Sur 20 ans : très porteur mais mouvant. Les outils changent extrêmement vite ; les fondamentaux (données, évaluation, mise en production fiable, sécurité, coûts) resteront recherchés.",
+    "risque_ia": "Faible à moyen terme, mais métier en transformation permanente.",
+    "acces": "Difficile en entrée directe depuis zéro : le chemin réaliste passe par data engineer (ou DevOps), puis une spécialisation MLOps.",
+    "optimiser": [
+     "Commencer par devenir un bon data engineer ou ingénieur DevOps, puis se spécialiser.",
+     "Solidifier les bases de statistiques et d'évaluation des modèles.",
+     "Maîtriser le RAG et l'évaluation des LLM : c'est là que les entreprises recrutent aujourd'hui.",
+     "Connaître le cadre de l'AI Act (documentation, traçabilité) — un atout distinctif."
+    ],
+    "specialisations": [
+     "MLOps",
+     "LLMOps / ingénierie des applications d'IA",
+     "Ingénieur données pour l'IA"
+    ],
+    "certifications": [
+     "aws-dea",
+     "gcp-pde",
+     "databricks-dea",
+     "kcna"
+    ],
+    "evolutions": "Data engineer → ML engineer → architecte IA / responsable plateforme ML.",
+    "premier_poste": false,
+    "porte_entree": "data-engineer"
+   },
+   {
+    "id": "cloud-engineer",
+    "titre": "Ingénieur cloud",
+    "emoji": "☁️",
+    "parcours": "cloud-devops",
+    "resume": "Conçoit et exploite l'infrastructure cloud — réseau, calcul, stockage, identités — de façon sûre et économe.",
+    "quotidien": "Console et CLI cloud, Terraform, réseau (VPC, DNS), IAM, supervision, optimisation des coûts.",
+    "marche": "Demande forte et diversifiée (entreprises, ESN, administrations) ; les certifications associées sont très lues par les recruteurs.",
+    "avenir": "Sur 20 ans : porteur. La migration vers le cloud n'est pas terminée, le cloud souverain et la réglementation (NIS2, DORA, SecNumCloud) créent de nouveaux besoins, et l'architecture, la sécurité et les coûts demandent du jugement humain.",
+    "risque_ia": "Modéré. Les déploiements standard s'automatisent ; l'architecture, la sécurité et les arbitrages de coûts restent humains.",
+    "acces": "Accessible en reconversion, surtout depuis le support informatique ou l'administration système ; les certifications associées ouvrent des portes.",
+    "optimiser": [
+     "Prendre une certification associée très demandée (AWS Solutions Architect Associate ou Azure Administrator AZ-104).",
+     "Devenir solide en réseau et en IAM : ce sont les sujets où se jouent la sécurité et la qualité d'une architecture.",
+     "Écrire toute l'infrastructure en Terraform et la publier sur GitHub.",
+     "Ajouter FinOps ou sécurité cloud comme spécialité différenciante.",
+     "Suivre le cloud souverain européen (SecNumCloud, acteurs européens) — un marché en croissance en France."
+    ],
+    "specialisations": [
+     "Architecte cloud",
+     "Sécurité cloud",
+     "FinOps",
+     "Cloud souverain"
+    ],
+    "certifications": [
+     "aws-ccp",
+     "az-900",
+     "aws-saa",
+     "az-104",
+     "gcp-ace",
+     "terraform-associate"
+    ],
+    "evolutions": "Ingénieur cloud → architecte cloud → responsable infrastructure / CTO.",
+    "premier_poste": true
+   },
+   {
+    "id": "devops",
+    "titre": "Ingénieur DevOps",
+    "emoji": "♾️",
+    "parcours": "cloud-devops",
+    "resume": "Automatise toute la chaîne qui va du code à la production (CI/CD, conteneurs, environnements).",
+    "quotidien": "Git, GitHub Actions ou GitLab CI, Docker, Kubernetes, Terraform, scripts, accompagnement des développeurs.",
+    "marche": "Demande forte et durable ; profils recherchés dans tous les secteurs qui produisent du logiciel.",
+    "avenir": "Sur 20 ans : porteur, avec une évolution vers l'ingénierie de plateforme (offrir aux développeurs des outils en libre-service) et vers la sécurité de la chaîne logicielle.",
+    "risque_ia": "Modéré. L'écriture de pipelines standard s'automatise ; la conception de plateformes fiables et sûres reste humaine.",
+    "acces": "Accessible en reconversion avec Linux solide, Git, Docker et un projet de CI/CD complet en portfolio.",
+    "optimiser": [
+     "Maîtriser Linux, Git, Docker et Kubernetes en profondeur (la CKA est un excellent signal).",
+     "Construire un projet complet — CI/CD, conteneurs, déploiement automatique, observabilité — et le documenter.",
+     "Ajouter la sécurité de la chaîne (DevSecOps : SBOM, scan d'images, signature) : compétence de plus en plus exigée.",
+     "Apprendre à programmer correctement (Python ou Go) pour l'outillage."
+    ],
+    "specialisations": [
+     "Platform engineering",
+     "DevSecOps",
+     "SRE",
+     "GitOps"
+    ],
+    "certifications": [
+     "github-foundations",
+     "github-actions",
+     "kcna",
+     "cka",
+     "terraform-associate",
+     "az-400"
+    ],
+    "evolutions": "DevOps → platform engineer / SRE senior → responsable plateforme.",
+    "premier_poste": true
+   },
+   {
+    "id": "sre",
+    "titre": "SRE (ingénieur fiabilité)",
+    "emoji": "🚨",
+    "parcours": "cloud-devops",
+    "resume": "Garantit la fiabilité et la performance des services en production, mesure, alerte, gère les incidents.",
+    "quotidien": "Observabilité (métriques, journaux, traces), SLO, automatisation, gestion d'incidents, astreintes.",
+    "marche": "Rôle recherché dans les entreprises dont le service en ligne est critique (e-commerce, banques, éditeurs), avec des rémunérations souvent élevées.",
+    "avenir": "Sur 20 ans : porteur. Plus les systèmes sont distribués et critiques, plus la fiabilité devient un enjeu stratégique ; l'IA aidera au diagnostic, mais la responsabilité et le jugement en incident restent humains.",
+    "risque_ia": "Faible à modéré : l'IA aide à détecter et diagnostiquer, pas à assumer un incident majeur.",
+    "acces": "Rarement un premier poste ; on y arrive généralement après une expérience DevOps ou d'administration système.",
+    "optimiser": [
+     "Commencer par un poste DevOps ou d'ingénieur cloud, puis évoluer vers le SRE.",
+     "Devenir expert en observabilité (Prometheus, Grafana, OpenTelemetry) et en SLO.",
+     "Pratiquer la gestion d'incident et les post-mortems (y compris sur vos projets).",
+     "Préserver votre santé : les astreintes doivent être organisées et compensées — à vérifier à l'embauche."
+    ],
+    "specialisations": [
+     "Observabilité",
+     "Performance et capacité",
+     "Ingénierie du chaos",
+     "Platform engineering"
+    ],
+    "certifications": [
+     "lfcs",
+     "cka",
+     "aws-saa",
+     "az-104"
+    ],
+    "evolutions": "DevOps → SRE → SRE senior / responsable fiabilité.",
+    "premier_poste": false,
+    "porte_entree": "devops"
+   },
+   {
+    "id": "platform-engineer",
+    "titre": "Platform engineer",
+    "emoji": "🧱",
+    "parcours": "cloud-devops",
+    "resume": "Construit une plateforme interne en libre-service (Kubernetes, modèles, outils) qui simplifie la vie des développeurs et des équipes data.",
+    "quotidien": "Kubernetes, Terraform, GitOps, outils internes, portails développeurs, automatisation, beaucoup de code.",
+    "marche": "Tendance forte dans les moyennes et grandes organisations ; rarement un premier poste.",
+    "avenir": "Sur 20 ans : très porteur. Industrialiser et standardiser le développement est la réponse des entreprises à la complexité du cloud ; les plateformes intégreront de plus en plus l'IA, qu'il faudra concevoir et sécuriser.",
+    "risque_ia": "Faible. Concevoir des plateformes et des abstractions demande une vision d'ensemble.",
+    "acces": "Évolution naturelle après 2 à 4 ans de DevOps ou de cloud.",
+    "optimiser": [
+     "Passer par DevOps ou ingénieur cloud d'abord.",
+     "Devenir très solide en Kubernetes (CKA), Terraform et GitOps.",
+     "Apprendre à concevoir des produits internes (écouter les utilisateurs-développeurs, documenter).",
+     "Programmer sérieusement (Go ou Python)."
+    ],
+    "specialisations": [
+     "Plateformes Kubernetes",
+     "Plateformes data",
+     "Developer experience"
+    ],
+    "certifications": [
+     "cka",
+     "terraform-associate",
+     "kcna",
+     "aws-saa"
+    ],
+    "evolutions": "DevOps → platform engineer → architecte / responsable plateforme.",
+    "premier_poste": false,
+    "porte_entree": "devops"
+   },
+   {
+    "id": "cloud-security",
+    "titre": "Ingénieur sécurité cloud",
+    "emoji": "🔐",
+    "parcours": "cloud-devops",
+    "resume": "Sécurise les identités, les réseaux, les données et la chaîne de déploiement dans le cloud.",
+    "quotidien": "IAM, politiques, chiffrement, détection, conformité (RGPD, NIS2, DORA), DevSecOps, audits.",
+    "marche": "Demande très forte et pénurie durable de profils en cybersécurité ; la réglementation européenne l'accentue.",
+    "avenir": "Sur 20 ans : parmi les plus porteurs. Les attaques se professionnalisent (y compris avec l'IA), les obligations réglementaires augmentent, et la sécurité est l'un des domaines où la responsabilité humaine reste centrale.",
+    "risque_ia": "Faible. L'IA est un outil pour les défenseurs comme pour les attaquants ; elle augmente le besoin d'experts.",
+    "acces": "Mieux en deuxième temps, après des bases solides en systèmes, réseaux et cloud ; une certification d'entrée en sécurité aide.",
+    "optimiser": [
+     "Construire d'abord un socle cloud et réseau solide (le parcours Cloud/DevOps).",
+     "Prendre une certification d'entrée en sécurité (ISC2 CC, puis CompTIA Security+), puis une spécialité cloud.",
+     "Maîtriser l'IAM et la sécurité de la chaîne logicielle (DevSecOps).",
+     "Connaître la réglementation (RGPD, NIS2, DORA, AI Act) — atout rare chez les techniciens."
+    ],
+    "specialisations": [
+     "Sécurité cloud",
+     "DevSecOps",
+     "Gestion des identités",
+     "Conformité et gouvernance"
+    ],
+    "certifications": [
+     "isc2-cc",
+     "security-plus",
+     "aws-saa",
+     "az-104",
+     "cka"
+    ],
+    "evolutions": "Ingénieur cloud/DevOps → ingénieur sécurité cloud → architecte sécurité / RSSI.",
+    "premier_poste": false,
+    "porte_entree": "cloud-engineer"
+   },
+   {
+    "id": "finops",
+    "titre": "Spécialiste FinOps cloud",
+    "emoji": "💶",
+    "parcours": "cloud-devops",
+    "resume": "Pilote et optimise les dépenses cloud en associant finance, technique et métiers.",
+    "quotidien": "Analyse des factures cloud, tableaux de bord de coûts, recommandations d'optimisation, dialogue avec les équipes techniques et financières.",
+    "marche": "Métier jeune et en croissance dans les organisations dont la facture cloud est importante ; nombre de postes plus limité, mais peu de candidats qualifiés.",
+    "avenir": "Sur 20 ans : prometteur. La pression sur les coûts et la sobriété (impact environnemental) va s'accentuer ; la double compétence finance + technique est rare.",
+    "risque_ia": "Modéré. Les recommandations simples s'automatisent ; la négociation, les arbitrages et la conduite du changement restent humains.",
+    "acces": "Excellente porte d'entrée pour un profil finance/contrôle de gestion qui ajoute une compétence cloud solide.",
+    "optimiser": [
+     "Acquérir de solides bases cloud (certification de fondamentaux, puis associée).",
+     "Apprendre SQL et un outil de tableau de bord pour analyser les données de facturation.",
+     "Suivre le cadre de la FinOps Foundation (et ses certifications).",
+     "Ajouter la dimension environnementale (mesure de l'empreinte) — une demande montante."
+    ],
+    "specialisations": [
+     "FinOps",
+     "Green IT / sobriété numérique",
+     "Gouvernance cloud"
+    ],
+    "certifications": [
+     "aws-ccp",
+     "az-900",
+     "aws-saa"
+    ],
+    "evolutions": "FinOps → responsable FinOps / gouvernance cloud.",
+    "premier_poste": true
+   }
+  ],
+  "conseils_durables": [
+   "Profil en T : une expertise profonde (votre métier) + des bases larges (Linux, Git, SQL, Python, cloud, sécurité). C'est le profil qui traverse le mieux les changements d'outils.",
+   "Distinguer compétences durables et périssables : SQL, réseaux, Linux, modélisation, sécurité, raisonnement sur les systèmes durent des décennies ; tel outil à la mode, quelques années. Investissez d'abord dans les premières.",
+   "Faire de l'IA un outil de productivité, pas un concurrent : savoir lui confier les tâches répétitives, vérifier ce qu'elle produit, et l'intégrer dans les systèmes que vous construisez.",
+   "Se spécialiser dans un secteur (finance, santé, énergie, industrie, secteur public) : la combinaison compétence technique + connaissance métier est la plus difficile à remplacer.",
+   "Entretenir ses certifications et sa veille : la plupart expirent après 2 à 3 ans ; c'est l'occasion d'actualiser régulièrement ses compétences.",
+   "Soigner les compétences humaines : expliquer simplement, écrire une documentation claire, travailler en équipe, gérer un incident calmement. Elles comptent de plus en plus à mesure que la technique s'automatise.",
+   "Rester visible : GitHub à jour, profil LinkedIn, participation à des communautés locales. La plupart des opportunités circulent par le réseau."
+  ],
+  "avertissement": "Ce test donne une orientation à partir de vos goûts déclarés ; il ne mesure ni vos aptitudes ni le marché local. Les projections à 20 ans reposent sur des tendances connues en octobre 2026 (données, cloud, IA, sécurité, réglementation européenne) et comportent une part d'incertitude. Confrontez le résultat à la réalité : lisez des offres d'emploi de votre région, échangez avec des professionnels du métier, essayez les premiers modules.",
+  "questions": [
+   {
+    "id": "q1",
+    "q": "Dans un travail, ce qui vous plaît le plus, c'est…",
+    "reponses": [
+     {
+      "texte": "Comprendre ce que disent les chiffres et trouver une explication",
+      "points": {
+       "data-analyst": 3,
+       "analytics-engineer": 2,
+       "data-engineer": 1
+      }
+     },
+     {
+      "texte": "Construire des systèmes qui tournent tout seuls, de façon fiable",
+      "points": {
+       "data-engineer": 3,
+       "platform-engineer": 2,
+       "devops": 2
+      }
+     },
+     {
+      "texte": "Réparer quand ça casse, et faire en sorte que ça ne recasse pas",
+      "points": {
+       "sre": 3,
+       "cloud-engineer": 2,
+       "devops": 1
+      }
+     },
+     {
+      "texte": "Protéger : repérer les failles et les risques",
+      "points": {
+       "cloud-security": 3,
+       "cloud-engineer": 1
+      }
+     },
+     {
+      "texte": "Optimiser : faire mieux avec moins",
+      "points": {
+       "finops": 3,
+       "cloud-engineer": 1,
+       "sre": 1
+      }
+     },
+     {
+      "texte": "Créer quelque chose d'« intelligent » qui prédit ou génère",
+      "points": {
+       "ml-engineer": 3,
+       "data-engineer": 1
+      }
+     }
+    ]
+   },
+   {
+    "id": "q2",
+    "q": "Le résultat de travail qui vous rendrait le plus fier…",
+    "reponses": [
+     {
+      "texte": "Un tableau de bord que toute la direction consulte chaque matin",
+      "points": {
+       "data-analyst": 3,
+       "analytics-engineer": 2
+      }
+     },
+     {
+      "texte": "Un pipeline qui alimente chaque jour des millions de lignes sans erreur",
+      "points": {
+       "data-engineer": 3,
+       "analytics-engineer": 1
+      }
+     },
+     {
+      "texte": "Une plateforme que des dizaines d'équipes utilisent",
+      "points": {
+       "platform-engineer": 3,
+       "devops": 2,
+       "data-engineer": 1
+      }
+     },
+     {
+      "texte": "Un site qui n'est jamais tombé pendant les soldes",
+      "points": {
+       "sre": 3,
+       "cloud-engineer": 2
+      }
+     },
+     {
+      "texte": "Une facture cloud réduite de 30 %",
+      "points": {
+       "finops": 3,
+       "cloud-engineer": 1
+      }
+     },
+     {
+      "texte": "Une attaque déjouée avant qu'elle ne fasse des dégâts",
+      "points": {
+       "cloud-security": 3
+      }
+     },
+     {
+      "texte": "Un assistant d'IA qui répond juste, à partir des documents de l'entreprise",
+      "points": {
+       "ml-engineer": 3,
+       "data-engineer": 1
+      }
+     }
+    ]
+   },
+   {
+    "id": "q3",
+    "q": "Votre rapport aux mathématiques et aux statistiques…",
+    "reponses": [
+     {
+      "texte": "J'aime ça, les probabilités et les modèles m'intéressent",
+      "points": {
+       "ml-engineer": 3,
+       "data-analyst": 2,
+       "analytics-engineer": 1
+      }
+     },
+     {
+      "texte": "Je suis à l'aise avec les chiffres, sans plus",
+      "points": {
+       "data-engineer": 1,
+       "analytics-engineer": 2,
+       "finops": 2,
+       "data-analyst": 1
+      }
+     },
+     {
+      "texte": "Je préfère éviter",
+      "points": {
+       "cloud-engineer": 1,
+       "devops": 1,
+       "sre": 1,
+       "cloud-security": 1,
+       "platform-engineer": 1
+      },
+      "conseil": "Bonne nouvelle : les métiers cloud, DevOps et sécurité demandent de la logique, pas des mathématiques avancées. Le machine learning, en revanche, en demande ; le data engineering très peu."
+     }
+    ]
+   },
+   {
+    "id": "q4",
+    "q": "Et la programmation ?",
+    "reponses": [
+     {
+      "texte": "J'aimerais coder une bonne partie de la journée",
+      "points": {
+       "data-engineer": 2,
+       "ml-engineer": 2,
+       "platform-engineer": 2,
+       "devops": 1
+      }
+     },
+     {
+      "texte": "Des scripts pour automatiser, oui ; développer toute la journée, non",
+      "points": {
+       "cloud-engineer": 2,
+       "sre": 1,
+       "devops": 1,
+       "cloud-security": 1
+      }
+     },
+     {
+      "texte": "Je préfère SQL et les tableurs",
+      "points": {
+       "data-analyst": 3,
+       "analytics-engineer": 2,
+       "finops": 1
+      }
+     },
+     {
+      "texte": "Le moins possible",
+      "points": {
+       "finops": 2,
+       "cloud-security": 1
+      },
+      "conseil": "Tous les métiers de ce domaine demandent au minimum du SQL et un peu de scripting. Rassurez-vous : c'est ce qui s'apprend le mieux par la pratique quotidienne — les labos de l'application sont faits pour ça."
+     }
+    ]
+   },
+   {
+    "id": "q5",
+    "q": "Avec qui préférez-vous travailler au quotidien ?",
+    "reponses": [
+     {
+      "texte": "Les métiers : marketing, finance, direction",
+      "points": {
+       "data-analyst": 3,
+       "analytics-engineer": 2,
+       "finops": 1
+      }
+     },
+     {
+      "texte": "Les développeurs",
+      "points": {
+       "devops": 3,
+       "platform-engineer": 2
+      }
+     },
+     {
+      "texte": "Des ingénieurs système et réseau",
+      "points": {
+       "cloud-engineer": 2,
+       "sre": 2,
+       "cloud-security": 1
+      }
+     },
+     {
+      "texte": "Des data scientists et des analystes",
+      "points": {
+       "data-engineer": 2,
+       "ml-engineer": 2,
+       "analytics-engineer": 1
+      }
+     },
+     {
+      "texte": "Des contrôleurs, auditeurs, juristes",
+      "points": {
+       "cloud-security": 2,
+       "finops": 2
+      }
+     }
+    ]
+   },
+   {
+    "id": "q6",
+    "q": "Être joignable la nuit ou le week-end en cas de panne (astreinte)…",
+    "reponses": [
+     {
+      "texte": "Ça me stimule, j'aime l'urgence",
+      "points": {
+       "sre": 3,
+       "devops": 1,
+       "cloud-security": 1
+      }
+     },
+     {
+      "texte": "Je l'accepte de temps en temps",
+      "points": {
+       "cloud-engineer": 1,
+       "data-engineer": 1,
+       "devops": 1,
+       "platform-engineer": 1
+      }
+     },
+     {
+      "texte": "Je veux l'éviter",
+      "points": {
+       "analytics-engineer": 2,
+       "data-analyst": 1,
+       "finops": 1,
+       "ml-engineer": 1
+      },
+      "conseil": "Évitez le métier de SRE et posez la question des astreintes à chaque entretien (fréquence, compensation). Les postes d'analytics engineer et de FinOps en comportent rarement."
+     }
+    ]
+   },
+   {
+    "id": "q7",
+    "q": "Vous préférez…",
+    "reponses": [
+     {
+      "texte": "Dessiner des schémas d'architecture et réfléchir à l'ensemble",
+      "points": {
+       "cloud-engineer": 2,
+       "platform-engineer": 2,
+       "data-engineer": 1
+      }
+     },
+     {
+      "texte": "Appliquer des règles avec rigueur, ne rien laisser passer",
+      "points": {
+       "cloud-security": 2,
+       "analytics-engineer": 1,
+       "finops": 1
+      }
+     },
+     {
+      "texte": "Expérimenter, tester des hypothèses",
+      "points": {
+       "ml-engineer": 2,
+       "data-analyst": 1,
+       "sre": 1
+      }
+     },
+     {
+      "texte": "Automatiser tout ce qui se répète",
+      "points": {
+       "devops": 2,
+       "data-engineer": 2,
+       "platform-engineer": 1
+      }
+     }
+    ]
+   },
+   {
+    "id": "q8",
+    "q": "Dans quel domaine avez-vous le plus d'expérience professionnelle ?",
+    "reponses": [
+     {
+      "texte": "Finance, comptabilité, contrôle de gestion",
+      "points": {
+       "finops": 2,
+       "analytics-engineer": 1,
+       "data-analyst": 1
+      },
+      "conseil": "Votre expérience financière est un atout rare : data engineer dans la banque/assurance (réglementation DORA), analytics engineer pour les indicateurs financiers, ou FinOps. Mettez-la en avant dès l'accroche du CV."
+     },
+     {
+      "texte": "Commerce, marketing, vente",
+      "points": {
+       "data-analyst": 2,
+       "analytics-engineer": 1
+      },
+      "conseil": "Valorisez votre connaissance des clients et des indicateurs commerciaux : les équipes data manquent de profils qui comprennent le métier. Ciblez le e-commerce et la distribution."
+     },
+     {
+      "texte": "Industrie, logistique, technique",
+      "points": {
+       "data-engineer": 1,
+       "cloud-engineer": 1,
+       "sre": 1
+      },
+      "conseil": "L'industrie (capteurs, maintenance prédictive) et la logistique (flux temps réel) ont de forts besoins en data engineering et en streaming : votre connaissance du terrain est un vrai plus."
+     },
+     {
+      "texte": "Support informatique, réseau, administration",
+      "points": {
+       "cloud-engineer": 2,
+       "sre": 1,
+       "cloud-security": 1,
+       "devops": 1
+      },
+      "conseil": "Vous partez avec une longueur d'avance pour le parcours Cloud/DevOps : vos bases systèmes et réseau sont exactement ce qui manque à beaucoup de débutants. Visez rapidement AZ-104 ou AWS Solutions Architect."
+     },
+     {
+      "texte": "Santé, social, éducation, secteur public",
+      "points": {
+       "data-analyst": 1,
+       "data-engineer": 1,
+       "cloud-security": 1
+      },
+      "conseil": "Le secteur public et la santé recrutent des profils data et cloud, avec des enjeux forts de protection des données (RGPD, données de santé, SecNumCloud) : votre connaissance de ces environnements est valorisable."
+     },
+     {
+      "texte": "Autre, ou peu d'expérience professionnelle",
+      "points": {},
+      "conseil": "Sans expérience à valoriser, vos projets de portfolio et vos certifications seront votre vitrine : soignez-les particulièrement, et visez l'alternance pour un premier poste."
+     }
+    ]
+   },
+   {
+    "id": "q9",
+    "q": "Votre niveau d'anglais à l'écrit ?",
+    "reponses": [
+     {
+      "texte": "À l'aise",
+      "points": {
+       "ml-engineer": 1,
+       "platform-engineer": 1,
+       "sre": 1
+      }
+     },
+     {
+      "texte": "Je lis une documentation avec un traducteur",
+      "points": {},
+      "conseil": "Suffisant pour démarrer. Prenez l'habitude de lire la documentation en anglais dès maintenant : plusieurs certifications (Linux Foundation, HashiCorp, Databricks) n'existent qu'en anglais."
+     },
+     {
+      "texte": "C'est difficile",
+      "points": {},
+      "conseil": "L'anglais technique sera votre premier chantier transversal : 15 minutes par jour de documentation en anglais suffisent pour progresser vite. Commencez par les certifications disponibles en français (AWS, Microsoft)."
+     }
+    ]
+   },
+   {
+    "id": "q10",
+    "q": "Combien de temps pouvez-vous consacrer à votre formation chaque semaine ?",
+    "reponses": [
+     {
+      "texte": "Moins de 5 heures",
+      "points": {},
+      "valeur": 4,
+      "conseil": "Avec moins de 5 heures par semaine, comptez plutôt 2 à 3 ans : visez d'abord une évolution dans votre entreprise actuelle (projet data ou cloud interne), qui valorisera chaque heure investie."
+     },
+     {
+      "texte": "5 à 10 heures",
+      "points": {},
+      "valeur": 8
+     },
+     {
+      "texte": "10 à 20 heures",
+      "points": {},
+      "valeur": 15
+     },
+     {
+      "texte": "Temps plein (formation intensive, reconversion)",
+      "points": {},
+      "valeur": 35,
+      "conseil": "À temps plein, une formation financée (CPF, Transitions Pro, France Travail) ou un bootcamp complétera bien l'application ; l'alternance est aussi une excellente option."
+     }
+    ]
+   },
+   {
+    "id": "q11",
+    "q": "Ce qui compte le plus pour vous dans votre futur emploi…",
+    "reponses": [
+     {
+      "texte": "La sécurité de l'emploi sur le long terme",
+      "points": {
+       "cloud-security": 2,
+       "data-engineer": 1,
+       "cloud-engineer": 1
+      }
+     },
+     {
+      "texte": "Un salaire élevé",
+      "points": {
+       "sre": 1,
+       "ml-engineer": 1,
+       "cloud-engineer": 1,
+       "platform-engineer": 1
+      }
+     },
+     {
+      "texte": "Le sens, l'impact de mon travail",
+      "points": {
+       "data-analyst": 1,
+       "ml-engineer": 1,
+       "cloud-security": 1
+      }
+     },
+     {
+      "texte": "Apprendre en permanence",
+      "points": {
+       "platform-engineer": 1,
+       "devops": 1,
+       "ml-engineer": 1
+      }
+     },
+     {
+      "texte": "Le télétravail et l'autonomie",
+      "points": {
+       "data-engineer": 1,
+       "analytics-engineer": 1,
+       "devops": 1
+      }
+     }
+    ]
+   },
+   {
+    "id": "q12",
+    "q": "Quand vous découvrez un nouvel outil…",
+    "reponses": [
+     {
+      "texte": "Je veux comprendre comment il fonctionne à l'intérieur",
+      "points": {
+       "platform-engineer": 2,
+       "sre": 1,
+       "cloud-security": 1,
+       "data-engineer": 1
+      }
+     },
+     {
+      "texte": "Je veux surtout savoir à quoi il sert pour mon problème",
+      "points": {
+       "data-analyst": 1,
+       "analytics-engineer": 1,
+       "finops": 1,
+       "cloud-engineer": 1
+      }
+     },
+     {
+      "texte": "Je cherche comment il pourrait casser ou être détourné",
+      "points": {
+       "cloud-security": 3,
+       "sre": 1
+      }
+     },
+     {
+      "texte": "Je l'automatise et je l'intègre à une chaîne",
+      "points": {
+       "devops": 2,
+       "data-engineer": 1
+      }
+     }
+    ]
+   },
+   {
+    "id": "q13",
+    "q": "Où souhaitez-vous travailler ?",
+    "reponses": [
+     {
+      "texte": "En Île-de-France ou dans une grande métropole (Lyon, Toulouse, Nantes, Lille…)",
+      "points": {},
+      "conseil": "Les grandes métropoles concentrent la majorité des offres data et cloud, y compris les premiers postes. Ciblez aussi les ESN, très présentes dans ces villes."
+     },
+     {
+      "texte": "Dans une ville moyenne ou à la campagne, sans déménager",
+      "points": {
+       "cloud-engineer": 1,
+       "data-analyst": 1
+      },
+      "conseil": "Hors des métropoles, les offres sont moins nombreuses : visez le télétravail (fréquent en data et DevOps une fois l'expérience acquise), les administrations et collectivités, les ESN régionales, et l'évolution interne dans votre entreprise actuelle."
+     },
+     {
+      "texte": "Je suis mobile, y compris à l'étranger",
+      "points": {
+       "ml-engineer": 1,
+       "platform-engineer": 1
+      },
+      "conseil": "La mobilité multiplie vos chances ; l'anglais devient alors indispensable, et les certifications des grands fournisseurs cloud sont reconnues dans le monde entier."
+     }
+    ]
+   },
+   {
+    "id": "q14",
+    "q": "Quelle est votre situation actuelle ?",
+    "reponses": [
+     {
+      "texte": "Salarié(e), je me forme en parallèle",
+      "points": {},
+      "conseil": "Financement et accélérateur : CPF, projet de transition professionnelle (Transitions Pro), et surtout l'évolution interne — proposez-vous sur un projet data ou cloud dans votre entreprise ; c'est souvent le chemin le plus court vers un premier poste."
+     },
+     {
+      "texte": "Demandeur d'emploi",
+      "points": {},
+      "conseil": "Parlez de votre projet à votre conseiller France Travail : aides au financement de formations et de certifications, préparation opérationnelle à l'emploi (POE) avec des entreprises qui recrutent. L'alternance est aussi accessible aux adultes."
+     },
+     {
+      "texte": "Étudiant(e) ou jeune diplômé(e)",
+      "points": {},
+      "conseil": "Visez l'alternance ou le stage : c'est la voie la plus efficace pour un premier emploi. Les certifications d'entrée (Linux Essentials, GitHub, AWS Cloud Practitioner) vous démarqueront."
+     },
+     {
+      "texte": "Indépendant(e) ou en création d'activité",
+      "points": {
+       "finops": 1,
+       "cloud-engineer": 1
+      },
+      "conseil": "Le freelance en data ou cloud demande d'abord 2 à 3 ans d'expérience salariée. En attendant, appliquez ces compétences à votre propre activité : c'est un excellent projet de portfolio."
+     }
+    ]
+   }
+  ]
+ }
+}
